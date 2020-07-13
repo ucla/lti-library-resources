@@ -2,14 +2,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-import theme from '@instructure/canvas-high-contrast-theme';
-import './App.css';
+import './app.css';
+import '@instructure/canvas-theme';
+
+import Nav from '../Nav';
 
 const App = () => {
   return (
-    <div>
-      nothing
-    </div>
+    <Nav />
   );
 };
 

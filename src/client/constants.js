@@ -1,0 +1,5 @@
+export const TABS = { 
+    RESEARCH_GUIDE: 1,
+    COURSE_RESERVES: 2,
+    LIBRARY_TOUR: 3,
+    RESEARCH_TUTORIALS: 4};
