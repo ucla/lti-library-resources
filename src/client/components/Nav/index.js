@@ -29,7 +29,8 @@ function Nav() {
       <AppNav.Item
         isSelected={selectedIndex === constants.TABS.RESEARCH_TUTORIALS}
         renderLabel="Research Tutorials"
-        onClick={() => setSelectedIndex(constants.TABS.RESEARCH_TUTORIALS)}
+        href="https://uclalibrary.github.io/research-tips/workshops/"
+        target="_blank"
       />
     </AppNav>
   );
