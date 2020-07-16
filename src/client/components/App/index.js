@@ -1,15 +1,20 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import axios from 'axios';
-
-import './app.css';
-import '@instructure/canvas-theme';
-
 import Nav from '../Nav';
 
+import './app.css';
+import { theme } from '@instructure/canvas-theme'
+theme.use()
+
 const App = () => {
+  const [courseData, setCourseData] = useState({
+    url: "temp",
+    subjectArea: "CLUSTER",
+  });
+
   return (
-    <Nav />
+    <Nav subjectArea={courseData.subjectArea} />
   );
 };
 
