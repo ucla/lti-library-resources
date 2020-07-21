@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tabs render correctly for clusters 1`] = `
+<AppNav
+  debounce={300}
+  elementRef={[Function]}
+  margin="0"
+  onUpdate={[Function]}
+  renderTruncateLabel={[Function]}
+  screenReaderLabel="App navigation"
+  visibleItemsCount={4}
+>
+  <Item
+    cursor="pointer"
+    isDisabled={false}
+    isSelected={true}
+    onClick={[Function]}
+    renderLabel="Research Guide"
+  />
+  <Item
+    cursor="pointer"
+    isDisabled={false}
+    isSelected={false}
+    onClick={[Function]}
+    renderLabel="Course Reserves"
+  />
+  <Item
+    cursor="pointer"
+    href="https://spark.adobe.com/page/uJnBMHgK6VMHA/"
+    isDisabled={false}
+    isSelected={false}
+    onClick={[Function]}
+    renderLabel="Library Tour"
+    target="_blank"
+  />
+  <Item
+    cursor="pointer"
+    href="https://uclalibrary.github.io/research-tips/workshops/"
+    isDisabled={false}
+    isSelected={false}
+    onClick={[Function]}
+    renderLabel="Research Tutorials"
+    target="_blank"
+  />
+</AppNav>
+`;
+
+exports[`Tabs render correctly for non-clusters 1`] = `
+<AppNav
+  debounce={300}
+  elementRef={[Function]}
+  margin="0"
+  onUpdate={[Function]}
+  renderTruncateLabel={[Function]}
+  screenReaderLabel="App navigation"
+  visibleItemsCount={4}
+>
+  <Item
+    cursor="pointer"
+    isDisabled={false}
+    isSelected={true}
+    onClick={[Function]}
+    renderLabel="Research Guide"
+  />
+  <Item
+    cursor="pointer"
+    isDisabled={false}
+    isSelected={false}
+    onClick={[Function]}
+    renderLabel="Course Reserves"
+  />
+  <Item
+    cursor="pointer"
+    href="https://uclalibrary.github.io/research-tips/workshops/"
+    isDisabled={false}
+    isSelected={false}
+    onClick={[Function]}
+    renderLabel="Research Tutorials"
+    target="_blank"
+  />
+</AppNav>
+`;

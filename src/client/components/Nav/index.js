@@ -3,7 +3,7 @@ import * as constants from '../../constants';
 
 import { AppNav } from '@instructure/ui-navigation';
 
-function Nav() {
+function Nav({ subjectArea }) {
   const [selectedIndex, setSelectedIndex] = useState(constants.TABS.RESEARCH_GUIDE);
 
   return (
@@ -21,15 +21,17 @@ function Nav() {
         renderLabel="Course Reserves"
         onClick={() => setSelectedIndex(constants.TABS.COURSE_RESERVES)}
       />
-      <AppNav.Item
+      {subjectArea === "CLUSTER" && <AppNav.Item
         isSelected={selectedIndex === constants.TABS.LIBRARY_TOUR}
         renderLabel="Library Tour"
-        onClick={() => setSelectedIndex(constants.TABS.LIBRARY_TOUR)}
-      />
+        href="https://spark.adobe.com/page/uJnBMHgK6VMHA/"
+        target="_blank"
+      />}
       <AppNav.Item
         isSelected={selectedIndex === constants.TABS.RESEARCH_TUTORIALS}
         renderLabel="Research Tutorials"
-        onClick={() => setSelectedIndex(constants.TABS.RESEARCH_TUTORIALS)}
+        href="https://uclalibrary.github.io/research-tips/workshops/"
+        target="_blank"
       />
     </AppNav>
   );
