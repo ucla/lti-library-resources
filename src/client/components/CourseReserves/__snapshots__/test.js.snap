@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Correctly displays iframe when URL exists 1`] = `
+<div>
+  <Iframe
+    url="test"
+  />
+</div>
+`;
+
+exports[`Correctly does not display iframe when URL is empty 1`] = `
+<div>
+  <Iframe
+    url=""
+  />
+</div>
+`;
+
+exports[`Correctly does not display iframe when URL is none 1`] = `
+<div>
+  <Iframe />
+</div>
+`;

@@ -1,6 +1,8 @@
 require('dotenv').config();
 const path = require('path');
 
+const apiRouter = require('./api');
+
 // Requiring LTIJS provider
 const Lti = require('ltijs').Provider;
 
@@ -30,37 +32,8 @@ lti.onConnect((token, req, res) => {
   return lti.redirect(res, 'http://localhost:3000');
 });
 
-// Routes.
-
-// Names and Roles route.
-lti.app.get('/api/members', (req, res) => {
-  lti.NamesAndRoles.getMembers(res.locals.token)
-    .then(members => {
-      console.log(members);
-      res.send(members.members);
-    })
-    .catch(err => res.status(400).send(err));
-});
-
-// Grades routes.
-lti.app.get('/api/grades', (req, res) => {
-  lti.Grade.result(res.locals.token)
-    .then(grades => res.status(200).send(grades))
-    .catch(err => {
-      console.log(err);
-      return res.status(400);
-    });
-});
-
-lti.app.post('/api/grades', (req, res) => {
-  try {
-    lti.Grade.ScorePublish(res.locals.token, req.body);
-    return res.status(200).send(req.body);
-  } catch (err) {
-    console.log(err);
-    return res.status(400).send(err);
-  }
-});
+// Routes
+lti.app.use('/api', apiRouter);
 
 async function setup() {
   // Deploying provider, connecting to the database and starting express server.
