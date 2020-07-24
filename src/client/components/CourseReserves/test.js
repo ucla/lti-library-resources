@@ -9,16 +9,23 @@ it('Correctly displays iframe when URL exists', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
-it('Correctly does not display iframe when URL is empty', () => {
+it('Correctly displays alert when URL is empty', () => {
   const wrapper = shallow(
     <CourseReserves url={""} />,
   );
   expect(wrapper).toMatchSnapshot();
 });
 
-it('Correctly does not display iframe when URL is none', () => {
+it('Correctly diplays alert when URL is none', () => {
   const wrapper = shallow(
     <CourseReserves />,
+  );
+  expect(wrapper).toMatchSnapshot();
+});
+
+it('Correctly displays links when user is admin', () => {
+  const wrapper = shallow(
+    <CourseReserves userIsAdmin={true} />,
   );
   expect(wrapper).toMatchSnapshot();
 });
