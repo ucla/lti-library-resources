@@ -13,16 +13,16 @@ exports[`Tabs render correctly for clusters 1`] = `
   <Item
     cursor="pointer"
     isDisabled={false}
-    isSelected={true}
+    isSelected={false}
     onClick={[Function]}
-    renderLabel="Research Guide"
+    renderLabel="Research guide"
   />
   <Item
     cursor="pointer"
     isDisabled={false}
     isSelected={false}
     onClick={[Function]}
-    renderLabel="Course Reserves"
+    renderLabel="Course reserves"
   />
   <Item
     cursor="pointer"
@@ -30,7 +30,7 @@ exports[`Tabs render correctly for clusters 1`] = `
     isDisabled={false}
     isSelected={false}
     onClick={[Function]}
-    renderLabel="Library Tour"
+    renderLabel="Library tour"
     target="_blank"
   />
   <Item
@@ -39,7 +39,7 @@ exports[`Tabs render correctly for clusters 1`] = `
     isDisabled={false}
     isSelected={false}
     onClick={[Function]}
-    renderLabel="Research Tutorials"
+    renderLabel="Research tutorials"
     target="_blank"
   />
 </AppNav>
@@ -58,16 +58,16 @@ exports[`Tabs render correctly for non-clusters 1`] = `
   <Item
     cursor="pointer"
     isDisabled={false}
-    isSelected={true}
+    isSelected={false}
     onClick={[Function]}
-    renderLabel="Research Guide"
+    renderLabel="Research guide"
   />
   <Item
     cursor="pointer"
     isDisabled={false}
     isSelected={false}
     onClick={[Function]}
-    renderLabel="Course Reserves"
+    renderLabel="Course reserves"
   />
   <Item
     cursor="pointer"
@@ -75,7 +75,7 @@ exports[`Tabs render correctly for non-clusters 1`] = `
     isDisabled={false}
     isSelected={false}
     onClick={[Function]}
-    renderLabel="Research Tutorials"
+    renderLabel="Research tutorials"
     target="_blank"
   />
 </AppNav>
