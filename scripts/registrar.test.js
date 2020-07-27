@@ -21,7 +21,7 @@ async function axiosMock(config) {
         status: 404,
       },
     };
-  } else if (process.env.reg_token == 'bad token') {
+  } else if (process.env.reg_token === 'bad token') {
     // 401 response
     throw {
       response: {
@@ -41,19 +41,19 @@ registrar.getToken = jest.fn().mockResolvedValue('good token');
 
 // Call good link, should return correct values
 test('1. Normal token retrieval', async () => {
-  const response = await registrar.call('good url');
+  const response = await registrar.call({ url: 'good url' });
   expect(response).toEqual('good response');
 });
 
 // Set token to garbage, call good link, should return correct values
 test('2. Bad token handling', async () => {
   process.env.reg_token = 'bad token';
-  const response = await registrar.call('good url');
+  const response = await registrar.call({ url: 'good url' });
   expect(response).toEqual('good response');
 });
 
 // Given a garbage link, should log 404 and return null
 test('3. Bad endpoint handling', async () => {
-  const response = await registrar.call('bad url');
+  const response = await registrar.call({ url: 'bad url' });
   expect(response).toEqual(null);
 });

@@ -1,8 +1,19 @@
-const got = require('got');
+const axios = require('axios');
 const { MongoClient } = require('mongodb');
-const { parseString } = require('xml2js');
+const winston = require('winston');
 const registrar = require('./registrar');
 require('dotenv').config();
+
+// winston setup
+const logger = winston.createLogger({
+  format: winston.format.prettyPrint(),
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({
+      filename: `logs/get_reserves-${Date.now}.log`,
+    }),
+  ],
+});
 
 // Mongo values
 const mongourl = process.env.MONGO_URL;
@@ -13,7 +24,7 @@ const client = new MongoClient(mongourl, { useUnifiedTopology: true });
 // test with 20S - URLs are empty though
 const args = process.argv.slice(2);
 if (args.length !== 1) {
-  console.log('ERROR: Bad arguments. Usage: node script.js TERM');
+  logger.error('ERROR: Bad arguments. Usage: node script.js TERM');
   process.exit();
 }
 const term = args[0];
@@ -22,60 +33,75 @@ const term = args[0];
   try {
     // connect to mongodb
     await client.connect();
-    console.log('Connected correctly to mongodb server');
+    logger.info({ message: 'Connected correctly to mongodb server', term });
     const db = client.db(dbName);
+    let srsArray = [];
 
     // get dept IDs which have course reserves
-    const response = await got(
+    const response = await axios(
       `https://webservices.library.ucla.edu/reserves/departments/during/${term}`
     );
-    let deptIDs = [];
-    parseString(response.body, function(err, result) {
-      const {
-        departmentList: { department: depts },
-      } = result;
-      deptIDs = depts.map(dept => dept.departmentID[0]);
-    });
+    // console.log(response.data);
+    const { department: depts } = response.data;
+
+    const deptIDs = depts.map(dept => dept.departmentID);
+    const deptCodes = depts.map(dept => dept.departmentCode);
 
     // get courses from the department IDs
     const numDepts = deptIDs.length;
     for (let i = 0; i < numDepts; i += 1) {
-      // process.stdout.clearLine();
-      // process.stdout.cursorTo(0);
-      // const str = (((i + 1)/num_depts * 100).toPrecision(3).toString() + "% complete");
-      // process.stdout.write(str);
-      const deptResponse = await got(
+      const deptResponse = await axios(
         `https://webservices.library.ucla.edu/reserves/courses/dept/${deptIDs[i]}/term/${term}`
       );
 
-      let courses = [];
-      parseString(deptResponse.body, function(err, result) {
-        const {
-          courseList: { course: coursesObj },
-        } = result;
-        courses = coursesObj;
-      });
+      const { course: courses } = deptResponse.data;
 
       for (let j = 0; j < courses.length; j += 1) {
-        const srs = courses[j].srsNumber[0];
-        const url = courses[j].url[0];
-        const shortname = await registrar.getShortname(
-          `${process.env.REGISTRAR_API_URL}/sis/api/v1/Dictionary/${term}/${srs}/CourseClassIdentifiers`
-        );
-        console.log(`${srs}: ${shortname}`);
+        const srs = courses[j].srsNumber;
+        const url = courses[j].url;
+        logger.info({ message: 'Processing', srs, term });
+        srsArray.push(srs);
+        const shortname = await registrar.getShortname(term, srs);
         if (shortname !== null) {
-          const exists = await db
-            .collection('reserves')
-            .countDocuments({ shortname }, { limit: 1 });
-          if (exists === 0) {
-            await db.collection('reserves').insertOne({ url, shortname });
-          }
+          const updateStatus = await db.collection('reserves').update(
+            { srs },
+            {
+              url,
+              srs,
+              shortname,
+              term,
+              lastUpdated: Date.now(),
+              deptCode: deptCodes[i],
+            },
+            { upsert: true }
+          );
+          logger.info({
+            message: updateStatus.nUpserted
+              ? 'Insert DB entry'
+              : 'Update DB entry',
+            url,
+            srs,
+            shortname,
+            term,
+            lastUpdated: Date.now(),
+            deptCode: deptCodes[i],
+          });
+        } else {
+          logger.error({ message: 'Registrar returned null', srs, term });
         }
       }
     }
+    // do the collection cleanup here
+    const deleteStatus = await db
+      .collection('reserves')
+      .deleteMany({ $and: [{ term }, { srs: { $nin: srsArray } }] });
+    logger.info({
+      message: 'Delete DB entry',
+      count: deleteStatus.deletedCount,
+      term,
+    });
     client.close();
   } catch (error) {
-    console.log(error);
+    logger.error({ message: error, term });
   }
 })();
-// console.log(util.inspect(dept_IDs, false, null, true));

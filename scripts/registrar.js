@@ -51,31 +51,27 @@ async function refreshToken() {
     console.log(error);
   }
 }
-async function call(url, method) {
+async function call(params) {
   try {
-    const config = {
-      method,
-      url,
-      headers: {
-        esmAuthnClientToken:
-          process.env.reg_token === undefined
-            ? await registrar.refreshToken()
-            : process.env.reg_token,
-      },
-    };
-    const response = await axios(config);
+    const token =
+      process.env.reg_token === undefined
+        ? await registrar.refreshToken()
+        : process.env.reg_token;
+
+    if (params.headers === undefined) {
+      params.headers = { esmAuthnClientToken: token };
+    } else {
+      params.headers.esmAuthnClientToken = token;
+    }
+
+    const response = await axios(params);
     return response.data;
   } catch (error) {
     if (error.response.status === 401 || error.response.status === 403) {
       // Token may have expired
-      const config = {
-        method,
-        url,
-        headers: {
-          esmAuthnClientToken: await registrar.refreshToken(),
-        },
-      };
-      const retryResponse = await axios(config);
+      params.headers.esmAuthnClientToken = await registrar.refreshToken();
+      const retryResponse = await axios(params);
+
       if (retryResponse.status === 200) {
         return retryResponse.data;
       }
@@ -83,9 +79,11 @@ async function call(url, method) {
     return null;
   }
 }
-async function getShortname(url) {
+async function getShortname(term, srs) {
   try {
-    const response = await registrar.call(url, 'get');
+    const response = await registrar.call({
+      url: `${process.env.REGISTRAR_API_URL}/sis/api/v1/Dictionary/${term}/${srs}/CourseClassIdentifiers`,
+    });
     if (response === null) return null;
     const {
       courseClassIdentifiers: [
@@ -100,14 +98,10 @@ async function getShortname(url) {
         },
       ],
     } = response;
-    const updateCatNum =
-      catNum.charAt(catNum.length - 1) === 'M'
-        ? `M${catNum.replace(/\s|M|^0+/g, '')}`
-        : catNum.replace(/\s|^0+/g, '');
-    const shortname = `${'20S'}-${subArea.replace(
+    const shortname = `${'201'}-${subArea.replace(
       /\s|&/g,
       ''
-    )}${updateCatNum}-${secNum.replace(/^0+/g, '')}`;
+    )}${catNum.replace(/\s|^0+/g, '')}-${secNum.replace(/^0+/g, '')}`;
     return shortname;
   } catch (error) {
     console.log(error);
