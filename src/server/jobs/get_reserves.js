@@ -1,7 +1,7 @@
 const axios = require('axios');
 const { MongoClient } = require('mongodb');
 const winston = require('winston');
-const registrar = require('./registrar');
+const registrar = require('../services/registrar');
 require('dotenv').config();
 
 // winston setup
