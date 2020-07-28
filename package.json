@@ -24,6 +24,7 @@
   "author": "Sandeep Raveesh",
   "license": "ISC",
   "dependencies": {
+    "@babel/runtime": "^7.10.5",
     "@instructure/canvas-high-contrast-theme": "^7.1.1",
     "@instructure/canvas-theme": "^7.1.1",
     "@instructure/ui-billboard": "^7.1.1",
@@ -38,6 +39,7 @@
     "axios": "^0.19.2",
     "babel-polyfill": "^6.26.0",
     "cors": "^2.8.5",
+    "debug": "^4.1.1",
     "dotenv": "^8.2.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
@@ -52,6 +54,7 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "babel-eslint": "^9.0.0",

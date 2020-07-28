@@ -19,7 +19,7 @@ jobs:
         run: yarn install --frozen-lockfile
       # Run tests and provide coverage diff
       - name: TestCoverage
-        id: testCovergae
+        id: testCoverage
         uses: anuraag016/Jest-Coverage-Diff@master
         with:
           fullCoverageDiff: false
