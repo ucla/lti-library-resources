@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Correctly diplays alert when URL is none 1`] = `
+<div>
+  <Iframe />
+</div>
+`;
+
+exports[`Correctly displays alert when URL is empty 1`] = `
+<div>
+  <Iframe
+    url=""
+  />
+</div>
+`;
+
 exports[`Correctly displays iframe when URL exists 1`] = `
 <div>
   <Iframe
@@ -8,15 +22,7 @@ exports[`Correctly displays iframe when URL exists 1`] = `
 </div>
 `;
 
-exports[`Correctly does not display iframe when URL is empty 1`] = `
-<div>
-  <Iframe
-    url=""
-  />
-</div>
-`;
-
-exports[`Correctly does not display iframe when URL is none 1`] = `
+exports[`Correctly displays links when user is admin 1`] = `
 <div>
   <Iframe />
 </div>
