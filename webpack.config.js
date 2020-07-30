@@ -47,4 +47,7 @@ module.exports = {
       favicon: './public/favicon.ico',
     }),
   ],
+  node: {
+    fs: "empty"
+  },
 };
