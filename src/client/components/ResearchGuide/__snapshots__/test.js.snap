@@ -2,6 +2,10 @@
 
 exports[`Correctly displays button for teacher/admin 1`] = `
 <div>
+  <Iframe
+    name="lti-iframe"
+    url=""
+  />
   <Button
     as="button"
     color="secondary"
@@ -22,4 +26,11 @@ exports[`Correctly displays button for teacher/admin 1`] = `
 </div>
 `;
 
-exports[`Correctly hides button for student 1`] = `<div />`;
+exports[`Correctly hides button for student 1`] = `
+<div>
+  <Iframe
+    name="lti-iframe"
+    url=""
+  />
+</div>
+`;
