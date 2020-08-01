@@ -6,6 +6,7 @@ import { ltikPromise } from '../../services/ltik';
 import { isUserAdmin, isUserTeacher, isUserStudent } from './userRoles';
 import Nav from '../Nav';
 import CourseReserves from '../CourseReserves';
+import Stats from '../Stats';
 import * as constants from '../../constants';
 
 theme.use();
@@ -14,6 +15,7 @@ const App = () => {
   const [currentTab, setCurrentTab] = useState(constants.TABS.RESEARCH_GUIDE);
   const [idToken, setIdToken] = useState({});
   const [platformContext, setPlatformContext] = useState({});
+  const [stats, setStats] = useState({});
   // Temporary data
   const [courseData, setCourseData] = useState({
     // Url: "https://catalog.library.ucla.edu/vwebv/search?browseFlag=N&instructorId=3673%7CCooney%2C%20K.M.&departmentId=2%7CAN%20N%20EA%3A%20Ancient%20and%20Near%20East&courseId=11005%7CAN%20N%20EA%3A%20015%20Women%20and%20Power%20in%20Ancient%20World&searchType=5",
@@ -34,6 +36,13 @@ const App = () => {
         setPlatformContext(res.data);
       });
     });
+
+    ltikPromise.then(ltik => {
+      axios.get(`/api/stats/123456789?ltik=${ltik}`).then(res => {
+        setStats(res.data);
+        console.log(res.data);
+      });
+    });
   };
 
   useEffect(retrieveCourse, []);
@@ -44,11 +53,21 @@ const App = () => {
         subjectArea={courseData.subjectArea}
         setCurrentTab={setCurrentTab}
         currentTab={currentTab}
+        isUserAdmin={false}
+        idToken={idToken}
+        platformContext={platformContext}
       />
       {currentTab === constants.TABS.COURSE_RESERVES && (
         <CourseReserves
           url={courseData.url}
           isUserAdmin={isUserAdmin(idToken)}
+        />
+      )}
+      {currentTab === constants.TABS.STATS && (
+        <Stats
+          stats={stats}
+          idToken={idToken}
+          platformContext={platformContext}
         />
       )}
     </div>
