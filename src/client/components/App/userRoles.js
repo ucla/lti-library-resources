@@ -1,22 +1,18 @@
 import * as constants from '../../constants';
 
-const useUserRole = (idToken, role) => {
-  if (idToken === {}) {
+const checkUserRole = (idToken, role) => {
+  try {
+    return idToken.roles[0].search(role) !== -1;
+  } catch {
     return false;
   }
-  else {
-    return (idToken.roles[0].search(role) === -1 ? false : true);
-  }
-}
+};
 
-export const isUserAdmin = (idToken) => {
-  return useUserRole(idToken, constants.ROLES.ADMIN);
-}
+export const isUserAdmin = idToken =>
+  checkUserRole(idToken, constants.ROLES.ADMIN);
 
-export const isUserTeacher = (idToken) => {
-  return useUserRole(idToken, constants.ROLES.TEACHER);
-}
+export const isUserTeacher = idToken =>
+  checkUserRole(idToken, constants.ROLES.TEACHER);
 
-export const isUserStudent = (idToken) => {
-  return useUserRole(idToken, constants.ROLES.STUDENT);
-}
+export const isUserStudent = idToken =>
+  checkUserRole(idToken, constants.ROLES.STUDENT);

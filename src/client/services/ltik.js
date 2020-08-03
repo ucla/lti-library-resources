@@ -20,4 +20,3 @@ const ltikPromise = new Promise((resolve, reject) => {
 });
 
 export { ltikPromise };
-  
