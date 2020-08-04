@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Correctly displays button for teacher/admin 1`] = `
+<div>
+  <Button
+    as="button"
+    color="secondary"
+    cursor="pointer"
+    display="inline-block"
+    elementRef={[Function]}
+    href="http://ucla.libsurveys.com/rg-feedback"
+    margin="small"
+    rel="noopener roreferrer"
+    size="medium"
+    target="_blank"
+    textAlign="center"
+    type="button"
+    withBackground={true}
+  >
+    Library resources feedback
+  </Button>
+</div>
+`;
+
+exports[`Correctly hides button for student 1`] = `<div />`;

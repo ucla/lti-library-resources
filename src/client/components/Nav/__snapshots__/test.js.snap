@@ -19,17 +19,11 @@ exports[`Tabs render correctly for clusters 1`] = `
   />
   <Item
     cursor="pointer"
-    isDisabled={false}
-    isSelected={false}
-    onClick={[Function]}
-    renderLabel="Course reserves"
-  />
-  <Item
-    cursor="pointer"
     href="https://spark.adobe.com/page/uJnBMHgK6VMHA/"
     isDisabled={false}
     isSelected={false}
     onClick={[Function]}
+    rel="noopener roreferrer"
     renderLabel="Library tour"
     target="_blank"
   />
@@ -39,6 +33,7 @@ exports[`Tabs render correctly for clusters 1`] = `
     isDisabled={false}
     isSelected={false}
     onClick={[Function]}
+    rel="noopener roreferrer"
     renderLabel="Research tutorials"
     target="_blank"
   />
@@ -64,17 +59,11 @@ exports[`Tabs render correctly for non-clusters 1`] = `
   />
   <Item
     cursor="pointer"
-    isDisabled={false}
-    isSelected={false}
-    onClick={[Function]}
-    renderLabel="Course reserves"
-  />
-  <Item
-    cursor="pointer"
     href="https://uclalibrary.github.io/research-tips/workshops/"
     isDisabled={false}
     isSelected={false}
     onClick={[Function]}
+    rel="noopener roreferrer"
     renderLabel="Research tutorials"
     target="_blank"
   />
