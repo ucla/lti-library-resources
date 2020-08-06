@@ -42,6 +42,13 @@ const Nav = ({
       target="_blank"
       rel="noopener roreferrer"
     />
+    {isUserAdmin(idToken) && (
+      <AppNav.Item
+        isSelected={currentTab === constants.TABS.ADMIN_PANEL}
+        renderLabel="Admin panel"
+        onClick={() => setCurrentTab(constants.TABS.ADMIN_PANEL)}
+      />
+    )}
   </AppNav>
 );
 
