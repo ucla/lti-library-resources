@@ -3,6 +3,8 @@ const express = require('express');
 const oauth = require('oauth-sign');
 const btoa = require('btoa');
 
+const LibraryServices = require('../services/LibraryServices');
+
 const router = express.Router();
 
 // ID Token route
@@ -58,6 +60,18 @@ router.get('/ltilaunch', (req, res) => {
       launch: action,
       params,
     });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send(err);
+  }
+});
+
+// Course reserves route
+router.get('/getreserves', (req, res) => {
+  try {
+    LibraryServices.getReserveListings(req.query.term).then(reserves =>
+      res.send(reserves)
+    );
   } catch (err) {
     console.log(err);
     return res.status(400).send(err);

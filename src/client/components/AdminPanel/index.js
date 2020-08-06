@@ -13,8 +13,6 @@ const AdminPanel = () => {
     <Tabs
       variant="secondary"
       onRequestTabChange={(event, { index }) => setSelectedIndex(index)}
-      minHeight="10rem"
-      maxHeight="10rem"
     >
       <Tabs.Panel
         renderTitle="Course Reserve Listings"
