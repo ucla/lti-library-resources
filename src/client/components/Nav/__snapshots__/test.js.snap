@@ -8,7 +8,7 @@ exports[`Tabs render correctly for clusters 1`] = `
   onUpdate={[Function]}
   renderTruncateLabel={[Function]}
   screenReaderLabel="App navigation"
-  visibleItemsCount={4}
+  visibleItemsCount={5}
 >
   <Item
     cursor="pointer"
@@ -48,7 +48,7 @@ exports[`Tabs render correctly for non-clusters 1`] = `
   onUpdate={[Function]}
   renderTruncateLabel={[Function]}
   screenReaderLabel="App navigation"
-  visibleItemsCount={4}
+  visibleItemsCount={5}
 >
   <Item
     cursor="pointer"
