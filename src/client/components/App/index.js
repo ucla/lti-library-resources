@@ -51,15 +51,16 @@ const App = () => {
         isUserTeacher={isUserTeacher}
         idToken={idToken}
       />
-      {currentTab === constants.TABS.COURSE_RESERVES && (
-        <CourseReserves url={courseData.url} />
-      )}
       {currentTab === constants.TABS.RESEARCH_GUIDE && (
         <ResearchGuide
+          context={platformContext}
           isUserAdmin={isUserAdmin}
           isUserTeacher={isUserTeacher}
           idToken={idToken}
         />
+      )}
+      {currentTab === constants.TABS.COURSE_RESERVES && (
+        <CourseReserves url={courseData.url} />
       )}
       {currentTab === constants.TABS.ADMIN_PANEL && <AdminPanel />}
     </div>
