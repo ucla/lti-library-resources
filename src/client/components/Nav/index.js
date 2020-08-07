@@ -8,33 +8,23 @@ const Nav = ({
   subjectArea,
   setCurrentTab,
   currentTab,
-  idToken,
+  isUserAdmin,
+  isUserTeacher,
   platformContext,
+  idToken,
 }) => {
-  const statsTab = (
-    <AppNav.Item
-      isSelected={currentTab === constants.TABS.STATS}
-      renderLabel="Analytics"
-      onClick={() => {
-        setCurrentTab(constants.TABS.STATS);
-      }}
-    />
-  );
   const addView = type => {
     console.log('adding view');
     ltikPromise.then(ltik => {
       axios
         .get(
-          `/api/addview/${type}/${platformContext.context.id}/${idToken.user}?ltik=${ltik}`,
+          `/api/addview/${type}/${platformContext.context.id}/${idToken.user}?ltik=${ltik}`
         )
         .then(res => {
           console.log(res.data);
         });
     });
   };
-  let isAdmin = false;
-  if (idToken.roles) isAdmin = idToken.roles[0].search('Admin') === -1 ? false : true;
-
   return (
     <AppNav
       screenReaderLabel="App navigation"
@@ -46,23 +36,26 @@ const Nav = ({
         onClick={() => {
           setCurrentTab(constants.TABS.RESEARCH_GUIDE);
           // Update research views
-          addView('reserve');
-        }}
-      />
-      <AppNav.Item
-        isSelected={currentTab === constants.TABS.COURSE_RESERVES}
-        renderLabel="Course reserves"
-        onClick={() => {
-          setCurrentTab(constants.TABS.COURSE_RESERVES);
           addView('research');
         }}
       />
+      {(isUserAdmin(idToken) || isUserTeacher(idToken)) && (
+        <AppNav.Item
+          isSelected={currentTab === constants.TABS.COURSE_RESERVES}
+          renderLabel="Course reserves"
+          onClick={() => {
+            setCurrentTab(constants.TABS.COURSE_RESERVES);
+            addView('reserve');
+          }}
+        />
+      )}
       {subjectArea === 'CLUSTER' && (
         <AppNav.Item
           isSelected={currentTab === constants.TABS.LIBRARY_TOUR}
           renderLabel="Library tour"
           href="https://spark.adobe.com/page/uJnBMHgK6VMHA/"
           target="_blank"
+          rel="noopener roreferrer"
         />
       )}
       <AppNav.Item
@@ -70,8 +63,15 @@ const Nav = ({
         renderLabel="Research tutorials"
         href="https://uclalibrary.github.io/research-tips/workshops/"
         target="_blank"
+        rel="noopener roreferrer"
       />
-      {isAdmin && statsTab}
+      {isUserAdmin(idToken) && (
+        <AppNav.Item
+          isSelected={currentTab === constants.TABS.ADMIN_PANEL}
+          renderLabel="Admin panel"
+          onClick={() => setCurrentTab(constants.TABS.ADMIN_PANEL)}
+        />
+      )}
     </AppNav>
   );
 };

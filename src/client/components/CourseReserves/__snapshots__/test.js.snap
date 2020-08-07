@@ -21,9 +21,3 @@ exports[`Correctly displays iframe when URL exists 1`] = `
   />
 </div>
 `;
-
-exports[`Correctly displays links when user is admin 1`] = `
-<div>
-  <Iframe />
-</div>
-`;

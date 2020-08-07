@@ -1,12 +1,13 @@
-/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { theme } from '@instructure/canvas-theme';
+import './index.css';
 import { ltikPromise } from '../../services/ltik';
 import { isUserAdmin, isUserTeacher, isUserStudent } from './userRoles';
 import Nav from '../Nav';
 import CourseReserves from '../CourseReserves';
-import Stats from '../Stats';
+import ResearchGuide from '../ResearchGuide';
+import AdminPanel from '../AdminPanel';
 import * as constants from '../../constants';
 
 theme.use();
@@ -61,25 +62,26 @@ const App = () => {
     <div>
       <Nav
         subjectArea={courseData.subjectArea}
-        setCurrentTab={setCurrentTab}
         currentTab={currentTab}
-        isUserAdmin={false}
-        idToken={idToken}
         platformContext={platformContext}
+        setCurrentTab={setCurrentTab}
+        isUserAdmin={isUserAdmin}
+        isUserTeacher={isUserTeacher}
+        idToken={idToken}
       />
-      {currentTab === constants.TABS.COURSE_RESERVES && (
-        <CourseReserves
-          url={courseData.url}
-          isUserAdmin={isUserAdmin(idToken)}
+      {currentTab === constants.TABS.RESEARCH_GUIDE && (
+        <ResearchGuide
+          context={platformContext}
+          isUserAdmin={isUserAdmin}
+          isUserTeacher={isUserTeacher}
+          idToken={idToken}
         />
       )}
-      {currentTab === constants.TABS.STATS && (
-        <Stats
-          stats={stats}
-          members={members}
-          idToken={idToken}
-          platformContext={platformContext}
-        />
+      {currentTab === constants.TABS.COURSE_RESERVES && (
+        <CourseReserves url={courseData.url} />
+      )}
+      {currentTab === constants.TABS.ADMIN_PANEL && (
+        <AdminPanel stats={stats} members={members} />
       )}
     </div>
   );
