@@ -8,6 +8,7 @@ import { isUserAdmin, isUserTeacher, isUserStudent } from './userRoles';
 import Nav from '../Nav';
 import CourseReserves from '../CourseReserves';
 import ResearchGuide from '../ResearchGuide';
+import AdminPanel from '../AdminPanel';
 import * as constants from '../../constants';
 
 theme.use();
@@ -61,6 +62,7 @@ const App = () => {
       {currentTab === constants.TABS.COURSE_RESERVES && (
         <CourseReserves url={courseData.url} />
       )}
+      {currentTab === constants.TABS.ADMIN_PANEL && <AdminPanel />}
     </div>
   );
 };
