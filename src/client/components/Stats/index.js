@@ -1,39 +1,60 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import { Table } from '@instructure/ui-table';
+import { Button } from '@instructure/ui-buttons';
+import axios from 'axios';
+import { ltikPromise } from '../../services/ltik';
 
-const Stats = ({stats, idToken, platformContext}) => { 
-    console.log(stats);
-    console.log(idToken);
-    console.log(platformContext); 
+const Stats = ({ stats }) => {
+  const statsBody = stats.map(stat => (
+    <Table.Row>
+      <Table.RowHeader>{stat.srs}</Table.RowHeader>
+      <Table.Cell>{stat.shortname}</Table.Cell>
+      <Table.Cell>{stat.numMembers}</Table.Cell>
+      <Table.Cell>{stat.total_reserve_clicks}</Table.Cell>
+      <Table.Cell>
+        {((stat.reserve_clicks * 100) / stat.numMembers).toPrecision(3)}
+      </Table.Cell>
+      <Table.Cell>{stat.total_research_clicks}</Table.Cell>
+      <Table.Cell>
+        {((stat.research_clicks * 100) / stat.numMembers).toPrecision(3)}
+      </Table.Cell>
+    </Table.Row>
+  ));
   return (
     <div>
-    <Table>
-          <Table.Head>
-            <Table.Row>
-              <Table.ColHeader>Course ID</Table.ColHeader>
-              <Table.ColHeader>Shortname</Table.ColHeader>
-              <Table.ColHeader>Total students enrolled</Table.ColHeader>
-              <Table.ColHeader>Views for research guide</Table.ColHeader>
-              <Table.ColHeader>% of students viewed research guide</Table.ColHeader>
-              <Table.ColHeader>Views for course reserves</Table.ColHeader>
-              <Table.ColHeader>% of students viewed course reserves</Table.ColHeader>
-            </Table.Row>
-          </Table.Head>
-          <Table.Body>
-            <Table.Row>
-              <Table.RowHeader>{platformContext.context.id}</Table.RowHeader>
-              <Table.Cell>{platformContext.context.label}</Table.Cell>
-              <Table.Cell>---</Table.Cell>
-              <Table.Cell>{stats.researchCount}</Table.Cell>
-              <Table.Cell>--</Table.Cell>
-              <Table.Cell>{stats.reservesCount}</Table.Cell>
-              <Table.Cell>--</Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table>
+      <Table>
+        <Table.Head>
+          <Table.Row>
+            <Table.ColHeader>Course ID</Table.ColHeader>
+            <Table.ColHeader>Shortname</Table.ColHeader>
+            <Table.ColHeader>Total students enrolled</Table.ColHeader>
+            <Table.ColHeader>Views for research guide</Table.ColHeader>
+            <Table.ColHeader>
+              % of students viewed research guide
+            </Table.ColHeader>
+            <Table.ColHeader>Views for course reserves</Table.ColHeader>
+            <Table.ColHeader>
+              % of students viewed course reserves
+            </Table.ColHeader>
+          </Table.Row>
+        </Table.Head>
+        <Table.Body>{statsBody}</Table.Body>
+      </Table>
+      <Button
+        color="primary"
+        margin="small"
+        onClick={() => {
+          ltikPromise.then(ltik => {
+            axios.get(`/api/statfile?ltik=${ltik}`).then(res => {
+              console.log(res.data);
+            });
+          });
+        }}
+      >
+        Download as Excel file
+      </Button>
     </div>
   );
-}
+};
 
 export default Stats;

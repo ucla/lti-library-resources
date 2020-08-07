@@ -1,5 +1,7 @@
 const express = require('express');
 const stats = require('../services/stats');
+const util = require('util');
+const lti = require('ltijs').Provider;
 
 const router = express.Router();
 
@@ -24,10 +26,10 @@ router.get('/platformcontext', (req, res) => {
 });
 
 // Gets library view stats
-router.get('/stats/:srs', (req, res) => {
+router.get('/stats', (req, res) => {
   try {
-    stats.getStats(req.params.srs).then(result => {
-      console.log(`RESULT${result}`);
+    console.log('api received getstats request');
+    stats.getStats().then(result => {
       res.send(result);
     });
   } catch (err) {
@@ -36,10 +38,16 @@ router.get('/stats/:srs', (req, res) => {
   }
 });
 
-// Adds research view
-router.get('/addresearchview/:srs/:student', (req, res) => {
+// Adds research or reserve view
+router.get('/addview/:type/:srs/:student', (req, res) => {
   try {
-    stats.addReserveStat(req.params.srs, req.params.student);
+    console.log('api received addview request');
+    stats.addStat(
+      req.params.type,
+      req.params.srs,
+      req.params.student,
+      res.locals.context.context.label
+    );
     res.send();
   } catch (err) {
     console.log(err);
@@ -47,14 +55,24 @@ router.get('/addresearchview/:srs/:student', (req, res) => {
   }
 });
 
-// Adds reserves view
-router.get('/addreserveview/:srs/:student', (req, res) => {
+// Makes and downloads stats filename
+router.get('/statfile', (req, res) => {
   try {
-    stats.addResearchStat(req.params.srs, req.params.student);
-    res.send();
+    console.log('getting file');
+    stats.getStats().then(result => {
+      // make result into excel file
+      res.sendFile(__dirname + '/lib-stats.txt', function(err) {
+        if (err) {
+          // Handle error, but keep in mind the response may be partially-sent
+          // so check res.headersSent
+          console.log(err);
+        } else {
+          console.log('OK');
+        }
+      });
+    });
   } catch (err) {
     console.log(err);
-    return res.status(400).send(err);
   }
 });
 

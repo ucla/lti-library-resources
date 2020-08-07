@@ -14,6 +14,7 @@ theme.use();
 const App = () => {
   const [currentTab, setCurrentTab] = useState(constants.TABS.RESEARCH_GUIDE);
   const [idToken, setIdToken] = useState({});
+  const [members, setMembers] = useState({});
   const [platformContext, setPlatformContext] = useState({});
   const [stats, setStats] = useState({});
   // Temporary data
@@ -38,8 +39,17 @@ const App = () => {
     });
 
     ltikPromise.then(ltik => {
-      axios.get(`/api/stats/123456789?ltik=${ltik}`).then(res => {
+      axios.get(`/api/stats?ltik=${ltik}`).then(res => {
+        console.log('calling stats api');
         setStats(res.data);
+        console.log(res.data);
+      });
+    });
+
+    ltikPromise.then(ltik => {
+      axios.get(`/api/members?ltik=${ltik}`).then(res => {
+        console.log('calling members api');
+        setMembers(res.data);
         console.log(res.data);
       });
     });
@@ -66,6 +76,7 @@ const App = () => {
       {currentTab === constants.TABS.STATS && (
         <Stats
           stats={stats}
+          members={members}
           idToken={idToken}
           platformContext={platformContext}
         />

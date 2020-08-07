@@ -1,7 +1,15 @@
 require('dotenv').config();
 const path = require('path');
+const { MongoClient } = require('mongodb');
+require('dotenv').config();
 
 const apiRouter = require('./api');
+
+// MongoDB config
+const mongourl = process.env.MONGO_URL;
+const dbName = process.env.DB_LIB_STATS;
+
+const client = new MongoClient(mongourl, { useUnifiedTopology: true });
 
 // Requiring LTIJS provider
 const Lti = require('ltijs').Provider;
@@ -25,10 +33,20 @@ const lti = new Lti(
 );
 
 // When receiving successful LTI launch redirects to app.
-lti.onConnect((token, req, res) => {
+lti.onConnect(async (token, req, res) => {
   if (process.env.MODE === 'production') {
     return res.sendFile(path.join(__dirname, '../../dist/index.html'));
   }
+  const result = await lti.NamesAndRoles.getMembers(res.locals.token);
+  const numMembers = result.members.length;
+  await client.connect();
+  console.log('Connected correctly to mongodb server - addMembers');
+  const dbStats = client.db(dbName);
+  const srs = res.locals.context.context.id;
+  console.log(srs);
+  const updateStatus = await dbStats
+    .collection('stats')
+    .update({ srs }, { $set: { numMembers } });
   return lti.redirect(res, 'http://localhost:3000');
 });
 
@@ -58,3 +76,5 @@ async function setup() {
 }
 
 setup();
+
+module.exports = lti;

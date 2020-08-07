@@ -1,10 +1,10 @@
 const { MongoClient } = require('mongodb');
+const util = require('util');
 require('dotenv').config();
 
 // Mongo setup
 const mongourl = process.env.MONGO_URL;
-const dbResearchName = process.env.DB_RESEARCH_STATS;
-const dbReservesName = process.env.DB_RESERVES_STATS;
+const dbName = process.env.DB_LIB_STATS;
 
 const client = new MongoClient(mongourl, { useUnifiedTopology: true });
 
@@ -13,59 +13,50 @@ let stats = {};
 /**
  * Returns Library stats for a given class.
  *
- * @param {string} srs SRS number
  * @returns {object}   Stats
  */
-async function getStats(srs) {
+async function getStats() {
   await client.connect();
-  console.log('Connected correctly to mongodb server - addResearchStat');
+  console.log('Connected correctly to mongodb server - getStats');
 
-  const dbResearch = client.db(dbResearchName);
-  const dbReserves = client.db(dbReservesName);
-  const reservesCount = await dbReserves.collection(srs).countDocuments({});
-  const researchCount = await dbResearch.collection(srs).countDocuments({});
-  console.log(reservesCount);
-  return { reservesCount, researchCount };
+  const dbStats = client.db(dbName);
+  const cursor = await dbStats.collection('stats').find();
+  console.log('DB_RESULT');
+  const result = await cursor.toArray();
+  result.map(
+    x =>
+      (x.reserve_clicks =
+        x.reserve_clicks === undefined ? 0 : x.reserve_clicks.length)
+  );
+  result.map(
+    x =>
+      (x.research_clicks =
+        x.research_clicks === undefined ? 0 : x.research_clicks.length)
+  );
+  console.log(util.inspect(result, false, null, true));
+  return result;
 }
 
 /**
  * Adds student to the reserve stats
  *
  * @param {string} srs SRS number
+ * @param {string} type Type of stat
  * @param {string} student Student ID
  * @returns {object}   Update Status
  */
-async function addReserveStat(srs, student) {
+async function addStat(type, srs, student, shortname) {
   await client.connect();
-  console.log('Connected correctly to mongodb server - addReserveStat');
-  const dbReserves = client.db(dbReservesName);
-  const updateStatus = await dbReserves.collection(srs).update(
-    { student },
+  console.log('Connected correctly to mongodb server - addStat');
+  const dbStats = client.db(dbName);
+  const typeField = `${type}_clicks`;
+  const totalTypeField = `total_${type}_clicks`;
+  const updateStatus = await dbStats.collection('stats').update(
+    { srs },
     {
-      student,
-      lastUpdated: Date.now(),
-    },
-    { upsert: true }
-  );
-  return updateStatus;
-}
-
-/**
- * Adds student to the research stats
- *
- * @param {string} srs SRS number
- * @param {string} student Student ID
- * @returns {object}   Update Status
- */
-async function addResearchStat(srs, student) {
-  await client.connect();
-  console.log('Connected correctly to mongodb server');
-  const dbResearch = client.db(dbResearchName);
-  const updateStatus = await dbResearch.collection(srs).update(
-    { student },
-    {
-      student,
-      lastUpdated: Date.now(),
+      $addToSet: { [typeField]: student },
+      $set: { lastUpdated: Date.now(), shortname },
+      $inc: { [totalTypeField]: 1 },
     },
     { upsert: true }
   );
@@ -74,8 +65,7 @@ async function addResearchStat(srs, student) {
 
 stats = {
   getStats,
-  addResearchStat,
-  addReserveStat,
+  addStat,
 };
 
 module.exports = stats;
