@@ -17,11 +17,9 @@ let stats = {};
  */
 async function getStats() {
   await client.connect();
-  console.log('Connected correctly to mongodb server - getStats');
 
   const dbStats = client.db(dbName);
   const cursor = await dbStats.collection('stats').find();
-  console.log('DB_RESULT');
   const result = await cursor.toArray();
   result.map(
     x =>
@@ -33,7 +31,6 @@ async function getStats() {
       (x.research_clicks =
         x.research_clicks === undefined ? 0 : x.research_clicks.length)
   );
-  console.log(util.inspect(result, false, null, true));
   return result;
 }
 
@@ -43,11 +40,11 @@ async function getStats() {
  * @param {string} srs SRS number
  * @param {string} type Type of stat
  * @param {string} student Student ID
+ * @param {string} shortname Class shortname
  * @returns {object}   Update Status
  */
 async function addStat(type, srs, student, shortname) {
   await client.connect();
-  console.log('Connected correctly to mongodb server - addStat');
   const dbStats = client.db(dbName);
   const typeField = `${type}_clicks`;
   const totalTypeField = `total_${type}_clicks`;

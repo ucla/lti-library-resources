@@ -40,18 +40,14 @@ const App = () => {
     });
 
     ltikPromise.then(ltik => {
-      axios.get(`/api/stats?ltik=${ltik}`).then(res => {
-        console.log('calling stats api');
+      axios.get(`/api/analytics?ltik=${ltik}`).then(res => {
         setStats(res.data);
-        console.log(res.data);
       });
     });
 
     ltikPromise.then(ltik => {
       axios.get(`/api/members?ltik=${ltik}`).then(res => {
-        console.log('calling members api');
         setMembers(res.data);
-        console.log(res.data);
       });
     });
   };

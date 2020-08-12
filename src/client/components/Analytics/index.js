@@ -4,7 +4,7 @@ import { Button } from '@instructure/ui-buttons';
 import axios from 'axios';
 import { ltikPromise } from '../../services/ltik';
 
-const Stats = ({ stats }) => {
+const Stats = ({ stats, members }) => {
   const statsBody = stats.map(stat => (
     <Table.Row>
       <Table.RowHeader>{stat.srs}</Table.RowHeader>

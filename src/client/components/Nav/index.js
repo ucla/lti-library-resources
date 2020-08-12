@@ -1,5 +1,4 @@
-import React from 'react';
-import { AppNav } from '@instructure/ui-navigation';
+import React from 'react'; import { AppNav } from '@instructure/ui-navigation';
 import axios from 'axios';
 import * as constants from '../../constants';
 import { ltikPromise } from '../../services/ltik';

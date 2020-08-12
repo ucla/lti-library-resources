@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const stats = require('../services/stats');
+const stats = require('../services/analytics');
 const util = require('util');
 const lti = require('ltijs').Provider;
 const oauth = require('oauth-sign');
@@ -29,9 +29,8 @@ router.get('/platformcontext', (req, res) => {
 });
 
 // Gets library view stats
-router.get('/stats', (req, res) => {
+router.get('/analytics', (req, res) => {
   try {
-    console.log('api received getstats request');
     stats.getStats().then(result => {
       res.send(result);
     });
@@ -44,7 +43,6 @@ router.get('/stats', (req, res) => {
 // Adds research or reserve view
 router.get('/addview/:type/:srs/:student', (req, res) => {
   try {
-    console.log('api received addview request');
     stats.addStat(
       req.params.type,
       req.params.srs,
@@ -61,7 +59,6 @@ router.get('/addview/:type/:srs/:student', (req, res) => {
 // Makes and downloads stats filename
 router.get('/statfile', (req, res) => {
   try {
-    console.log('getting file');
     stats.getStats().then(result => {
       // make result into excel file
       res.sendFile(__dirname + '/lib-stats.txt', function(err) {
