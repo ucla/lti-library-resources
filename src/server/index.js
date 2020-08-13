@@ -7,7 +7,7 @@ const apiRouter = require('./api');
 
 // MongoDB config
 const mongourl = process.env.MONGO_URL;
-const dbName = process.env.DB_LIB_STATS;
+const dbName = process.env.DB_DATABASE;
 
 const client = new MongoClient(mongourl, { useUnifiedTopology: true });
 
