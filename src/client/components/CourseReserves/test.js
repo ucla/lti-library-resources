@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import CourseReserves from '.';
-import * as constants from '../../constants';
 
 it('Correctly displays iframe when URL exists', () => {
   const wrapper = shallow(<CourseReserves url="test" />);

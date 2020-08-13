@@ -1,10 +1,7 @@
 require('dotenv').config();
 const path = require('path');
-
-const apiRouter = require('./api');
-
-// Requiring LTIJS provider
 const Lti = require('ltijs').Provider;
+const apiRouter = require('./api');
 
 // Creating a provider instance
 let options = {};
@@ -35,6 +32,9 @@ lti.onConnect((token, req, res) => {
 // Routes
 lti.app.use('/api', apiRouter);
 
+/**
+ *
+ */
 async function setup() {
   // Deploying provider, connecting to the database and starting express server.
   await lti.deploy({ port: 8080 });

@@ -9,7 +9,7 @@ let registrar = {};
 /**
  * Retrieves token from web service.
  *
- * @returns {string}
+ * @returns {string} token
  */
 async function getToken() {
   registrarDebug('getToken called');

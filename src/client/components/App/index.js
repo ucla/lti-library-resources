@@ -4,7 +4,7 @@ import axios from 'axios';
 import { theme } from '@instructure/canvas-theme';
 import './index.css';
 import { ltikPromise } from '../../services/ltik';
-import { isUserAdmin, isUserTeacher, isUserStudent } from './userRoles';
+import { isUserAdmin, isUserTeacher } from './userRoles';
 import Nav from '../Nav';
 import CourseReserves from '../CourseReserves';
 import ResearchGuide from '../ResearchGuide';

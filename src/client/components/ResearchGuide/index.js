@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import Iframe from 'react-iframe';
 import { Button } from '@instructure/ui-buttons';
@@ -30,13 +31,13 @@ const ResearchGuide = ({ context, isUserAdmin, isUserTeacher, idToken }) => {
           form.method = 'POST';
 
           // Repeat for each parameter
-          for (const param in res.data.params) {
+          Object.keys(res.data.params).forEach(param => {
             const input = document.createElement('input');
             input.type = 'hidden';
             input.name = param;
             input.value = res.data.params[param];
             form.appendChild(input);
-          }
+          });
 
           document.body.appendChild(form);
           form.submit();
@@ -62,6 +63,13 @@ const ResearchGuide = ({ context, isUserAdmin, isUserTeacher, idToken }) => {
       )}
     </div>
   );
+};
+
+ResearchGuide.propTypes = {
+  context: PropTypes.object.isRequired,
+  isUserAdmin: PropTypes.func.isRequired,
+  isUserTeacher: PropTypes.func.isRequired,
+  idToken: PropTypes.object.isRequired,
 };
 
 export default ResearchGuide;
