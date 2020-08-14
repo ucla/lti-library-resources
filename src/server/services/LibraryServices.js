@@ -1,8 +1,8 @@
 const Queries = require('../models/queries');
 
 class LibraryServices {
-  static async getReserveListings(term) {
-    const media = await Queries.getReservesByTerm('reserves', term);
+  static async getReserveListings() {
+    const media = await Queries.getReservesByTerm('reserves');
     return media;
   }
 }

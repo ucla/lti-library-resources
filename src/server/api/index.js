@@ -3,6 +3,7 @@ const express = require('express');
 const oauth = require('oauth-sign');
 const btoa = require('btoa');
 
+const CheckRoleServices = require('../services/CheckRole');
 const LibraryServices = require('../services/LibraryServices');
 
 const router = express.Router();
@@ -69,9 +70,16 @@ router.get('/ltilaunch', (req, res) => {
 // Course reserves route
 router.get('/getreserves', (req, res) => {
   try {
-    LibraryServices.getReserveListings(req.query.term).then(reserves =>
-      res.send(reserves)
-    );
+    if (!CheckRoleServices.isAdmin(res.locals.token.roles)) {
+      return res.status(403).send(new Error('Unauthorized role'));
+    }
+    LibraryServices.getReserveListings().then(reserves => {
+      const terms = new Set();
+      for (let i = 0; i < reserves.length; i += 1) {
+        terms.add(reserves[i].term);
+      }
+      res.send({ terms: Array.from(terms), reserves });
+    });
   } catch (err) {
     console.log(err);
     return res.status(400).send(err);

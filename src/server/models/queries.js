@@ -6,7 +6,10 @@ const dbName = process.env.DB_DATABASE;
 
 module.exports.getReservesByTerm = async (dbCollection, academicTerm) => {
   client.connect(mongourl);
-  const query = { term: academicTerm };
+  let query = {};
+  if (academicTerm) {
+    query = { term: academicTerm };
+  }
 
   const recordsForTerm = await client
     .db(dbName)

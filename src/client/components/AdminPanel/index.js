@@ -15,7 +15,7 @@ const AdminPanel = () => {
       onRequestTabChange={(event, { index }) => setSelectedIndex(index)}
     >
       <Tabs.Panel
-        renderTitle="Course Reserve Listings"
+        renderTitle="Course reserve listings"
         isSelected={selectedIndex === constants.ADMIN_TABS.COURSE_LISTINGS}
       >
         <ReserveListings />
