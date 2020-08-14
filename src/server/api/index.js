@@ -3,6 +3,9 @@ const express = require('express');
 const oauth = require('oauth-sign');
 const btoa = require('btoa');
 
+const CheckRoleServices = require('../services/CheckRole');
+const LibraryServices = require('../services/LibraryServices');
+
 const router = express.Router();
 
 // ID Token route
@@ -57,6 +60,25 @@ router.get('/ltilaunch', (req, res) => {
     res.send({
       launch: action,
       params,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send(err);
+  }
+});
+
+// Course reserves route
+router.get('/getreserves', (req, res) => {
+  try {
+    if (!CheckRoleServices.isAdmin(res.locals.token.roles)) {
+      return res.status(403).send(new Error('Unauthorized role'));
+    }
+    LibraryServices.getReserveListings().then(reserves => {
+      const terms = new Set();
+      for (let i = 0; i < reserves.length; i += 1) {
+        terms.add(reserves[i].term);
+      }
+      res.send({ terms: Array.from(terms), reserves });
     });
   } catch (err) {
     console.log(err);
