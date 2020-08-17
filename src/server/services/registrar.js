@@ -1,6 +1,7 @@
 const axios = require('axios');
 const https = require('https');
 const fs = require('fs');
+const xml2js = require('xml2js');
 const registrarDebug = require('debug')('registrar:api');
 require('dotenv').config();
 
@@ -203,8 +204,38 @@ async function getShortname(offeredTermCode, classSectionID) {
   }
 }
 
+/**
+ * Get crosslisted courses from the registrar (stored as an array of shortnames)
+ *
+ * @param {string} offeredTermCode  Term.
+ * @param {string} classSectionID   ClassID aka SRS.
+ * @returns {Array}   Returns a list of crosslisted courses.
+ */
+async function getCrosslists(offeredTermCode, classSectionID) {
+  const crosslistXml = await axios(
+    `https://webservices.registrar.ucla.edu/SRDB/SRDBWeb.asmx/getConSched?user=${process.env.REG_DB_USER}&pass=${process.env.REG_DB_PASS}&term=${offeredTermCode}&SRS=${classSectionID};`
+  );
+
+  const crosslists = [];
+  // eslint-disable-next-line no-loop-func
+  xml2js.parseString(crosslistXml.data, (err, result) => {
+    result.ArrayOfGetConSchedData.getConSchedData.forEach(async crosslist => {
+      const crosslistShortname = await registrar.getShortname(
+        crosslist.term[0],
+        crosslist.srs[0]
+      );
+      if (crosslistShortname) {
+        crosslists.push(crosslistShortname);
+      }
+    });
+  });
+
+  return crosslists;
+}
+
 registrar = {
   getShortname,
+  getCrosslists,
   call,
   getToken,
   cacheToken,
