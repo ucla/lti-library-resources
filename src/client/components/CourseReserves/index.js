@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Iframe from 'react-iframe';
 
 import { Alert } from '@instructure/ui-alerts';
 import { Button } from '@instructure/ui-buttons';
-import * as constants from '../../constants';
 
 const CourseReserves = ({ url }) => {
   const [urlExists, setUrlExists] = useState(true);
@@ -49,6 +49,10 @@ const CourseReserves = ({ url }) => {
       )}
     </div>
   );
+};
+
+CourseReserves.propTypes = {
+  url: PropTypes.string,
 };
 
 export default CourseReserves;

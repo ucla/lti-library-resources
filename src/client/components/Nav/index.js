@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { AppNav } from '@instructure/ui-navigation';
 import * as constants from '../../constants';
 
@@ -51,5 +53,14 @@ const Nav = ({
     )}
   </AppNav>
 );
+
+Nav.propTypes = {
+  subjectArea: PropTypes.string.isRequired,
+  setCurrentTab: PropTypes.func.isRequired,
+  currentTab: PropTypes.number.isRequired,
+  isUserAdmin: PropTypes.func.isRequired,
+  isUserTeacher: PropTypes.func.isRequired,
+  idToken: PropTypes.object.isRequired,
+};
 
 export default Nav;
