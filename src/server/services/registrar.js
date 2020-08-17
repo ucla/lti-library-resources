@@ -217,7 +217,6 @@ async function getCrosslists(offeredTermCode, classSectionID) {
   );
 
   const crosslists = [];
-  // eslint-disable-next-line no-loop-func
   xml2js.parseString(crosslistXml.data, (err, result) => {
     result.ArrayOfGetConSchedData.getConSchedData.forEach(async crosslist => {
       const crosslistShortname = await registrar.getShortname(
@@ -225,7 +224,13 @@ async function getCrosslists(offeredTermCode, classSectionID) {
         crosslist.srs[0]
       );
       if (crosslistShortname) {
-        crosslists.push(crosslistShortname);
+        crosslists.push({
+          term: crosslist.term[0],
+          srs: crosslist.srs[0],
+          crosslistShortname,
+        });
+      } else {
+        registrarDebug('getShortname returned null');
       }
     });
   });
