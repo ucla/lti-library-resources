@@ -3,16 +3,15 @@ const path = require('path');
 const { MongoClient } = require('mongodb');
 require('dotenv').config();
 
+// Requiring LTIJS provider
+const Lti = require('ltijs').Provider;
 const apiRouter = require('./api');
 
 // MongoDB config
-const mongourl = process.env.MONGO_URL;
+const mongourl = process.env.DB_URL;
 const dbName = process.env.DB_DATABASE;
 
 const client = new MongoClient(mongourl, { useUnifiedTopology: true });
-
-// Requiring LTIJS provider
-const Lti = require('ltijs').Provider;
 
 // Creating a provider instance
 let options = {};
@@ -40,13 +39,20 @@ lti.onConnect(async (token, req, res) => {
   const result = await lti.NamesAndRoles.getMembers(res.locals.token);
   const numMembers = result.members.length;
   await client.connect();
-  console.log('Connected correctly to mongodb server - addMembers');
-  const dbStats = client.db(dbName);
-  const srs = res.locals.context.context.id;
-  console.log(srs);
-  const updateStatus = await dbStats
-    .collection('stats')
-    .update({ srs }, { $set: { numMembers } });
+  const dbAnalytics = client.db(dbName);
+  const contextId = res.locals.context.context.id;
+  const shortname = res.locals.context.context.label;
+  const updateStatus = await dbAnalytics.collection('analytics').updateOne(
+    { contextId },
+    {
+      $set: {
+        numMembers,
+        shortname,
+        lastUpdated: Date.now(),
+      },
+    },
+    { upsert: true }
+  );
   return lti.redirect(res, 'http://localhost:3000');
 });
 

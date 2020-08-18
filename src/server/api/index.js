@@ -1,10 +1,9 @@
 require('dotenv').config();
 const express = require('express');
-const stats = require('../services/analytics');
-const util = require('util');
-const lti = require('ltijs').Provider;
 const oauth = require('oauth-sign');
 const btoa = require('btoa');
+const analytics = require('../services/analytics');
+const CheckRoleServices = require('../services/CheckRole.js');
 
 const router = express.Router();
 
@@ -28,10 +27,32 @@ router.get('/platformcontext', (req, res) => {
   }
 });
 
-// Gets library view stats
+// Course reserves route
+router.get('/getreserves', (req, res) => {
+  try {
+    if (!CheckRoleServices.isAdmin(res.locals.token.roles)) {
+      return res.status(403).send(new Error('Unauthorized role'));
+    }
+    LibraryServices.getReserveListings().then(reserves => {
+      const terms = new Set();
+      for (let i = 0; i < reserves.length; i += 1) {
+        terms.add(reserves[i].term);
+      }
+      res.send({ terms: Array.from(terms), reserves });
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send(err);
+  }
+});
+
+// Gets library view analytics
 router.get('/analytics', (req, res) => {
   try {
-    stats.getStats().then(result => {
+    if (!CheckRoleServices.isAdmin(res.locals.token.roles)) {
+      return res.status(403).send(new Error('Unauthorized role'));
+    }
+    analytics.getAnalytics().then(result => {
       res.send(result);
     });
   } catch (err) {
@@ -41,12 +62,16 @@ router.get('/analytics', (req, res) => {
 });
 
 // Adds research or reserve view
-router.get('/addview/:type/:srs/:student', (req, res) => {
+router.get('/addview/:type', (req, res) => {
   try {
-    stats.addStat(
+    if (!CheckRoleServices.isStudent(res.locals.token.roles)) {
+      return;
+    }
+    console.log(req.locals);
+    analytics.addAnalytics(
       req.params.type,
-      req.params.srs,
-      req.params.student,
+      res.locals.context.context.id,
+      res.locals.token.user,
       res.locals.context.context.label
     );
     res.send();
@@ -56,12 +81,12 @@ router.get('/addview/:type/:srs/:student', (req, res) => {
   }
 });
 
-// Makes and downloads stats filename
+// Makes and downloads analytics filename
 router.get('/statfile', (req, res) => {
   try {
-    stats.getStats().then(result => {
-      // make result into excel file
-      res.sendFile(__dirname + '/lib-stats.txt', function(err) {
+    analytics.getAnalytics().then(result => {
+      // Make result into excel file
+      res.sendFile('/lib-stats.txt', function(err) {
         if (err) {
           // Handle error, but keep in mind the response may be partially-sent
           // so check res.headersSent

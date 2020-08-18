@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Tabs } from '@instructure/ui-tabs';
+import PropTypes from 'prop-types';
 import ReserveListings from '../ReserveListings';
 import Analytics from '../Analytics';
 import * as constants from '../../constants';
 
-const AdminPanel = ({ stats, members }) => {
+const AdminPanel = ({ analytics }) => {
   const [selectedIndex, setSelectedIndex] = useState(
     constants.ADMIN_TABS.COURSE_LISTINGS
   );
@@ -27,10 +28,14 @@ const AdminPanel = ({ stats, members }) => {
         ></Tabs.Panel>
       </Tabs>
       {selectedIndex === constants.ADMIN_TABS.ANALYTICS && (
-        <Analytics stats={stats} members={members} />
+        <Analytics analytics={analytics} />
       )}
     </div>
   );
+};
+
+AdminPanel.propTypes = {
+  analytics: PropTypes.object,
 };
 
 export default AdminPanel;

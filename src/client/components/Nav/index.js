@@ -1,5 +1,7 @@
-import React from 'react'; import { AppNav } from '@instructure/ui-navigation';
+import React from 'react';
+import { AppNav } from '@instructure/ui-navigation';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import * as constants from '../../constants';
 import { ltikPromise } from '../../services/ltik';
 
@@ -13,15 +15,8 @@ const Nav = ({
   idToken,
 }) => {
   const addView = type => {
-    console.log('adding view');
     ltikPromise.then(ltik => {
-      axios
-        .get(
-          `/api/addview/${type}/${platformContext.context.id}/${idToken.user}?ltik=${ltik}`
-        )
-        .then(res => {
-          console.log(res.data);
-        });
+      axios.get(`/api/addview/${type}?ltik=${ltik}`).then(res => {});
     });
   };
   return (
@@ -73,6 +68,16 @@ const Nav = ({
       )}
     </AppNav>
   );
+};
+
+Nav.propTypes = {
+  subjectArea: PropTypes.object,
+  setCurrentTab: PropTypes.object,
+  currentTab: PropTypes.object,
+  isUserAdmin: PropTypes.object,
+  isUserTeacher: PropTypes.object,
+  platformContext: PropTypes.object,
+  idToken: PropTypes.object,
 };
 
 export default Nav;

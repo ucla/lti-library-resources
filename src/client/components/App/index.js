@@ -17,7 +17,7 @@ const App = () => {
   const [idToken, setIdToken] = useState({});
   const [members, setMembers] = useState({});
   const [platformContext, setPlatformContext] = useState({});
-  const [stats, setStats] = useState({});
+  const [analytics, setAnalytics] = useState({});
   // Temporary data
   const [courseData, setCourseData] = useState({
     // Url: "https://catalog.library.ucla.edu/vwebv/search?browseFlag=N&instructorId=3673%7CCooney%2C%20K.M.&departmentId=2%7CAN%20N%20EA%3A%20Ancient%20and%20Near%20East&courseId=11005%7CAN%20N%20EA%3A%20015%20Women%20and%20Power%20in%20Ancient%20World&searchType=5",
@@ -41,7 +41,7 @@ const App = () => {
 
     ltikPromise.then(ltik => {
       axios.get(`/api/analytics?ltik=${ltik}`).then(res => {
-        setStats(res.data);
+        setAnalytics(res.data);
       });
     });
 
@@ -77,7 +77,7 @@ const App = () => {
         <CourseReserves url={courseData.url} />
       )}
       {currentTab === constants.TABS.ADMIN_PANEL && (
-        <AdminPanel stats={stats} members={members} />
+        <AdminPanel analytics={analytics} members={members} />
       )}
     </div>
   );

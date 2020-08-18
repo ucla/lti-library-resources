@@ -1,25 +1,23 @@
 const { MongoClient } = require('mongodb');
-const util = require('util');
 require('dotenv').config();
 
 // Mongo setup
-const mongourl = process.env.MONGO_URL;
+const mongourl = process.env.DB_URL;
 const dbName = process.env.DB_DATABASE;
 
 const client = new MongoClient(mongourl, { useUnifiedTopology: true });
 
-let stats = {};
+let analytics = {};
 
 /**
- * Returns Library stats for a given class.
+ * Returns Library analytics for a given class.
  *
- * @returns {object}   Stats
+ * @returns {object}   Analytics
  */
-async function getStats() {
+async function getAnalytics() {
   await client.connect();
-
-  const dbStats = client.db(dbName);
-  const cursor = await dbStats.collection('stats').find();
+  const dbAnalytics = client.db(dbName);
+  const cursor = await dbAnalytics.collection('analytics').find();
   const result = await cursor.toArray();
   result.map(
     x =>
@@ -31,25 +29,35 @@ async function getStats() {
       (x.research_clicks =
         x.research_clicks === undefined ? 0 : x.research_clicks.length)
   );
+  result.total_research_clicks =
+    result.total_research_clicks === undefined
+      ? 0
+      : result.total_research_clicks;
+
+  result.total_research_clicks =
+    result.total_research_clicks === undefined
+      ? 0
+      : result.total_research_clicks;
+
   return result;
 }
 
 /**
- * Adds student to the reserve stats
+ * Adds student to the reserve analytics
  *
- * @param {string} srs SRS number
  * @param {string} type Type of stat
+ * @param {string} contextId Context id from LTI context
  * @param {string} student Student ID
  * @param {string} shortname Class shortname
  * @returns {object}   Update Status
  */
-async function addStat(type, srs, student, shortname) {
+async function addAnalytics(type, contextId, student, shortname) {
   await client.connect();
-  const dbStats = client.db(dbName);
+  const dbAnalytics = client.db(dbName);
   const typeField = `${type}_clicks`;
   const totalTypeField = `total_${type}_clicks`;
-  const updateStatus = await dbStats.collection('stats').update(
-    { srs },
+  const updateStatus = await dbAnalytics.collection('analytics').updateOne(
+    { contextId },
     {
       $addToSet: { [typeField]: student },
       $set: { lastUpdated: Date.now(), shortname },
@@ -60,9 +68,9 @@ async function addStat(type, srs, student, shortname) {
   return updateStatus;
 }
 
-stats = {
-  getStats,
-  addStat,
+analytics = {
+  getAnalytics,
+  addAnalytics,
 };
 
-module.exports = stats;
+module.exports = analytics;
