@@ -5,10 +5,10 @@ import ResearchGuide from '.';
 it('Correctly displays button for teacher/admin', () => {
   const wrapper = shallow(
     <ResearchGuide
-      idToken={{}}
-      context={{}}
+      platformContext={{ context: { label: '' }, resource: {} }}
       isUserAdmin={() => false}
       isUserTeacher={() => true}
+      idToken={{}}
     />
   );
   expect(wrapper).toMatchSnapshot();
@@ -17,10 +17,10 @@ it('Correctly displays button for teacher/admin', () => {
 it('Correctly hides button for student', () => {
   const wrapper = shallow(
     <ResearchGuide
-      idToken={{}}
-      context={{}}
+      platformContext={{ context: { label: '' }, resource: {} }}
       isUserAdmin={() => false}
       isUserTeacher={() => false}
+      idToken={{}}
     />
   );
   expect(wrapper).toMatchSnapshot();

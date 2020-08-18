@@ -2,35 +2,46 @@
 
 exports[`Correctly displays button for teacher/admin 1`] = `
 <div>
-  <Iframe
-    name="lti-iframe"
-    url=""
-  />
-  <Button
-    as="button"
-    color="secondary"
-    cursor="pointer"
-    display="inline-block"
-    elementRef={[Function]}
-    href="http://ucla.libsurveys.com/rg-feedback"
+  <Alert
+    isLiveRegionAtomic={false}
+    liveRegionPoliteness="assertive"
     margin="small"
-    rel="noopener roreferrer"
-    size="medium"
-    target="_blank"
-    textAlign="center"
-    type="button"
-    withBackground={true}
+    open={true}
+    screenReaderOnly={false}
+    timeout={0}
+    transition="fade"
+    variant="info"
   >
-    Library resources feedback
-  </Button>
+    Research guides compile useful databases, digital library collections, and research strategies.
+  </Alert>
+  <ResearchGuideTab
+    idToken={Object {}}
+    isUserAdmin={[Function]}
+    isUserTeacher={[Function]}
+    launchUrl=""
+  />
 </div>
 `;
 
 exports[`Correctly hides button for student 1`] = `
 <div>
-  <Iframe
-    name="lti-iframe"
-    url=""
+  <Alert
+    isLiveRegionAtomic={false}
+    liveRegionPoliteness="assertive"
+    margin="small"
+    open={true}
+    screenReaderOnly={false}
+    timeout={0}
+    transition="fade"
+    variant="info"
+  >
+    Research guides compile useful databases, digital library collections, and research strategies.
+  </Alert>
+  <ResearchGuideTab
+    idToken={Object {}}
+    isUserAdmin={[Function]}
+    isUserTeacher={[Function]}
+    launchUrl=""
   />
 </div>
 `;

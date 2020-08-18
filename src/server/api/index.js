@@ -87,6 +87,18 @@ router.get('/getreserves', (req, res) => {
   }
 });
 
+// Crosslists route
+router.get('/crosslists', (req, res) => {
+  try {
+    LibraryServices.getCrosslists(req.query.shortname).then(crosslists => {
+      res.send({ crosslists });
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send(err);
+  }
+});
+
 // Analytics routes
 router.get('/getanalytics', (req, res) => {
   try {

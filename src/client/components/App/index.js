@@ -16,7 +16,10 @@ theme.use();
 const App = () => {
   const [currentTab, setCurrentTab] = useState(constants.TABS.RESEARCH_GUIDE);
   const [idToken, setIdToken] = useState({});
-  const [platformContext, setPlatformContext] = useState({});
+  const [platformContext, setPlatformContext] = useState({
+    context: { label: '' },
+    resource: {},
+  });
   const [isCluster, setIsCluster] = useState(false);
 
   const retrieveCourse = () => {
@@ -50,7 +53,7 @@ const App = () => {
       />
       {currentTab === constants.TABS.RESEARCH_GUIDE && (
         <ResearchGuide
-          context={platformContext}
+          platformContext={platformContext}
           isUserAdmin={isUserAdmin}
           isUserTeacher={isUserTeacher}
           idToken={idToken}
