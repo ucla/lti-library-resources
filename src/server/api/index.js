@@ -5,6 +5,7 @@ const btoa = require('btoa');
 
 const CheckRoleServices = require('../services/CheckRole');
 const LibraryServices = require('../services/LibraryServices');
+const Analytics = require('../services/Analytics');
 
 const router = express.Router();
 
@@ -80,6 +81,40 @@ router.get('/getreserves', (req, res) => {
       }
       res.send({ terms: Array.from(terms), reserves });
     });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send(err);
+  }
+});
+
+// Analytics routes
+router.get('/getanalytics', (req, res) => {
+  try {
+    if (!CheckRoleServices.isAdmin(res.locals.token.roles)) {
+      return res.status(403).send(new Error('Unauthorized role'));
+    }
+    Analytics.getAnalytics().then(result => {
+      res.send(result);
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send(err);
+  }
+});
+
+// Adds research or reserve view
+router.get('/addanalytics/:type', (req, res) => {
+  try {
+    if (!CheckRoleServices.isStudent(res.locals.token.roles)) {
+      return;
+    }
+    Analytics.addAnalytics(
+      req.params.type,
+      res.locals.context.context.id,
+      res.locals.token.user,
+      res.locals.context.context.label
+    );
+    res.send();
   } catch (err) {
     console.log(err);
     return res.status(400).send(err);

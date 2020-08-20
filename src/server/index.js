@@ -1,6 +1,7 @@
 require('dotenv').config();
 const path = require('path');
 const Lti = require('ltijs').Provider;
+const { MongoClient } = require('mongodb');
 const apiRouter = require('./api');
 
 // Creating a provider instance
@@ -11,6 +12,12 @@ if (process.env.MODE === 'production') {
     cookies: { secure: false },
   };
 }
+
+// MongoDB config
+const mongourl = process.env.DB_URL;
+const dbName = process.env.DB_DATABASE;
+const client = new MongoClient(mongourl, { useUnifiedTopology: true });
+
 const lti = new Lti(
   process.env.LTI_KEY,
   // Setting up database configurations
@@ -22,10 +29,27 @@ const lti = new Lti(
 );
 
 // When receiving successful LTI launch redirects to app.
-lti.onConnect((token, req, res) => {
+lti.onConnect(async (token, req, res) => {
   if (process.env.MODE === 'production') {
     return res.sendFile(path.join(__dirname, '../../dist/index.html'));
   }
+  const result = await lti.NamesAndRoles.getMembers(res.locals.token);
+  const numMembers = result.members.length;
+  await client.connect();
+  const dbAnalytics = client.db(dbName);
+  const contextId = res.locals.context.context.id;
+  const shortname = res.locals.context.context.label;
+  await dbAnalytics.collection('analytics').updateOne(
+    { contextId },
+    {
+      $set: {
+        numMembers,
+        shortname,
+        lastUpdated: Date.now(),
+      },
+    },
+    { upsert: true }
+  );
   return lti.redirect(res, 'http://localhost:3000');
 });
 

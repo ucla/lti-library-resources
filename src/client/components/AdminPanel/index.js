@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Tabs } from '@instructure/ui-tabs';
 import ReserveListings from '../ReserveListings';
+import Analytics from '../Analytics';
 
 import * as constants from '../../constants';
 
@@ -23,7 +24,9 @@ const AdminPanel = () => {
       <Tabs.Panel
         renderTitle="Analytics"
         isSelected={selectedIndex === constants.ADMIN_TABS.ANALYTICS}
-      ></Tabs.Panel>
+      >
+        <Analytics />
+      </Tabs.Panel>
     </Tabs>
   );
 };
