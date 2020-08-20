@@ -7,7 +7,7 @@ import { ltikPromise } from '../../services/ltik';
 import * as constants from '../../constants';
 
 const Nav = ({
-  subjectArea,
+  isCluster,
   setCurrentTab,
   currentTab,
   isUserAdmin,
@@ -43,7 +43,7 @@ const Nav = ({
           }}
         />
       )}
-      {subjectArea === 'CLUSTER' && (
+      {isCluster && (
         <AppNav.Item
           isSelected={currentTab === constants.TABS.LIBRARY_TOUR}
           renderLabel="Library tour"
@@ -79,7 +79,7 @@ const Nav = ({
 };
 
 Nav.propTypes = {
-  subjectArea: PropTypes.string.isRequired,
+  isCluster: PropTypes.bool.isRequired,
   setCurrentTab: PropTypes.func.isRequired,
   currentTab: PropTypes.number.isRequired,
   isUserAdmin: PropTypes.func.isRequired,
