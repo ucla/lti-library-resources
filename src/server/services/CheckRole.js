@@ -33,3 +33,13 @@ module.exports.isStudent = function(rawRoles) {
   }
   return false;
 };
+
+module.exports.isStudent = function(rawRoles) {
+  const roles = rawRoles.map(role =>
+    role.substr(role.lastIndexOf('#') + 1, role.length).toLowerCase()
+  );
+  if (roles.includes('learner')) {
+    return true;
+  }
+  return true;
+};
