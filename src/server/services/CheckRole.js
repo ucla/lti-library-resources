@@ -41,5 +41,5 @@ module.exports.isStudent = function(rawRoles) {
   if (roles.includes('learner')) {
     return true;
   }
-  return true;
+  return false;
 };
