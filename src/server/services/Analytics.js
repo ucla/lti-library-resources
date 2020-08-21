@@ -18,51 +18,28 @@ async function getAnalytics() {
   const cursor = await dbAnalytics.collection('analytics').find();
   const result = await cursor.toArray();
 
-  result.map(
-    x =>
-      (x.reserve_clicks =
-        x.reserve_clicks === undefined ? 0 : x.reserve_clicks.length)
-  );
-  result.map(
-    x =>
-      (x.research_clicks =
-        x.research_clicks === undefined ? 0 : x.research_clicks.length)
-  );
-  result.map(
-    x =>
-      (x.lib_tour_clicks =
-        x.lib_tour_clicks === undefined ? 0 : x.lib_tour_clicks.length)
-  );
-  result.map(
-    x =>
-      (x.research_tuts_clicks =
-        x.research_tuts_clicks === undefined
-          ? 0
-          : x.research_tuts_clicks.length)
-  );
+  result.map(x => {
+    x.reserve_clicks =
+      x.reserve_clicks === undefined ? 0 : x.reserve_clicks.length;
+    x.research_clicks =
+      x.research_clicks === undefined ? 0 : x.research_clicks.length;
+    x.lib_tour_clicks =
+      x.lib_tour_clicks === undefined ? 0 : x.lib_tour_clicks.length;
+    x.research_tuts_clicks =
+      x.research_tuts_clicks === undefined ? 0 : x.research_tuts_clicks.length;
 
-  result.map(
-    x =>
-      (x.total_reserve_clicks =
-        x.total_reserve_clicks === undefined ? 0 : x.total_reserve_clicks)
-  );
-  result.map(
-    x =>
-      (x.total_research_clicks =
-        x.total_research_clicks === undefined ? 0 : x.total_research_clicks)
-  );
-  result.map(
-    x =>
-      (x.total_lib_tour_clicks =
-        x.total_lib_tour_clicks === undefined ? 0 : x.total_lib_tour_clicks)
-  );
-  result.map(
-    x =>
-      (x.total_research_tuts_clicks =
-        x.total_research_tuts_clicks === undefined
-          ? 0
-          : x.total_research_tuts_clicks)
-  );
+    x.total_reserve_clicks =
+      x.total_reserve_clicks === undefined ? 0 : x.total_reserve_clicks;
+    x.total_research_clicks =
+      x.total_research_clicks === undefined ? 0 : x.total_research_clicks;
+    x.total_lib_tour_clicks =
+      x.total_lib_tour_clicks === undefined ? 0 : x.total_lib_tour_clicks;
+    x.total_research_tuts_clicks =
+      x.total_research_tuts_clicks === undefined
+        ? 0
+        : x.total_research_tuts_clicks;
+    return result;
+  });
 
   return result;
 }
