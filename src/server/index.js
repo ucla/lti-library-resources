@@ -34,22 +34,27 @@ lti.onConnect(async (token, req, res) => {
     return res.sendFile(path.join(__dirname, '../../dist/index.html'));
   }
   const result = await lti.NamesAndRoles.getMembers(res.locals.token);
-  const numMembers = result.members.length;
-  await client.connect();
-  const dbAnalytics = client.db(dbName);
-  const contextId = res.locals.context.context.id;
-  const shortname = res.locals.context.context.label;
-  await dbAnalytics.collection('analytics').updateOne(
-    { contextId },
-    {
-      $set: {
-        numMembers,
-        shortname,
-        lastUpdated: Date.now(),
+  if (!result) {
+    console.log('getMembers returned null');
+  } else {
+    const numMembers = result.members.length;
+    await client.connect();
+    const dbAnalytics = client.db(dbName);
+    const contextId = res.locals.context.context.id;
+    const shortname = res.locals.context.context.label;
+    await dbAnalytics.collection('analytics').updateOne(
+      { contextId },
+      {
+        $set: {
+          numMembers,
+          shortname,
+          lastUpdated: Date.now(),
+        },
       },
-    },
-    { upsert: true }
-  );
+      { upsert: true }
+    );
+  }
+
   return lti.redirect(res, 'http://localhost:3000');
 });
 

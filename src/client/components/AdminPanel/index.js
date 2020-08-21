@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Tabs } from '@instructure/ui-tabs';
-import ReserveListings from '../ReserveListings';
-import Analytics from '../Analytics';
+import ReserveListings from './ReserveListings';
+import Analytics from './Analytics';
 
 import * as constants from '../../constants';
 

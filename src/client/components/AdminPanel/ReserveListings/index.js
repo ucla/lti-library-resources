@@ -6,7 +6,7 @@ import { Spinner } from '@instructure/ui-spinner';
 import { Table } from '@instructure/ui-table';
 import { Text } from '@instructure/ui-text';
 import { TruncateText } from '@instructure/ui-truncate-text';
-import { ltikPromise } from '../../services/ltik';
+import { ltikPromise } from '../../../services/ltik';
 
 const ReserveListings = () => {
   const [entries, setEntries] = useState([]);

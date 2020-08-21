@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from '@instructure/ui-table';
 import axios from 'axios';
-import { ltikPromise } from '../../services/ltik';
+import { ltikPromise } from '../../../services/ltik';
+import PercentageCell from './PercentageCell';
 
 const Analytics = () => {
   const [analytics, setAnalytics] = useState([]);
@@ -15,30 +16,37 @@ const Analytics = () => {
   };
 
   useEffect(getAnalytics, []);
-  console.log(analytics);
+
   const analyticsBody = analytics
     ? analytics.map(stat => (
         <Table.Row>
           <Table.RowHeader>{stat.contextId}</Table.RowHeader>
           <Table.Cell>{stat.shortname}</Table.Cell>
           <Table.Cell>{stat.numMembers}</Table.Cell>
-          <Table.Cell>{stat.total_reserve_clicks}</Table.Cell>
-          <Table.Cell>
-            {((stat.reserve_clicks * 100) / stat.numMembers).toPrecision(3)}
-          </Table.Cell>
           <Table.Cell>{stat.total_research_clicks}</Table.Cell>
           <Table.Cell>
-            {((stat.research_clicks * 100) / stat.numMembers).toPrecision(3)}
+            <PercentageCell
+              num={stat.total_research_clicks}
+              total={stat.numMembers}
+            />
+          </Table.Cell>
+          <Table.Cell>{stat.total_reserve_clicks}</Table.Cell>
+          <Table.Cell>
+            <PercentageCell num={stat.reserve_clicks} total={stat.numMembers} />
           </Table.Cell>
           <Table.Cell>{stat.total_lib_tour_clicks}</Table.Cell>
           <Table.Cell>
-            {((stat.lib_tour_clicks * 100) / stat.numMembers).toPrecision(3)}
+            <PercentageCell
+              num={stat.lib_tour_clicks}
+              total={stat.numMembers}
+            />
           </Table.Cell>
           <Table.Cell>{stat.total_research_tuts_clicks}</Table.Cell>
           <Table.Cell>
-            {((stat.research_tuts_clicks * 100) / stat.numMembers).toPrecision(
-              3
-            )}
+            <PercentageCell
+              num={stat.research_tuts_clicks}
+              total={stat.numMembers}
+            />
           </Table.Cell>
         </Table.Row>
       ))
