@@ -4,14 +4,24 @@ import ResearchGuide from '.';
 
 it('Correctly displays button for teacher/admin', () => {
   const wrapper = shallow(
-    <ResearchGuide isUserAdmin={() => false} isUserTeacher={() => true} />
+    <ResearchGuide
+      idToken={{}}
+      context={{}}
+      isUserAdmin={() => false}
+      isUserTeacher={() => true}
+    />
   );
   expect(wrapper).toMatchSnapshot();
 });
 
 it('Correctly hides button for student', () => {
   const wrapper = shallow(
-    <ResearchGuide isUserAdmin={() => false} isUserTeacher={() => false} />
+    <ResearchGuide
+      idToken={{}}
+      context={{}}
+      isUserAdmin={() => false}
+      isUserTeacher={() => false}
+    />
   );
   expect(wrapper).toMatchSnapshot();
 });

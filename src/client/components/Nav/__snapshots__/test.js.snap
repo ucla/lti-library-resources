@@ -13,7 +13,7 @@ exports[`Tabs render correctly for clusters 1`] = `
   <Item
     cursor="pointer"
     isDisabled={false}
-    isSelected={false}
+    isSelected={true}
     onClick={[Function]}
     renderLabel="Research guide"
   />
@@ -53,7 +53,7 @@ exports[`Tabs render correctly for non-clusters 1`] = `
   <Item
     cursor="pointer"
     isDisabled={false}
-    isSelected={false}
+    isSelected={true}
     onClick={[Function]}
     renderLabel="Research guide"
   />

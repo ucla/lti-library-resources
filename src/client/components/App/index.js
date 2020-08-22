@@ -17,11 +17,7 @@ const App = () => {
   const [currentTab, setCurrentTab] = useState(constants.TABS.RESEARCH_GUIDE);
   const [idToken, setIdToken] = useState({});
   const [platformContext, setPlatformContext] = useState({});
-  // Temporary data
-  const [courseData, setCourseData] = useState({
-    // Url: "https://catalog.library.ucla.edu/vwebv/search?browseFlag=N&instructorId=3673%7CCooney%2C%20K.M.&departmentId=2%7CAN%20N%20EA%3A%20Ancient%20and%20Near%20East&courseId=11005%7CAN%20N%20EA%3A%20015%20Women%20and%20Power%20in%20Ancient%20World&searchType=5",
-    subjectArea: 'CLUSTER',
-  });
+  const [isCluster, setIsCluster] = useState(false);
 
   const retrieveCourse = () => {
     // Get the idToken and platformContext, which contain user info,
@@ -35,6 +31,7 @@ const App = () => {
     ltikPromise.then(ltik => {
       axios.get(`/api/platformcontext?ltik=${ltik}`).then(res => {
         setPlatformContext(res.data);
+        setIsCluster(res.data.context.label.search('CLUSTER') !== -1);
       });
     });
   };
@@ -44,7 +41,7 @@ const App = () => {
   return (
     <div>
       <Nav
-        subjectArea={courseData.subjectArea}
+        isCluster={isCluster}
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
         isUserAdmin={isUserAdmin}
@@ -60,7 +57,7 @@ const App = () => {
         />
       )}
       {currentTab === constants.TABS.COURSE_RESERVES && (
-        <CourseReserves url={courseData.url} />
+        <CourseReserves url="" />
       )}
       {currentTab === constants.TABS.ADMIN_PANEL && <AdminPanel />}
     </div>
