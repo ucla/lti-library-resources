@@ -13,6 +13,11 @@ class LibraryServices {
     );
     return crosslists;
   }
+
+  static async getReserveUrl(shortname) {
+    const reserve = await Queries.getReserveByShortname('reserves', shortname);
+    return reserve;
+  }
 }
 
 module.exports = LibraryServices;

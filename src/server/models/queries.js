@@ -35,3 +35,17 @@ module.exports.getCrosslistsByShortname = async (dbCollection, shortname) => {
   });
   return result;
 };
+
+module.exports.getReserveByShortname = async (dbCollection, shortname) => {
+  client.connect(mongourl);
+  const query = { shortname };
+
+  const reserve = await client
+    .db(dbName)
+    .collection(dbCollection)
+    .findOne(query);
+  if (!reserve) {
+    return '';
+  }
+  return reserve.url;
+};

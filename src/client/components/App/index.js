@@ -60,7 +60,7 @@ const App = () => {
         />
       )}
       {currentTab === constants.TABS.COURSE_RESERVES && (
-        <CourseReserves url="" />
+        <CourseReserves context={platformContext} />
       )}
       {currentTab === constants.TABS.ADMIN_PANEL && <AdminPanel />}
     </div>
