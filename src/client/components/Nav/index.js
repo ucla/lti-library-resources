@@ -20,6 +20,11 @@ const Nav = ({
     });
   };
 
+  // On page load, registers a view for research guide
+  window.onload = function() {
+    addAnalytics('research');
+  };
+
   return (
     <AppNav
       screenReaderLabel="App navigation"
@@ -52,7 +57,7 @@ const Nav = ({
           rel="noopener roreferrer"
           onClick={() => {
             setCurrentTab(constants.TABS.COURSE_RESERVES);
-            addAnalytics('lib_tour');
+            addAnalytics('libTour');
           }}
         />
       )}
@@ -64,7 +69,7 @@ const Nav = ({
         rel="noopener roreferrer"
         onClick={() => {
           setCurrentTab(constants.TABS.COURSE_RESERVES);
-          addAnalytics('research_tuts');
+          addAnalytics('researchTuts');
         }}
       />
       {isUserAdmin(idToken) && (

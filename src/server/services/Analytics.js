@@ -8,6 +8,17 @@ const client = require('../models/db');
 let analytics = {};
 
 /**
+ * Get percentage from data
+ *
+ * @param {object} clicks Array of clicks
+ * @param {number} members Total members
+ * @returns {string}   Percentage who clicked
+ */
+function percentOf(clicks, members) {
+  return `${((clicks.length * 100) / members).toPrecision(3)}%`;
+}
+
+/**
  * Returns Library analytics for a given class.
  *
  * @returns {object}   Analytics
@@ -17,30 +28,37 @@ async function getAnalytics() {
   const dbAnalytics = client.db(dbName);
   const cursor = await dbAnalytics.collection('analytics').find();
   const result = await cursor.toArray();
-
+  result.forEach(function(x) {
+    delete x._id;
+  });
   result.map(x => {
-    x.reserve_clicks =
-      x.reserve_clicks === undefined ? 0 : x.reserve_clicks.length;
-    x.research_clicks =
-      x.research_clicks === undefined ? 0 : x.research_clicks.length;
-    x.lib_tour_clicks =
-      x.lib_tour_clicks === undefined ? 0 : x.lib_tour_clicks.length;
-    x.research_tuts_clicks =
-      x.research_tuts_clicks === undefined ? 0 : x.research_tuts_clicks.length;
+    x.reserveClicks =
+      x.reserveClicks === undefined
+        ? '0%'
+        : percentOf(x.reserveClicks, x.numMembers);
+    x.researchClicks =
+      x.researchClicks === undefined
+        ? '0%'
+        : percentOf(x.researchClicks, x.numMembers);
+    x.libTourClicks =
+      x.libTourClicks === undefined
+        ? '0%'
+        : percentOf(x.libTourClicks, x.numMembers);
+    x.researchTutsClicks =
+      x.researchTutsClicks === undefined
+        ? '0%'
+        : percentOf(x.researchTutsClicks, x.numMembers);
 
-    x.total_reserve_clicks =
-      x.total_reserve_clicks === undefined ? 0 : x.total_reserve_clicks;
-    x.total_research_clicks =
-      x.total_research_clicks === undefined ? 0 : x.total_research_clicks;
-    x.total_lib_tour_clicks =
-      x.total_lib_tour_clicks === undefined ? 0 : x.total_lib_tour_clicks;
-    x.total_research_tuts_clicks =
-      x.total_research_tuts_clicks === undefined
-        ? 0
-        : x.total_research_tuts_clicks;
+    x.reserveClicksTotal =
+      x.reserveClicksTotal === undefined ? 0 : x.reserveClicksTotal;
+    x.researchClicksTotal =
+      x.researchClicksTotal === undefined ? 0 : x.researchClicksTotal;
+    x.libTourClicksTotal =
+      x.libTourClicksTotal === undefined ? 0 : x.libTourClicksTotal;
+    x.researchTutsClicksTotal =
+      x.researchTutsClicksTotal === undefined ? 0 : x.researchTutsClicksTotal;
     return result;
   });
-
   return result;
 }
 
@@ -56,14 +74,14 @@ async function getAnalytics() {
 async function addAnalytics(type, contextId, student, shortname) {
   await client.connect(mongourl);
   const dbAnalytics = client.db(dbName);
-  const typeField = `${type}_clicks`;
-  const totalTypeField = `total_${type}_clicks`;
+  const typeField = `${type}Clicks`;
+  const typeFieldTotal = `${type}ClicksTotal`;
   const updateStatus = await dbAnalytics.collection('analytics').updateOne(
     { contextId },
     {
       $addToSet: { [typeField]: student },
       $set: { lastUpdated: Date.now(), shortname },
-      $inc: { [totalTypeField]: 1 },
+      $inc: { [typeFieldTotal]: 1 },
     },
     { upsert: true }
   );
