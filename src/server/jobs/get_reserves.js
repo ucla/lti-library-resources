@@ -62,6 +62,9 @@ const term = args[0];
         const { courseName } = courses[j];
         const { courseNumber } = courses[j];
         const { url } = courses[j];
+
+        const crosslists = await registrar.getCrosslists(term, srs);
+
         logger.info({ message: 'Processing', srs, term });
         srsArray.push(srs);
         const shortname = await registrar.getShortname(term, srs);
@@ -78,6 +81,7 @@ const term = args[0];
               lastUpdated: Date.now(),
               deptCode: deptCodes[i],
               deptName: deptNames[i],
+              crosslists,
             },
             { upsert: true }
           );
@@ -94,6 +98,7 @@ const term = args[0];
             lastUpdated: Date.now(),
             deptCode: deptCodes[i],
             deptName: deptNames[i],
+            crosslists,
           });
         } else {
           logger.error({ message: 'Registrar returned null', srs, term });

@@ -18,3 +18,20 @@ module.exports.getReservesByTerm = async (dbCollection, academicTerm) => {
     .toArray();
   return recordsForTerm;
 };
+
+module.exports.getCrosslistsByShortname = async (dbCollection, shortname) => {
+  client.connect(mongourl);
+
+  const course = await client
+    .db(dbName)
+    .collection(dbCollection)
+    .findOne({ shortname });
+  if (!course) {
+    return [];
+  }
+  const result = [];
+  course.crosslists.forEach(crosslist => {
+    result.push(crosslist.shortname);
+  });
+  return result;
+};
