@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { AppNav } from '@instructure/ui-navigation';
@@ -14,16 +14,13 @@ const Nav = ({
   isUserTeacher,
   idToken,
 }) => {
-  const addAnalytics = type => {
+  const addAnalytics = (type = 'research') => {
     ltikPromise.then(ltik => {
       axios.get(`/api/addanalytics/${type}?ltik=${ltik}`).then(res => {});
     });
   };
 
-  // On page load, registers a view for research guide
-  window.onload = function() {
-    addAnalytics('research');
-  };
+  useEffect(addAnalytics, []);
 
   return (
     <AppNav
