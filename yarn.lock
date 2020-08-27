@@ -1286,22 +1286,7 @@
     classnames "^2"
     prop-types "^15"
 
-"@instructure/ui-i18n@^7.1.2":
-  version "7.1.2"
-  resolved "https://registry.yarnpkg.com/@instructure/ui-i18n/-/ui-i18n-7.1.2.tgz#c8594cde82c29e97d41a8cb0ccda2d680c242c72"
-  integrity sha512-sxTXfWYX+Ljx+qo6VAB8pTeydsKaw3UL5eu54UoSu7JGV01WPUpVV7rMdEAxGB4rUqOpvt+3xKMsHrEwVwnXFw==
-  dependencies:
-    "@babel/runtime" "^7.9.2"
-    "@instructure/ui-decorator" "^7.1.2"
-    "@instructure/ui-dom-utils" "^7.1.2"
-    "@instructure/ui-prop-types" "^7.1.2"
-    "@instructure/ui-react-utils" "^7.1.2"
-    "@instructure/ui-utils" "^7.1.2"
-    decimal.js "^10"
-    moment-timezone "^0.5"
-    prop-types "^15"
-
-"@instructure/ui-i18n@^7.1.3":
+"@instructure/ui-i18n@^7.1.2", "@instructure/ui-i18n@^7.1.3":
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/@instructure/ui-i18n/-/ui-i18n-7.1.3.tgz#ff26d6dc796f3e7f4bce7ebfa7fc422773603484"
   integrity sha512-t8ILmWzntYnimSHbKsxYx5M5FyjL8Si4bwJL2nkG95BMJWgBwb+TujehEy8y1PAfiCGxp06rI0AfgyE/FnL/5w==
@@ -1542,15 +1527,7 @@
     classnames "^2"
     prop-types "^15"
 
-"@instructure/ui-prop-types@^7.1.2":
-  version "7.1.2"
-  resolved "https://registry.yarnpkg.com/@instructure/ui-prop-types/-/ui-prop-types-7.1.2.tgz#999614ca06df626c5ab3585b476b894358012e93"
-  integrity sha512-k2d9zOI6aGzbYSsJnI/aB4VRkK1CM7k38OxYVkOjjHj960buL+TkZRqhHQsE3bf4VruhKfqOlatrHkZ6MTN9IQ==
-  dependencies:
-    "@babel/runtime" "^7.9.2"
-    prop-types ">= 15.7.0"
-
-"@instructure/ui-prop-types@^7.1.3":
+"@instructure/ui-prop-types@^7.1.2", "@instructure/ui-prop-types@^7.1.3":
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/@instructure/ui-prop-types/-/ui-prop-types-7.1.3.tgz#0db28e17fefafa5c3b353fc3591cb6f53c96475e"
   integrity sha512-JEE3cTJd4Uv6r1fj1WbSHTG2Fd/jfuu7VRqETqgb+NZfdZUDXhD1/r/rsuy+Km+qqNT4FXUQh31zDbcjkqOvzQ==
