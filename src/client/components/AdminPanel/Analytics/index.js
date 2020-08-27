@@ -17,7 +17,7 @@ const Analytics = () => {
 
   const getExcelFile = () => {
     ltikPromise.then(ltik => {
-      window.open(`http://localhost:3000/api/analyticsfile?ltik=${ltik}`);
+      window.open(`/api/analyticsfile?ltik=${ltik}`);
     });
   };
 
