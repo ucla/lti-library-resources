@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Iframe from 'react-iframe';
 import PropTypes from 'prop-types';
-
 import { Alert } from '@instructure/ui-alerts';
 import { Button } from '@instructure/ui-buttons';
-import { ltikPromise } from '../../services/ltik';
+import axiosRetry from 'axios-retry';
+import { getLtik } from '../../services/ltik';
 
-const CourseReserves = ({ context }) => {
+axiosRetry(axios);
+
+const CourseReserves = ({ context, setError }) => {
   const [url, setUrl] = useState('');
 
   const getUrl = () => {
@@ -15,17 +17,23 @@ const CourseReserves = ({ context }) => {
       return;
     }
 
-    ltikPromise.then(ltik => {
-      axios
-        .get(`/api/getreserveurl?ltik=${ltik}`, {
-          params: {
-            shortname: context.context.label,
-          },
-        })
-        .then(res => {
-          setUrl(res.data.reserve);
+    const ltik = getLtik();
+    axios
+      .get(`/api/getreserveurl?ltik=${ltik}`, {
+        params: {
+          shortname: context.context.label,
+        },
+      })
+      .then(res => {
+        setUrl(res.data.reserve);
+        setError(null);
+      })
+      .catch(err => {
+        setError({
+          err,
+          msg: 'Something went wrong when retrieving course reserve...',
         });
-    });
+      });
   };
 
   useEffect(getUrl, []);
@@ -67,6 +75,7 @@ const CourseReserves = ({ context }) => {
 
 CourseReserves.propTypes = {
   context: PropTypes.object.isRequired,
+  setError: PropTypes.func,
 };
 
 export default CourseReserves;

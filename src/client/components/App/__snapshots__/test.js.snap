@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App component matches its original snapshot 1`] = `
+<div>
+  <Nav
+    currentTab={0}
+    idToken={Object {}}
+    isCluster={false}
+    isUserAdmin={[Function]}
+    isUserTeacher={[Function]}
+    setCurrentTab={[Function]}
+    setError={[Function]}
+  />
+  <ResearchGuide
+    idToken={Object {}}
+    isUserAdmin={[Function]}
+    isUserTeacher={[Function]}
+    platformContext={
+      Object {
+        "context": Object {
+          "label": "",
+        },
+        "resource": Object {},
+      }
+    }
+    setError={[Function]}
+  />
+</div>
+`;

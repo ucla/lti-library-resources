@@ -3,14 +3,18 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Alert } from '@instructure/ui-alerts';
 import { Tabs } from '@instructure/ui-tabs';
-import { ltikPromise } from '../../services/ltik';
+import axiosRetry from 'axios-retry';
+import { getLtik } from '../../services/ltik';
 import ResearchGuideTab from '../ResearchGuideTab';
+
+axiosRetry(axios);
 
 const ResearchGuide = ({
   platformContext: { context, resource },
   isUserAdmin,
   isUserTeacher,
   idToken,
+  setError,
 }) => {
   const { label: contextLabel } = context;
   const [launchUrl, setLaunchUrl] = useState('');
@@ -23,36 +27,42 @@ const ResearchGuide = ({
       return;
     }
 
-    ltikPromise.then(ltik => {
-      axios
-        .get(`/api/ltilaunch?ltik=${ltik}`, {
-          params: {
-            contextId: context.id,
-            resourceId: resource.id,
-            shortname: launchLabel,
-          },
-        })
-        .then(res => {
-          setLaunchUrl(res.data.launch);
-          // Construct a form with hidden inputs, targeting the iframe
-          const form = document.createElement('form');
-          form.target = 'lti-iframe';
-          form.action = res.data.launch;
-          form.method = 'POST';
+    const ltik = getLtik();
+    axios
+      .get(`/api/ltilaunch?ltik=${ltik}`, {
+        params: {
+          contextId: context.id,
+          resourceId: resource.id,
+          shortname: launchLabel,
+        },
+      })
+      .then(res => {
+        setLaunchUrl(res.data.launch);
+        // Construct a form with hidden inputs, targeting the iframe
+        const form = document.createElement('form');
+        form.target = 'lti-iframe';
+        form.action = res.data.launch;
+        form.method = 'POST';
 
-          // Repeat for each parameter
-          Object.keys(res.data.params).forEach(param => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = param;
-            input.value = res.data.params[param];
-            form.appendChild(input);
-          });
-
-          document.body.appendChild(form);
-          form.submit();
+        // Repeat for each parameter
+        Object.keys(res.data.params).forEach(param => {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = param;
+          input.value = res.data.params[param];
+          form.appendChild(input);
         });
-    });
+
+        document.body.appendChild(form);
+        form.submit();
+        setError(null);
+      })
+      .catch(err => {
+        setError({
+          err,
+          msg: 'Something went wrong when retrieving LTI Launch...',
+        });
+      });
   };
 
   const getCrosslists = () => {
@@ -60,17 +70,23 @@ const ResearchGuide = ({
       return;
     }
 
-    ltikPromise.then(ltik => {
-      axios
-        .get(`/api/crosslists?ltik=${ltik}`, {
-          params: {
-            shortname: contextLabel,
-          },
-        })
-        .then(res => {
-          setCrosslists(res.data.crosslists);
+    const ltik = getLtik();
+    axios
+      .get(`/api/crosslists?ltik=${ltik}`, {
+        params: {
+          shortname: contextLabel,
+        },
+      })
+      .then(res => {
+        setCrosslists(res.data.crosslists);
+        setError(null);
+      })
+      .catch(err => {
+        setError({
+          err,
+          msg: 'Something went wrong when retrieving crosslisted courses...',
         });
-    });
+      });
   };
 
   useEffect(ltiLaunch, [launchLabel]);
@@ -145,6 +161,7 @@ ResearchGuide.propTypes = {
   isUserAdmin: PropTypes.func.isRequired,
   isUserTeacher: PropTypes.func.isRequired,
   idToken: PropTypes.object.isRequired,
+  setError: PropTypes.func,
 };
 
 export default ResearchGuide;

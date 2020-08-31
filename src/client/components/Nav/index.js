@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { AppNav } from '@instructure/ui-navigation';
-
-import { ltikPromise } from '../../services/ltik';
+import axiosRetry from 'axios-retry';
+import { getLtik } from '../../services/ltik';
 import * as constants from '../../constants';
+
+axiosRetry(axios);
 
 const Nav = ({
   isCluster,
@@ -13,11 +15,21 @@ const Nav = ({
   isUserAdmin,
   isUserTeacher,
   idToken,
+  setError,
 }) => {
-  const addAnalytics = (type = 'research') => {
-    ltikPromise.then(ltik => {
-      axios.get(`/api/addanalytics/${type}?ltik=${ltik}`).then(res => {});
-    });
+  const addAnalytics = type => {
+    const ltik = getLtik();
+    axios
+      .get(`/api/addanalytics/${type}?ltik=${ltik}`)
+      .then(res => {
+        setError(null);
+      })
+      .catch(err => {
+        setError({
+          err,
+          msg: 'Something went wrong when recording analytics...',
+        });
+      });
   };
 
   useEffect(addAnalytics, []);
@@ -87,6 +99,7 @@ Nav.propTypes = {
   isUserAdmin: PropTypes.func.isRequired,
   isUserTeacher: PropTypes.func.isRequired,
   idToken: PropTypes.object.isRequired,
+  setError: PropTypes.func,
 };
 
 export default Nav;

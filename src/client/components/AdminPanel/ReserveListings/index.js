@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import { Link } from '@instructure/ui-link';
 import { SimpleSelect } from '@instructure/ui-simple-select';
 import { Spinner } from '@instructure/ui-spinner';
 import { Table } from '@instructure/ui-table';
 import { Text } from '@instructure/ui-text';
 import { TruncateText } from '@instructure/ui-truncate-text';
-import { ltikPromise } from '../../../services/ltik';
+import axiosRetry from 'axios-retry';
+import { getLtik } from '../../../services/ltik';
 
-const ReserveListings = () => {
+axiosRetry(axios);
+
+const ReserveListings = ({ setError }) => {
   const [entries, setEntries] = useState([]);
   const [selectedEntries, setSelectedEntries] = useState([]);
   const [terms, setTerms] = useState([]);
@@ -16,14 +20,22 @@ const ReserveListings = () => {
   const [loading, setLoading] = useState(true);
 
   const getReserves = () => {
-    ltikPromise.then(ltik => {
-      axios.get(`/api/getreserves?ltik=${ltik}`).then(res => {
+    const ltik = getLtik();
+    axios
+      .get(`/api/getreserves?ltik=${ltik}`)
+      .then(res => {
         setEntries([...entries, ...res.data.reserves]);
         setSelectedEntries([...entries, ...res.data.reserves]);
         setTerms(res.data.terms);
         setLoading(false);
+        setError(null);
+      })
+      .catch(err => {
+        setError({
+          err,
+          msg: 'Something went wrong when retrieving course reserves...',
+        });
       });
-    });
   };
 
   useEffect(getReserves, []);
@@ -117,6 +129,10 @@ const ReserveListings = () => {
       )}
     </div>
   );
+};
+
+ReserveListings.propTypes = {
+  setError: PropTypes.func,
 };
 
 export default ReserveListings;
