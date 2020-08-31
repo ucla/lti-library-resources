@@ -41,7 +41,6 @@ const term = args[0];
     const response = await axios(
       `https://webservices.library.ucla.edu/reserves/departments/during/${term}`
     );
-    // Console.log(response.data);
     const { department: depts } = response.data;
 
     const deptIDs = depts.map(dept => dept.departmentID);

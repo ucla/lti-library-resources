@@ -68,7 +68,7 @@ router.get('/ltilaunch', (req, res) => {
   }
 });
 
-// Course reserves route
+// Course reserve listings route
 router.get('/getreserves', (req, res) => {
   try {
     if (!CheckRoleServices.isAdmin(res.locals.token.roles)) {
@@ -80,6 +80,18 @@ router.get('/getreserves', (req, res) => {
         terms.add(reserves[i].term);
       }
       res.send({ terms: Array.from(terms), reserves });
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send(err);
+  }
+});
+
+// Get course reserve URL route
+router.get('/getreserveurl', (req, res) => {
+  try {
+    LibraryServices.getReserveUrl(req.query.shortname).then(reserve => {
+      res.send({ reserve });
     });
   } catch (err) {
     console.log(err);

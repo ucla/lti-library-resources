@@ -1,24 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import axios from 'axios';
 import Iframe from 'react-iframe';
+import PropTypes from 'prop-types';
 
 import { Alert } from '@instructure/ui-alerts';
 import { Button } from '@instructure/ui-buttons';
+import { ltikPromise } from '../../services/ltik';
 
-const CourseReserves = ({ url }) => {
-  const [urlExists, setUrlExists] = useState(true);
+const CourseReserves = ({ context }) => {
+  const [url, setUrl] = useState('');
 
-  const validateUrl = () => {
-    if (!url || url === '') {
-      setUrlExists(false);
+  const getUrl = () => {
+    if (typeof context.context === 'undefined') {
+      return;
     }
+
+    ltikPromise.then(ltik => {
+      axios
+        .get(`/api/getreserveurl?ltik=${ltik}`, {
+          params: {
+            shortname: context.context.label,
+          },
+        })
+        .then(res => {
+          setUrl(res.data.reserve);
+        });
+    });
   };
 
-  useEffect(validateUrl, []);
+  useEffect(getUrl, []);
 
   return (
     <div>
-      {urlExists ? (
+      {url ? (
         <Iframe url={url} />
       ) : (
         <div>
@@ -52,7 +66,7 @@ const CourseReserves = ({ url }) => {
 };
 
 CourseReserves.propTypes = {
-  url: PropTypes.string,
+  context: PropTypes.object.isRequired,
 };
 
 export default CourseReserves;
