@@ -1040,21 +1040,21 @@
     prop-types "^15"
 
 "@instructure/ui-alerts@^7.1.2":
-  version "7.1.2"
-  resolved "https://registry.yarnpkg.com/@instructure/ui-alerts/-/ui-alerts-7.1.2.tgz#32aef29066dbdff58d2417932e006ce82e894bcb"
-  integrity sha512-JvVYM9BCtWYF6Fe4KiqbMowXq5smMqiaOH/WpahzKeSccDWueTusrgmVZxy4gFdBs6W7KJKuEKm9A88SbIyoRA==
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/@instructure/ui-alerts/-/ui-alerts-7.1.3.tgz#b64207895d663dd37e97bb3ee7b0de8a359b557d"
+  integrity sha512-JWpkW41oIAN/5Cr7J8ieBEwkTbld/VDalyWD6TgupG7cgYm7eQ0avW4H2bTNYB+XZPKPdlXz1Nr51K/hEyh0hQ==
   dependencies:
     "@babel/runtime" "^7.9.2"
-    "@instructure/console" "^7.1.2"
-    "@instructure/ui-a11y-content" "^7.1.2"
-    "@instructure/ui-buttons" "^7.1.2"
-    "@instructure/ui-icons" "^7.1.2"
-    "@instructure/ui-motion" "^7.1.2"
-    "@instructure/ui-react-utils" "^7.1.2"
-    "@instructure/ui-themeable" "^7.1.2"
-    "@instructure/ui-utils" "^7.1.2"
-    "@instructure/ui-view" "^7.1.2"
-    "@instructure/uid" "^7.1.2"
+    "@instructure/console" "^7.1.3"
+    "@instructure/ui-a11y-content" "^7.1.3"
+    "@instructure/ui-buttons" "^7.1.3"
+    "@instructure/ui-icons" "^7.1.3"
+    "@instructure/ui-motion" "^7.1.3"
+    "@instructure/ui-react-utils" "^7.1.3"
+    "@instructure/ui-themeable" "^7.1.3"
+    "@instructure/ui-utils" "^7.1.3"
+    "@instructure/ui-view" "^7.1.3"
+    "@instructure/uid" "^7.1.3"
     classnames "^2"
     keycode "^2"
     prop-types "^15"
@@ -1090,7 +1090,7 @@
     classnames "^2"
     prop-types "^15"
 
-"@instructure/ui-buttons@^7.1.2", "@instructure/ui-buttons@^7.1.3":
+"@instructure/ui-buttons@^7.1.3":
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/@instructure/ui-buttons/-/ui-buttons-7.1.3.tgz#14ae0b813001bc2db4b66125b6c9aa5403bb8fd9"
   integrity sha512-uiPQZgYUC7JcT9x4JhDKCZ6yd6sbrk/qm/xMG0I03Su6S0xXI052F83R1Kb7inAFY4n2YZ01LvA0IJB35Z4qVA==
