@@ -984,13 +984,13 @@
   integrity sha512-Ja/Vfqe3HpuzRsG1oBtWTHk2PGZ7GR+2Vz5iYGelAw8dx32K0y7PjVuxK6z1nMpZOqAFsRUPCkK1YjJ56qJlgw==
 
 "@instructure/canvas-theme@^7.1.1":
-  version "7.1.2"
-  resolved "https://registry.yarnpkg.com/@instructure/canvas-theme/-/canvas-theme-7.1.2.tgz#f702d421a7e78644e92962b4d3fda39f24a94587"
-  integrity sha512-SpMUV14k7KKWFNLeuECgmxpyLbbtnxJt6/iyCkD/1Y94X4ciDDyOhfQXQifSewbDTMpAjeAD62YERamOrRalrg==
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/@instructure/canvas-theme/-/canvas-theme-7.1.3.tgz#ffa69ce82b23a9c6d4c4a3c1af8bb2c74972fb37"
+  integrity sha512-J2Oydvn9Xv6fOnsWCI21va3d1qimuHPK8HMF4hMeVJoiTDe3ELU9vW67ByR8VUJxl8i931gX1LdM3YAxNUDJrg==
   dependencies:
     "@babel/runtime" "^7.9.2"
-    "@instructure/ui-theme-tokens" "^7.1.2"
-    "@instructure/ui-themeable" "^7.1.2"
+    "@instructure/ui-theme-tokens" "^7.1.3"
+    "@instructure/ui-themeable" "^7.1.3"
 
 "@instructure/console@^7.1.2", "@instructure/console@^7.1.3":
   version "7.1.3"
@@ -1097,31 +1097,7 @@
     classnames "^2"
     prop-types "^15"
 
-"@instructure/ui-buttons@^7.1.2":
-  version "7.1.3"
-  resolved "https://registry.yarnpkg.com/@instructure/ui-buttons/-/ui-buttons-7.1.3.tgz#14ae0b813001bc2db4b66125b6c9aa5403bb8fd9"
-  integrity sha512-uiPQZgYUC7JcT9x4JhDKCZ6yd6sbrk/qm/xMG0I03Su6S0xXI052F83R1Kb7inAFY4n2YZ01LvA0IJB35Z4qVA==
-  dependencies:
-    "@babel/runtime" "^7.9.2"
-    "@instructure/console" "^7.1.3"
-    "@instructure/ui-a11y-content" "^7.1.3"
-    "@instructure/ui-a11y-utils" "^7.1.3"
-    "@instructure/ui-color-utils" "^7.1.3"
-    "@instructure/ui-dom-utils" "^7.1.3"
-    "@instructure/ui-flex" "^7.1.3"
-    "@instructure/ui-icons" "^7.1.3"
-    "@instructure/ui-position" "^7.1.3"
-    "@instructure/ui-react-utils" "^7.1.3"
-    "@instructure/ui-testable" "^7.1.3"
-    "@instructure/ui-themeable" "^7.1.3"
-    "@instructure/ui-tooltip" "^7.1.3"
-    "@instructure/ui-utils" "^7.1.3"
-    "@instructure/ui-view" "^7.1.3"
-    classnames "^2"
-    keycode "^2"
-    prop-types "^15"
-
-"@instructure/ui-buttons@^7.1.3":
+"@instructure/ui-buttons@^7.1.2", "@instructure/ui-buttons@^7.1.3":
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/@instructure/ui-buttons/-/ui-buttons-7.1.3.tgz#14ae0b813001bc2db4b66125b6c9aa5403bb8fd9"
   integrity sha512-uiPQZgYUC7JcT9x4JhDKCZ6yd6sbrk/qm/xMG0I03Su6S0xXI052F83R1Kb7inAFY4n2YZ01LvA0IJB35Z4qVA==
@@ -1230,7 +1206,7 @@
     classnames "^2"
     prop-types "^15"
 
-"@instructure/ui-form-field@^7.1.2", "@instructure/ui-form-field@^7.1.3":
+"@instructure/ui-form-field@^7.1.3":
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/@instructure/ui-form-field/-/ui-form-field-7.1.3.tgz#8027f33b1652c2308d2e918490ba22a0aec74743"
   integrity sha512-aXfHDje8vNCcJBrvKjLiAse8Sj+9OqQVGD7c6iwmqOCS4mZjcKvA+b3VWna1Xg7QWyzMuM0wnoNz0iEKtgtdFg==
@@ -1718,13 +1694,13 @@
     classnames "^2"
     prop-types "^15"
 
-"@instructure/ui-theme-tokens@^7.1.2":
-  version "7.1.2"
-  resolved "https://registry.yarnpkg.com/@instructure/ui-theme-tokens/-/ui-theme-tokens-7.1.2.tgz#3715b692911beb4cd08a533c677c2e2a5f87e562"
-  integrity sha512-OahMsA6Z7NH8vBPafBfmz74rsUGiz1XXyvIe3NIFELnyRbT9UNeDINmvJkot8mCqXDcNrO4P4VwNY40Q1fWFiw==
+"@instructure/ui-theme-tokens@^7.1.3":
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/@instructure/ui-theme-tokens/-/ui-theme-tokens-7.1.3.tgz#75837de8dea7aaafba06b90f5fee3f9eac5dd158"
+  integrity sha512-C4p/7XcJjn1RUqDQqOmySInGne6rk4b4BIwtJx6Kc/f6cgLKwHW8gNGYFDGM5afOMhsOOA1KzoiyaGbp0VRw+w==
   dependencies:
     "@babel/runtime" "^7.9.2"
-    "@instructure/ui-themeable" "^7.1.2"
+    "@instructure/ui-themeable" "^7.1.3"
 
 "@instructure/ui-themeable@^7.1.2", "@instructure/ui-themeable@^7.1.3":
   version "7.1.3"
@@ -1743,21 +1719,6 @@
     prop-types "^15"
 
 "@instructure/ui-tooltip@^7.1.2", "@instructure/ui-tooltip@^7.1.3":
-  version "7.1.3"
-  resolved "https://registry.yarnpkg.com/@instructure/ui-tooltip/-/ui-tooltip-7.1.3.tgz#309889db9b1fc60becb87463b8c98b76c7e38b09"
-  integrity sha512-we0iCUilVU85lNndD7iLJVhGvKFJD015s7mYWaHUktVbLVhLEHbK27VPun0CpUr/JxFkbRXRHIUwgzjAKfWElQ==
-  dependencies:
-    "@babel/runtime" "^7.9.2"
-    "@instructure/ui-popover" "^7.1.3"
-    "@instructure/ui-position" "^7.1.3"
-    "@instructure/ui-prop-types" "^7.1.3"
-    "@instructure/ui-react-utils" "^7.1.3"
-    "@instructure/ui-testable" "^7.1.3"
-    "@instructure/ui-themeable" "^7.1.3"
-    "@instructure/uid" "^7.1.3"
-    prop-types "^15"
-
-"@instructure/ui-tooltip@^7.1.3":
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/@instructure/ui-tooltip/-/ui-tooltip-7.1.3.tgz#309889db9b1fc60becb87463b8c98b76c7e38b09"
   integrity sha512-we0iCUilVU85lNndD7iLJVhGvKFJD015s7mYWaHUktVbLVhLEHbK27VPun0CpUr/JxFkbRXRHIUwgzjAKfWElQ==
