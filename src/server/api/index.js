@@ -2,6 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const oauth = require('oauth-sign');
 const btoa = require('btoa');
+const json2xls = require('json2xls');
+const fs = require('fs');
+const tmp = require('tmp');
 
 const CheckRoleServices = require('../services/CheckRole');
 const LibraryServices = require('../services/LibraryServices');
@@ -68,7 +71,7 @@ router.get('/ltilaunch', (req, res) => {
   }
 });
 
-// Course reserves route
+// Course reserve listings route
 router.get('/getreserves', (req, res) => {
   try {
     if (!CheckRoleServices.isAdmin(res.locals.token.roles)) {
@@ -80,6 +83,18 @@ router.get('/getreserves', (req, res) => {
         terms.add(reserves[i].term);
       }
       res.send({ terms: Array.from(terms), reserves });
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send(err);
+  }
+});
+
+// Get course reserve URL route
+router.get('/getreserveurl', (req, res) => {
+  try {
+    LibraryServices.getReserveUrl(req.query.shortname).then(reserve => {
+      res.send({ reserve });
     });
   } catch (err) {
     console.log(err);
@@ -130,6 +145,22 @@ router.get('/addanalytics/:type', (req, res) => {
   } catch (err) {
     console.log(err);
     return res.status(400).send(err);
+  }
+});
+
+router.get('/analyticsfile', (req, res) => {
+  try {
+    if (!CheckRoleServices.isAdmin(res.locals.token.roles)) {
+      return res.status(403).send(new Error('Unauthorized role'));
+    }
+    Analytics.getAnalytics().then(result => {
+      const excel = json2xls(result);
+      const tmpobj = tmp.fileSync();
+      fs.writeFileSync(tmpobj.name, excel, 'binary');
+      res.download(tmpobj.name, 'analytics.xlsx');
+    });
+  } catch (err) {
+    console.log(err);
   }
 });
 
