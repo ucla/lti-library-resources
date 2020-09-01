@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { AppNav } from '@instructure/ui-navigation';
@@ -14,11 +14,13 @@ const Nav = ({
   isUserTeacher,
   idToken,
 }) => {
-  const addAnalytics = type => {
+  const addAnalytics = (type = 'research') => {
     ltikPromise.then(ltik => {
       axios.get(`/api/addanalytics/${type}?ltik=${ltik}`).then(res => {});
     });
   };
+
+  useEffect(addAnalytics, []);
 
   return (
     <AppNav
@@ -52,7 +54,7 @@ const Nav = ({
           rel="noopener roreferrer"
           onClick={() => {
             setCurrentTab(constants.TABS.COURSE_RESERVES);
-            addAnalytics('lib_tour');
+            addAnalytics('libTour');
           }}
         />
       )}
@@ -64,7 +66,7 @@ const Nav = ({
         rel="noopener roreferrer"
         onClick={() => {
           setCurrentTab(constants.TABS.COURSE_RESERVES);
-          addAnalytics('research_tuts');
+          addAnalytics('researchTuts');
         }}
       />
       {isUserAdmin(idToken) && (

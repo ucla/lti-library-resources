@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from '@instructure/ui-table';
 import axios from 'axios';
+import { Button } from '@instructure/ui-buttons';
 import { ltikPromise } from '../../../services/ltik';
-import PercentageCell from './PercentageCell';
 
 const Analytics = () => {
   const [analytics, setAnalytics] = useState([]);
@@ -15,6 +15,12 @@ const Analytics = () => {
     });
   };
 
+  const getExcelFile = () => {
+    ltikPromise.then(ltik => {
+      window.open(`/api/analyticsfile?ltik=${ltik}`);
+    });
+  };
+
   useEffect(getAnalytics, []);
 
   const analyticsBody = analytics
@@ -23,31 +29,14 @@ const Analytics = () => {
           <Table.RowHeader>{stat.contextId}</Table.RowHeader>
           <Table.Cell>{stat.shortname}</Table.Cell>
           <Table.Cell>{stat.numMembers}</Table.Cell>
-          <Table.Cell>{stat.total_research_clicks}</Table.Cell>
-          <Table.Cell>
-            <PercentageCell
-              num={stat.total_research_clicks}
-              total={stat.numMembers}
-            />
-          </Table.Cell>
-          <Table.Cell>{stat.total_reserve_clicks}</Table.Cell>
-          <Table.Cell>
-            <PercentageCell num={stat.reserve_clicks} total={stat.numMembers} />
-          </Table.Cell>
-          <Table.Cell>{stat.total_lib_tour_clicks}</Table.Cell>
-          <Table.Cell>
-            <PercentageCell
-              num={stat.lib_tour_clicks}
-              total={stat.numMembers}
-            />
-          </Table.Cell>
-          <Table.Cell>{stat.total_research_tuts_clicks}</Table.Cell>
-          <Table.Cell>
-            <PercentageCell
-              num={stat.research_tuts_clicks}
-              total={stat.numMembers}
-            />
-          </Table.Cell>
+          <Table.Cell>{stat.researchClicksTotal}</Table.Cell>
+          <Table.Cell>{stat.researchClicks}</Table.Cell>
+          <Table.Cell>{stat.reserveClicksTotal}</Table.Cell>
+          <Table.Cell>{stat.reserveClicks}</Table.Cell>
+          <Table.Cell>{stat.libTourClicksTotal}</Table.Cell>
+          <Table.Cell>{stat.libTourClicks}</Table.Cell>
+          <Table.Cell>{stat.researchTutsClicksTotal}</Table.Cell>
+          <Table.Cell>{stat.researchTutsClicks}</Table.Cell>
         </Table.Row>
       ))
     : '';
@@ -77,6 +66,14 @@ const Analytics = () => {
         </Table.Head>
         <Table.Body>{analyticsBody}</Table.Body>
       </Table>
+      <Button
+        color="primary"
+        onClick={() => {
+          getExcelFile();
+        }}
+      >
+        Download analytics in Excel format
+      </Button>
     </div>
   );
 };
