@@ -16,6 +16,8 @@ jobs:
         with:
           source: '.env.dist'
           target: '.env'
+      - name: MongoDB in GitHub Actions
+        uses: supercharge/mongodb-github-action@1.3.0
       # Run tests and provide coverage diff
       - name: TestCoverage
         id: testCoverage

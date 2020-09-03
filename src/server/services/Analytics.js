@@ -21,12 +21,13 @@ function percentOf(clicks, members) {
 /**
  * Returns Library analytics for a given class.
  *
+ * @param {object} collName For testing
  * @returns {object}   Analytics
  */
-async function getAnalytics() {
+async function getAnalytics(collName = 'analytics') {
   await client.connect(mongourl);
   const dbAnalytics = client.db(dbName);
-  const cursor = await dbAnalytics.collection('analytics').find();
+  const cursor = await dbAnalytics.collection(collName).find();
   const result = await cursor.toArray();
   result.forEach(function(x) {
     delete x._id;
@@ -69,14 +70,21 @@ async function getAnalytics() {
  * @param {string} contextId Context id from LTI context
  * @param {string} student Student ID
  * @param {string} shortname Class shortname
+ * @param {string} collName For testing
  * @returns {object}   Update Status
  */
-async function addAnalytics(type, contextId, student, shortname) {
+async function addAnalytics(
+  type,
+  contextId,
+  student,
+  shortname,
+  collName = 'analytics'
+) {
   await client.connect(mongourl);
   const dbAnalytics = client.db(dbName);
   const typeField = `${type}Clicks`;
   const typeFieldTotal = `${type}ClicksTotal`;
-  const updateStatus = await dbAnalytics.collection('analytics').updateOne(
+  const updateStatus = await dbAnalytics.collection(collName).updateOne(
     { contextId },
     {
       $addToSet: { [typeField]: student },
