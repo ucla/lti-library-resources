@@ -1,6 +1,6 @@
 on:
   pull_request:
-    types: [opened]
+    types: [opened, reopened]
 
 name: Pull Request and Jira issue integration
 
