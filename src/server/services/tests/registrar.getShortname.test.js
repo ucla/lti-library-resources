@@ -45,10 +45,11 @@ it('returns complex shortname', async () => {
   });
 
   const shortname = await registrar.getShortname('20S', '370705200');
-  expect(shortname).toEqual('20S-CSBIO150M-1');
+  expect(shortname).toEqual('20S-CSBIOM150-1');
 });
 
 it('returns summer shortnames', async () => {
+  // Just one summer section.
   registrar.call = jest
     .fn()
     .mockImplementationOnce(() => ({
@@ -75,15 +76,17 @@ it('returns summer shortnames', async () => {
             {
               termsessionGroupCode: 'A',
               termsessionInstructionWeeks: '8',
+              classCollection: [{ classNumber: '001' }],
             },
           ],
         },
       ],
     }));
 
-  let shortname = await registrar.getShortname('201', '187093910');
-  expect(shortname).toEqual('201A-COMSCI31-1');
+  const shortnameA = await registrar.getShortname('201', '187093910');
+  expect(shortnameA).toEqual('201A-COMSCI31-1');
 
+  // Multiple summer sessions.
   registrar.call = jest
     .fn()
     .mockImplementationOnce(() => ({
@@ -93,8 +96,8 @@ it('returns summer shortnames', async () => {
             {
               subjectAreaCode: 'LIFESCI',
               courseCatalogNumber: '0030B',
-              classNumber: '001',
-              classSectionNumber: '001',
+              classNumber: '002',
+              classSectionNumber: '002',
             },
           ],
         },
@@ -105,14 +108,20 @@ it('returns summer shortnames', async () => {
         {
           termSessionGroupCollection: [
             {
+              termsessionGroupCode: 'A',
+              termsessionInstructionWeeks: '8',
+              classCollection: [{ classNumber: '001' }],
+            },
+            {
               termsessionGroupCode: 'C',
               termsessionInstructionWeeks: '6',
+              classCollection: [{ classNumber: '002' }],
             },
           ],
         },
       ],
     }));
 
-  shortname = await registrar.getShortname('201', '252091930');
-  expect(shortname).toEqual('201C-LIFESCI30B-1');
+  const shortnameC = await registrar.getShortname('201', '252091930');
+  expect(shortnameC).toEqual('201C-LIFESCI30B-2');
 });
