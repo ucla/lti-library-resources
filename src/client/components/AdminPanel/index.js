@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Tabs } from '@instructure/ui-tabs';
+import PropTypes from 'prop-types';
 import ReserveListings from './ReserveListings';
 import Analytics from './Analytics';
-
 import * as constants from '../../constants';
 
-const AdminPanel = () => {
+const AdminPanel = ({ setError }) => {
   const [selectedIndex, setSelectedIndex] = useState(
     constants.ADMIN_TABS.COURSE_LISTINGS
   );
@@ -19,16 +19,20 @@ const AdminPanel = () => {
         renderTitle="Course reserve listings"
         isSelected={selectedIndex === constants.ADMIN_TABS.COURSE_LISTINGS}
       >
-        <ReserveListings />
+        <ReserveListings setError={setError} />
       </Tabs.Panel>
       <Tabs.Panel
         renderTitle="Analytics"
         isSelected={selectedIndex === constants.ADMIN_TABS.ANALYTICS}
       >
-        <Analytics />
+        <Analytics setError={setError} />
       </Tabs.Panel>
     </Tabs>
   );
+};
+
+AdminPanel.propTypes = {
+  setError: PropTypes.func,
 };
 
 export default AdminPanel;

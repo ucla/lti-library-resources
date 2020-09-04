@@ -1,24 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { Table } from '@instructure/ui-table';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Button } from '@instructure/ui-buttons';
-import { ltikPromise } from '../../../services/ltik';
+import axiosRetry from 'axios-retry';
+import { Table } from '@instructure/ui-table';
+import { getLtik } from '../../../services/ltik';
 
-const Analytics = () => {
+axiosRetry(axios);
+
+const Analytics = ({ setError }) => {
   const [analytics, setAnalytics] = useState([]);
 
   const getAnalytics = () => {
-    ltikPromise.then(ltik => {
-      axios.get(`/api/getanalytics?ltik=${ltik}`).then(res => {
+    const ltik = getLtik();
+    axios
+      .get(`/api/getanalytics?ltik=${ltik}`)
+      .then(res => {
         setAnalytics(res.data);
+        setError(null);
+      })
+      .catch(err => {
+        setError({
+          err,
+          msg: 'Something went wrong when retrieving course analytics...',
+        });
       });
-    });
   };
 
   const getExcelFile = () => {
-    ltikPromise.then(ltik => {
-      window.open(`/api/analyticsfile?ltik=${ltik}`);
-    });
+    const ltik = getLtik();
+    window.open(`/api/analyticsfile?ltik=${ltik}`);
   };
 
   useEffect(getAnalytics, []);
@@ -76,6 +87,10 @@ const Analytics = () => {
       </Button>
     </div>
   );
+};
+
+Analytics.propTypes = {
+  setError: PropTypes.func,
 };
 
 export default Analytics;
