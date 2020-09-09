@@ -13,7 +13,6 @@ const ResearchGuide = ({
   platformContext: { context, resource },
   isUserAdmin,
   isUserTeacher,
-  idToken,
   setError,
 }) => {
   const { label: contextLabel } = context;
@@ -102,7 +101,7 @@ const ResearchGuide = ({
         <ResearchGuideTab
           isUserAdmin={isUserAdmin}
           isUserTeacher={isUserTeacher}
-          idToken={idToken}
+          platformContext={{ context }}
           launchUrl={launchUrl}
         />
       ) : (
@@ -131,7 +130,7 @@ const ResearchGuide = ({
               <ResearchGuideTab
                 isUserAdmin={isUserAdmin}
                 isUserTeacher={isUserTeacher}
-                idToken={idToken}
+                platformContext={{ context }}
                 launchUrl={launchUrl}
               />
             </Tabs.Panel>
@@ -144,7 +143,7 @@ const ResearchGuide = ({
                 <ResearchGuideTab
                   isUserAdmin={isUserAdmin}
                   isUserTeacher={isUserTeacher}
-                  idToken={idToken}
+                  platformContext={{ context }}
                   launchUrl={launchUrl}
                 />
               </Tabs.Panel>
@@ -160,7 +159,6 @@ ResearchGuide.propTypes = {
   platformContext: PropTypes.object.isRequired,
   isUserAdmin: PropTypes.func.isRequired,
   isUserTeacher: PropTypes.func.isRequired,
-  idToken: PropTypes.object.isRequired,
   setError: PropTypes.func,
 };
 
