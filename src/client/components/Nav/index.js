@@ -14,7 +14,7 @@ const Nav = ({
   currentTab,
   isUserAdmin,
   isUserTeacher,
-  idToken,
+  platformContext,
   setError,
 }) => {
   const addAnalytics = type => {
@@ -47,7 +47,7 @@ const Nav = ({
           addAnalytics('research');
         }}
       />
-      {(isUserAdmin(idToken) || isUserTeacher(idToken)) && (
+      {(isUserAdmin(platformContext) || isUserTeacher(platformContext)) && (
         <AppNav.Item
           isSelected={currentTab === constants.TABS.COURSE_RESERVES}
           renderLabel="Course reserves"
@@ -65,7 +65,6 @@ const Nav = ({
           target="_blank"
           rel="noopener roreferrer"
           onClick={() => {
-            setCurrentTab(constants.TABS.COURSE_RESERVES);
             addAnalytics('libTour');
           }}
         />
@@ -77,11 +76,10 @@ const Nav = ({
         target="_blank"
         rel="noopener roreferrer"
         onClick={() => {
-          setCurrentTab(constants.TABS.COURSE_RESERVES);
           addAnalytics('researchTuts');
         }}
       />
-      {isUserAdmin(idToken) && (
+      {isUserAdmin(platformContext) && (
         <AppNav.Item
           isSelected={currentTab === constants.TABS.ADMIN_PANEL}
           renderLabel="Admin panel"
@@ -98,7 +96,7 @@ Nav.propTypes = {
   currentTab: PropTypes.number.isRequired,
   isUserAdmin: PropTypes.func.isRequired,
   isUserTeacher: PropTypes.func.isRequired,
-  idToken: PropTypes.object.isRequired,
+  platformContext: PropTypes.object.isRequired,
   setError: PropTypes.func,
 };
 

@@ -15,10 +15,16 @@ exports[`Correctly displays button for teacher/admin 1`] = `
     Research guides compile useful databases, digital library collections, and research strategies.
   </Alert>
   <ResearchGuideTab
-    idToken={Object {}}
     isUserAdmin={[Function]}
     isUserTeacher={[Function]}
     launchUrl=""
+    platformContext={
+      Object {
+        "context": Object {
+          "label": "",
+        },
+      }
+    }
   />
 </div>
 `;
@@ -38,10 +44,16 @@ exports[`Correctly hides button for student 1`] = `
     Research guides compile useful databases, digital library collections, and research strategies.
   </Alert>
   <ResearchGuideTab
-    idToken={Object {}}
     isUserAdmin={[Function]}
     isUserTeacher={[Function]}
     launchUrl=""
+    platformContext={
+      Object {
+        "context": Object {
+          "label": "",
+        },
+      }
+    }
   />
 </div>
 `;
