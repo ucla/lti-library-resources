@@ -58,7 +58,6 @@
     "enzyme-to-json": "^3.5.0",
     "eslint-plugin-jsdoc": "^30.3.2",
     "express": "^4.16.3",
-    "json2xls": "^0.1.2",
     "ltijs": "^5.2.1",
     "migrate-mongo": "^8.1.1",
     "mongodb": "^3.6.1",
@@ -67,7 +66,6 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-iframe": "^1.8.0",
-    "tmp": "^0.2.1",
     "winston": "^3.3.3",
     "xlsx": "^0.16.6",
     "xml2js": "^0.4.23"
