@@ -7,11 +7,11 @@ const ResearchGuideTab = ({
   launchUrl,
   isUserAdmin,
   isUserTeacher,
-  idToken,
+  platformContext,
 }) => (
   <div>
     <Iframe url={launchUrl} name="lti-iframe" />
-    {(isUserAdmin(idToken) || isUserTeacher(idToken)) && (
+    {(isUserAdmin(platformContext) || isUserTeacher(platformContext)) && (
       <Button
         color="secondary"
         margin="small"
@@ -29,7 +29,7 @@ ResearchGuideTab.propTypes = {
   launchUrl: PropTypes.string.isRequired,
   isUserAdmin: PropTypes.func.isRequired,
   isUserTeacher: PropTypes.func.isRequired,
-  idToken: PropTypes.object.isRequired,
+  platformContext: PropTypes.object.isRequired,
 };
 
 export default ResearchGuideTab;

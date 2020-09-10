@@ -72,7 +72,7 @@ router.get('/ltilaunch', (req, res) => {
 // Course reserve listings route
 router.get('/getreserves', (req, res) => {
   try {
-    if (!CheckRoleServices.isAdmin(res.locals.token.roles)) {
+    if (!CheckRoleServices.isAdmin(res.locals.context.roles)) {
       return res.status(403).send(new Error('Unauthorized role'));
     }
     LibraryServices.getReserveListings().then(reserves => {
@@ -115,7 +115,7 @@ router.get('/crosslists', (req, res) => {
 // Analytics routes
 router.get('/getanalytics', (req, res) => {
   try {
-    if (!CheckRoleServices.isAdmin(res.locals.token.roles)) {
+    if (!CheckRoleServices.isAdmin(res.locals.context.roles)) {
       return res.status(403).send(new Error('Unauthorized role'));
     }
     Analytics.getAnalytics().then(result => {
@@ -130,7 +130,7 @@ router.get('/getanalytics', (req, res) => {
 // Adds research or reserve view
 router.get('/addanalytics/:type', (req, res) => {
   try {
-    if (!CheckRoleServices.isStudent(res.locals.token.roles)) {
+    if (!CheckRoleServices.isStudent(res.locals.context.roles)) {
       return;
     }
     Analytics.addAnalytics(
@@ -148,7 +148,7 @@ router.get('/addanalytics/:type', (req, res) => {
 
 router.get('/analytics.xlsx', (req, res) => {
   try {
-    if (!CheckRoleServices.isAdmin(res.locals.token.roles)) {
+    if (!CheckRoleServices.isAdmin(res.locals.context.roles)) {
       return res.status(403).send(new Error('Unauthorized role'));
     }
     Analytics.getAnalytics().then(result => {

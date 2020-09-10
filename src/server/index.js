@@ -1,6 +1,6 @@
 require('dotenv').config();
 const path = require('path');
-const Lti = require('ltijs').Provider;
+const lti = require('ltijs').Provider;
 const { MongoClient } = require('mongodb');
 const apiRouter = require('./api');
 
@@ -18,7 +18,7 @@ const mongourl = process.env.DB_URL;
 const dbName = process.env.DB_DATABASE;
 const client = new MongoClient(mongourl, { useUnifiedTopology: true });
 
-const lti = new Lti(
+lti.setup(
   process.env.LTI_KEY,
   // Setting up database configurations
   {
@@ -82,7 +82,10 @@ async function setup() {
   });
 
   // Get the public key generated for that platform.
-  const plat = await lti.getPlatform(process.env.PLATFORM_URL);
+  const plat = await lti.getPlatform(
+    process.env.PLATFORM_URL,
+    process.env.PLATFORM_CLIENTID
+  );
   console.log(await plat.platformPublicKey());
 }
 
