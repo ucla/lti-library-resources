@@ -31,6 +31,7 @@ async function getAnalytics(collName = 'analytics') {
   const result = await cursor.toArray();
   result.forEach(function(x) {
     delete x._id;
+    delete x.lastUpdated;
   });
   result.map(x => {
     x.reserveClicks =

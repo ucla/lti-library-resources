@@ -29,7 +29,7 @@ const Analytics = ({ setError }) => {
 
   const getExcelFile = () => {
     const ltik = getLtik();
-    window.open(`/api/analyticsfile?ltik=${ltik}`);
+    window.open(`/api/analytics.xlsx?ltik=${ltik}`);
   };
 
   useEffect(getAnalytics, []);

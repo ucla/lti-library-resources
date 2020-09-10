@@ -2,9 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const oauth = require('oauth-sign');
 const btoa = require('btoa');
-const json2xls = require('json2xls');
-const fs = require('fs');
-const tmp = require('tmp');
+const XLSX = require('xlsx');
 
 const CheckRoleServices = require('../services/CheckRole');
 const LibraryServices = require('../services/LibraryServices');
@@ -148,16 +146,52 @@ router.get('/addanalytics/:type', (req, res) => {
   }
 });
 
-router.get('/analyticsfile', (req, res) => {
+router.get('/analytics.xlsx', (req, res) => {
   try {
     if (!CheckRoleServices.isAdmin(res.locals.context.roles)) {
       return res.status(403).send(new Error('Unauthorized role'));
     }
     Analytics.getAnalytics().then(result => {
-      const excel = json2xls(result);
-      const tmpobj = tmp.fileSync();
-      fs.writeFileSync(tmpobj.name, excel, 'binary');
-      res.download(tmpobj.name, 'analytics.xlsx');
+      const ws = XLSX.utils.json_to_sheet(result, {
+        // Specifies the correct collumn order
+        header: [
+          'contextId',
+          'numMembers',
+          'shortname',
+          'researchClicksTotal',
+          'researchClicks',
+          'reserveClicksTotal',
+          'reserveClicks',
+          'libTourClicksTotal',
+          'libTourClicks',
+          'researchTutsClicksTotal',
+          'researchTutsClicks',
+        ],
+      });
+      // Renames collumn headers
+      ws.A1.v = 'Course ID';
+      ws.B1.v = 'Shortname';
+      ws.C1.v = 'Total students enrolled';
+      ws.D1.v = 'Views for research guide';
+      ws.E1.v = '% of students viewed research guide';
+      ws.F1.v = 'Views for course reserves';
+      ws.G1.v = '% of students viewed course reserves';
+      ws.H1.v = 'Views for library tour';
+      ws.I1.v = '% of students viewed library tour';
+      ws.J1.v = 'Views for research tutorials';
+      ws.K1.v = '% of students viewed research tutorials';
+
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Library Analytics');
+
+      // Generate file buffer
+      const buf = XLSX.write(wb, {
+        type: 'buffer',
+        bookType: 'xlsx',
+      });
+
+      // Send to client
+      res.status(200).send(buf);
     });
   } catch (err) {
     console.log(err);
