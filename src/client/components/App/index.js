@@ -69,7 +69,7 @@ const App = () => {
         setCurrentTab={setCurrentTab}
         isUserAdmin={isUserAdmin}
         isUserTeacher={isUserTeacher}
-        idToken={idToken}
+        platformContext={platformContext}
         setError={setError}
       />
       {error && (
@@ -82,7 +82,6 @@ const App = () => {
           platformContext={platformContext}
           isUserAdmin={isUserAdmin}
           isUserTeacher={isUserTeacher}
-          idToken={idToken}
           setError={setError}
         />
       )}
