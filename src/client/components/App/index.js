@@ -18,18 +18,24 @@ theme.use();
 axiosRetry(axios);
 
 const App = () => {
+  // Holds the currently selected tab index
   const [currentTab, setCurrentTab] = useState(constants.TABS.RESEARCH_GUIDE);
+
+  // Holds the course information
   const [idToken, setIdToken] = useState({});
   const [platformContext, setPlatformContext] = useState({
     context: { label: '' },
     resource: {},
   });
+
+  // Holds whether the course is a cluster
   const [isCluster, setIsCluster] = useState(false);
   const [error, setError] = useState(null);
 
+  // Called once, to retrieve course information:
+  // idToken and platformContext, which contain user info,
+  // course shortname, etc.
   const retrieveCourse = () => {
-    // Get the idToken and platformContext, which contain user info,
-    // course shortname, etc.
     const ltik = getLtik();
     axios
       .get(`/api/idtoken?ltik=${ltik}`)
