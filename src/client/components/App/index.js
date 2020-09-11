@@ -22,7 +22,6 @@ const App = () => {
   const [currentTab, setCurrentTab] = useState(constants.TABS.RESEARCH_GUIDE);
 
   // Holds the course information
-  const [idToken, setIdToken] = useState({});
   const [platformContext, setPlatformContext] = useState({
     context: { label: '' },
     resource: {},
@@ -37,19 +36,6 @@ const App = () => {
   // course shortname, etc.
   const retrieveCourse = () => {
     const ltik = getLtik();
-    axios
-      .get(`/api/idtoken?ltik=${ltik}`)
-      .then(res => {
-        setIdToken(res.data);
-        setError(null);
-      })
-      .catch(err => {
-        setError({
-          err,
-          msg: 'Something went wrong when retrieving course token...',
-        });
-      });
-
     axios
       .get(`/api/platformcontext?ltik=${ltik}`)
       .then(res => {
