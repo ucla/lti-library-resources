@@ -29,10 +29,18 @@ async function getAnalytics(collName = 'analytics') {
   const dbAnalytics = client.db(dbName);
   const cursor = await dbAnalytics.collection(collName).find();
   const result = await cursor.toArray();
+
+  // Remove the _id and lastUpdated fields, which aren't relevant
+  // for the user
   result.forEach(function(x) {
     delete x._id;
     delete x.lastUpdated;
   });
+
+  // If analytics haven't yet been added, return 0 or 0% to prevent
+  // undefined behavior on the front end
+  // Additionally, this function computes the percentage rather than
+  // unique clicks
   result.map(x => {
     x.reserveClicks =
       x.reserveClicks === undefined
@@ -83,6 +91,7 @@ async function addAnalytics(
 ) {
   await client.connect(mongourl);
   const dbAnalytics = client.db(dbName);
+  // Database field names are determined by the type of analytics being added
   const typeField = `${type}Clicks`;
   const typeFieldTotal = `${type}ClicksTotal`;
   const updateStatus = await dbAnalytics.collection(collName).updateOne(
