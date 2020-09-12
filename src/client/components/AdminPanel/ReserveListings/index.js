@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Link } from '@instructure/ui-link';
+import { Pagination } from '@instructure/ui-pagination';
 import { SimpleSelect } from '@instructure/ui-simple-select';
 import { Spinner } from '@instructure/ui-spinner';
 import { Table } from '@instructure/ui-table';
@@ -9,6 +10,7 @@ import { Text } from '@instructure/ui-text';
 import { TruncateText } from '@instructure/ui-truncate-text';
 import axiosRetry from 'axios-retry';
 import { getLtik } from '../../../services/ltik';
+import * as constants from '../../../constants';
 
 axiosRetry(axios);
 
@@ -25,6 +27,9 @@ const ReserveListings = ({ setError }) => {
   // Holds the term being filtered by
   const [selectedTerm, setSelectedTerm] = useState('');
 
+  // Holds the page user is viewing
+  const [selectedPage, setSelectedPage] = useState(0);
+
   // Holds boolean on whether table is loading
   const [loading, setLoading] = useState(true);
 
@@ -34,8 +39,8 @@ const ReserveListings = ({ setError }) => {
     axios
       .get(`/api/getreserves?ltik=${ltik}`)
       .then(res => {
-        setEntries([...entries, ...res.data.reserves]);
-        setSelectedEntries([...entries, ...res.data.reserves]);
+        setEntries(res.data.reserves);
+        setSelectedEntries(res.data.reserves);
         setTerms(res.data.terms);
         setLoading(false);
         setError(null);
@@ -49,6 +54,20 @@ const ReserveListings = ({ setError }) => {
   };
 
   useEffect(getReserves, []);
+
+  const pages = Array.from(
+    Array(Math.ceil(selectedEntries.length / constants.LISTINGS_PER_PAGE))
+  ).map((v, i) => (
+    <Pagination.Page
+      key={i}
+      onClick={() => {
+        setSelectedPage(i);
+      }}
+      current={i === selectedPage}
+    >
+      {i + 1}
+    </Pagination.Page>
+  ));
 
   return (
     <div>
@@ -101,40 +120,54 @@ const ReserveListings = ({ setError }) => {
               </Table.Row>
             </Table.Head>
             <Table.Body>
-              {selectedEntries.slice(0, 10).map(entry => (
-                <Table.Row key={entry.shortname}>
-                  <Table.Cell>
-                    <Text size="small">{entry.shortname}</Text>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Text size="small">{entry.courseNumber}</Text>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Text size="small">{entry.courseName}</Text>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Text size="small">{entry.deptCode}</Text>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Text size="small">{entry.deptName}</Text>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Text size="small">
-                      <TruncateText>
-                        <Link
-                          href={entry.url}
-                          target="_blank"
-                          rel="noopener roreferrer"
-                        >
-                          {entry.url}
-                        </Link>
-                      </TruncateText>
-                    </Text>
-                  </Table.Cell>
-                </Table.Row>
-              ))}
+              {selectedEntries
+                .slice(
+                  constants.LISTINGS_PER_PAGE * selectedPage,
+                  constants.LISTINGS_PER_PAGE * (selectedPage + 1)
+                )
+                .map(entry => (
+                  <Table.Row key={entry.shortname}>
+                    <Table.Cell>
+                      <Text size="small">{entry.shortname}</Text>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Text size="small">{entry.courseNumber}</Text>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Text size="small">{entry.courseName}</Text>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Text size="small">{entry.deptCode}</Text>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Text size="small">{entry.deptName}</Text>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Text size="small">
+                        <TruncateText>
+                          <Link
+                            href={entry.url}
+                            target="_blank"
+                            rel="noopener roreferrer"
+                          >
+                            {entry.url}
+                          </Link>
+                        </TruncateText>
+                      </Text>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
             </Table.Body>
           </Table>
+          <Pagination
+            as="nav"
+            margin="small"
+            variant="compact"
+            labelNext="Next Page"
+            labelPrev="Previous Page"
+          >
+            {pages}
+          </Pagination>
         </div>
       )}
     </div>

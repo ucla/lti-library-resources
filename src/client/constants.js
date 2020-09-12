@@ -16,3 +16,5 @@ export const ROLES = {
   TEACHER: 'Instructor',
   STUDENT: 'Learner',
 };
+
+export const LISTINGS_PER_PAGE = 20;
