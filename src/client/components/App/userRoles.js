@@ -1,5 +1,6 @@
 import * as constants from '../../constants';
 
+// Checks the user's role by searching the role field for the appropriate string
 const checkUserRole = (context, role) => {
   try {
     return context.roles[0].search(role) !== -1;

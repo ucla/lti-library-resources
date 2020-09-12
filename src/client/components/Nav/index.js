@@ -17,7 +17,9 @@ const Nav = ({
   platformContext,
   setError,
 }) => {
-  const addAnalytics = type => {
+  // Calls the API to add a new student click to the analytics database
+  // Type defaults to research so initial page load will send a research view
+  const addAnalytics = (type = 'research') => {
     const ltik = getLtik();
     axios
       .get(`/api/addanalytics/${type}?ltik=${ltik}`)
@@ -32,6 +34,7 @@ const Nav = ({
       });
   };
 
+  // On initial page load, request adding a research view
   useEffect(addAnalytics, []);
 
   return (

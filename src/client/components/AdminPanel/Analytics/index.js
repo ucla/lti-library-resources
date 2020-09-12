@@ -11,6 +11,8 @@ axiosRetry(axios);
 const Analytics = ({ setError }) => {
   const [analytics, setAnalytics] = useState([]);
 
+  // Calls analytics api and saves analytics json into
+  // the Analytics component's state
   const getAnalytics = () => {
     const ltik = getLtik();
     axios
@@ -27,13 +29,17 @@ const Analytics = ({ setError }) => {
       });
   };
 
+  // Calls analytics excel file api, which handles creating
+  // and downloading the excel file
   const getExcelFile = () => {
     const ltik = getLtik();
     window.open(`/api/analytics.xlsx?ltik=${ltik}`);
   };
 
+  // Requests analytics as soon as page loads
   useEffect(getAnalytics, []);
 
+  // Creating the body of the analytics table to be displayed
   const analyticsBody = analytics
     ? analytics.map(stat => (
         <Table.Row>
@@ -51,6 +57,8 @@ const Analytics = ({ setError }) => {
         </Table.Row>
       ))
     : '';
+
+  // Returns the full table (body and header) as a react component
   return (
     <div>
       <Table>
@@ -78,6 +86,7 @@ const Analytics = ({ setError }) => {
         <Table.Body>{analyticsBody}</Table.Body>
       </Table>
       <Button
+        // Button requests the analytics excel download API call
         color="primary"
         onClick={() => {
           getExcelFile();

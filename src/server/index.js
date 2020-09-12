@@ -33,6 +33,7 @@ lti.onConnect(async (token, req, res) => {
   if (process.env.MODE === 'production') {
     return res.sendFile(path.join(__dirname, '../../dist/index.html'));
   }
+  // On LTI launch, add the number of class members to the analytics database
   const result = await lti.NamesAndRoles.getMembers(res.locals.token);
   if (!result) {
     console.log('getMembers returned null');
@@ -40,6 +41,7 @@ lti.onConnect(async (token, req, res) => {
     const numMembers = result.members.length;
     await client.connect();
     const dbAnalytics = client.db(dbName);
+    // Additionally, add shortname and contextId to analytics database entry
     const contextId = res.locals.context.context.id;
     const shortname = res.locals.context.context.label;
     await dbAnalytics.collection('analytics').updateOne(

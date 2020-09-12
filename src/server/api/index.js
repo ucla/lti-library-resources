@@ -127,7 +127,8 @@ router.get('/getanalytics', (req, res) => {
   }
 });
 
-// Adds research or reserve view
+// Adds a view to the analytics database of the given type to the
+// relevant class
 router.get('/addanalytics/:type', (req, res) => {
   try {
     if (!CheckRoleServices.isStudent(res.locals.context.roles)) {
@@ -146,8 +147,11 @@ router.get('/addanalytics/:type', (req, res) => {
   }
 });
 
+// API endpoint used to create and download an excel file containing
+// analytics for all library resources
 router.get('/analytics.xlsx', (req, res) => {
   try {
+    // Ensures only admin can see analytics
     if (!CheckRoleServices.isAdmin(res.locals.context.roles)) {
       return res.status(403).send(new Error('Unauthorized role'));
     }
@@ -181,16 +185,18 @@ router.get('/analytics.xlsx', (req, res) => {
       ws.J1.v = 'Views for research tutorials';
       ws.K1.v = '% of students viewed research tutorials';
 
+      // Workbooks are the excel file, worksheets are the spreadsheets
+      // within that file. Reference the xlsx library for more information
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Library Analytics');
 
-      // Generate file buffer
+      // Generate file buffer for download
       const buf = XLSX.write(wb, {
         type: 'buffer',
         bookType: 'xlsx',
       });
 
-      // Send to client
+      // Send buffer to client, which will automatically prompt a download
       res.status(200).send(buf);
     });
   } catch (err) {

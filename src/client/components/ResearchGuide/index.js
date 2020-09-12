@@ -15,12 +15,23 @@ const ResearchGuide = ({
   isUserTeacher,
   setError,
 }) => {
+  // Destructure platform context to get the shortname
   const { label: contextLabel } = context;
+
+  // Holds the LTI launch URL
   const [launchUrl, setLaunchUrl] = useState('');
+
+  // Holds the shortname of the current course or of its crosslisted courses
+  // if there are any
   const [launchLabel, setLaunchLabel] = useState(contextLabel);
+
+  // Holds an array of the crosslisted courses
   const [crosslists, setCrosslists] = useState([]);
+
+  // Holds the index of the selected tab (tabs only appear if there are crosslisted courses)
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  // Generates parameters for LTI launch. Called anytime launchLabel is updated.
   const ltiLaunch = () => {
     if (typeof context === 'undefined') {
       return;
@@ -64,6 +75,7 @@ const ResearchGuide = ({
       });
   };
 
+  // Called once, to get all the crosslisted courses if there are any
   const getCrosslists = () => {
     if (typeof context === 'undefined') {
       return;

@@ -6,6 +6,7 @@ import Analytics from './Analytics';
 import * as constants from '../../constants';
 
 const AdminPanel = ({ setError }) => {
+  // Holds currently selected (sub)tab index
   const [selectedIndex, setSelectedIndex] = useState(
     constants.ADMIN_TABS.COURSE_LISTINGS
   );

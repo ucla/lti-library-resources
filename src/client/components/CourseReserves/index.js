@@ -10,8 +10,10 @@ import { getLtik } from '../../services/ltik';
 axiosRetry(axios);
 
 const CourseReserves = ({ context, setError }) => {
+  // Holds URL of course reserve, or '' if there is none
   const [url, setUrl] = useState('');
 
+  // Called once, to retrieve course reserve URL from database
   const getUrl = () => {
     if (typeof context.context === 'undefined') {
       return;

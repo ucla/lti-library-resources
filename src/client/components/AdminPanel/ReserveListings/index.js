@@ -13,12 +13,22 @@ import { getLtik } from '../../../services/ltik';
 axiosRetry(axios);
 
 const ReserveListings = ({ setError }) => {
+  // Holds all the reserve listings that were found in database
   const [entries, setEntries] = useState([]);
+
+  // Holds the currently filtered listings
   const [selectedEntries, setSelectedEntries] = useState([]);
+
+  // Holds the available terms you can filter by
   const [terms, setTerms] = useState([]);
+
+  // Holds the term being filtered by
   const [selectedTerm, setSelectedTerm] = useState('');
+
+  // Holds boolean on whether table is loading
   const [loading, setLoading] = useState(true);
 
+  // Called once, to retrieve all listings from the database
   const getReserves = () => {
     const ltik = getLtik();
     axios
