@@ -68,7 +68,7 @@
     "react-dom": "^16.5.2",
     "react-iframe": "^1.8.0",
     "winston": "^3.3.3",
-    "xlsx": "^0.16.6",
+    "xlsx": "^0.16.7",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {
