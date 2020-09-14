@@ -43,9 +43,9 @@ const term = args[0];
     );
     const { department: depts } = response.data;
 
-    const deptIDs = depts.map(dept => dept.departmentID);
-    const deptCodes = depts.map(dept => dept.departmentCode);
-    const deptNames = depts.map(dept => dept.departmentName);
+    const deptIDs = depts.map((dept) => dept.departmentID);
+    const deptCodes = depts.map((dept) => dept.departmentCode);
+    const deptNames = depts.map((dept) => dept.departmentName);
 
     // Get courses from the department IDs
     const numDepts = deptIDs.length;

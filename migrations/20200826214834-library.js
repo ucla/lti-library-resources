@@ -1,10 +1,10 @@
 module.exports = {
   async up(db) {
     const collectionList = await db.listCollections().toArray();
-    if (!collectionList.map(col => col.name).includes('reserves')) {
+    if (!collectionList.map((col) => col.name).includes('reserves')) {
       await db.createCollection('reserves');
     }
-    if (!collectionList.map(col => col.name).includes('analytics')) {
+    if (!collectionList.map((col) => col.name).includes('analytics')) {
       await db.createCollection('analytics');
     }
   },

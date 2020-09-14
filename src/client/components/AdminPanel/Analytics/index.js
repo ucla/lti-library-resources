@@ -17,11 +17,11 @@ const Analytics = ({ setError }) => {
     const ltik = getLtik();
     axios
       .get(`/api/getanalytics?ltik=${ltik}`)
-      .then(res => {
+      .then((res) => {
         setAnalytics(res.data);
         setError(null);
       })
-      .catch(err => {
+      .catch((err) => {
         setError({
           err,
           msg: 'Something went wrong when retrieving course analytics...',
@@ -36,12 +36,13 @@ const Analytics = ({ setError }) => {
     window.open(`/api/analytics.xlsx?ltik=${ltik}`);
   };
 
-  // Requests analytics as soon as page loads
+  // Requests analytics as soon as page loads (only load once)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(getAnalytics, []);
 
   // Creating the body of the analytics table to be displayed
   const analyticsBody = analytics
-    ? analytics.map(stat => (
+    ? analytics.map((stat) => (
         <Table.Row>
           <Table.RowHeader>{stat.contextId}</Table.RowHeader>
           <Table.Cell>{stat.shortname}</Table.Cell>

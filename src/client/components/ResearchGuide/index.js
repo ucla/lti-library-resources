@@ -46,7 +46,7 @@ const ResearchGuide = ({
           shortname: launchLabel,
         },
       })
-      .then(res => {
+      .then((res) => {
         setLaunchUrl(res.data.launch);
         // Construct a form with hidden inputs, targeting the iframe
         const form = document.createElement('form');
@@ -55,7 +55,7 @@ const ResearchGuide = ({
         form.method = 'POST';
 
         // Repeat for each parameter
-        Object.keys(res.data.params).forEach(param => {
+        Object.keys(res.data.params).forEach((param) => {
           const input = document.createElement('input');
           input.type = 'hidden';
           input.name = param;
@@ -67,7 +67,7 @@ const ResearchGuide = ({
         form.submit();
         setError(null);
       })
-      .catch(err => {
+      .catch((err) => {
         setError({
           err,
           msg: 'Something went wrong when retrieving LTI Launch...',
@@ -88,11 +88,11 @@ const ResearchGuide = ({
           shortname: contextLabel,
         },
       })
-      .then(res => {
+      .then((res) => {
         setCrosslists(res.data.crosslists);
         setError(null);
       })
-      .catch(err => {
+      .catch((err) => {
         setError({
           err,
           msg: 'Something went wrong when retrieving crosslisted courses...',
@@ -100,8 +100,8 @@ const ResearchGuide = ({
       });
   };
 
-  useEffect(ltiLaunch, [launchLabel]);
-  useEffect(getCrosslists, [context]);
+  useEffect(ltiLaunch, [launchLabel, context, resource.id, setError]);
+  useEffect(getCrosslists, [context, contextLabel, setError]);
 
   return (
     <div>

@@ -23,10 +23,10 @@ const Nav = ({
     const ltik = getLtik();
     axios
       .get(`/api/addanalytics/${type}?ltik=${ltik}`)
-      .then(res => {
+      .then((res) => {
         setError(null);
       })
-      .catch(err => {
+      .catch((err) => {
         setError({
           err,
           msg: 'Something went wrong when recording analytics...',
@@ -34,7 +34,8 @@ const Nav = ({
       });
   };
 
-  // On initial page load, request adding a research view
+  // On initial page load, request adding a research view (only load once)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(addAnalytics, []);
 
   return (

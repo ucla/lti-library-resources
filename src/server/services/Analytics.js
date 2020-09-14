@@ -32,7 +32,7 @@ async function getAnalytics(collName = 'analytics') {
 
   // Remove the _id and lastUpdated fields, which aren't relevant
   // for the user
-  result.forEach(function(x) {
+  result.forEach(function (x) {
     delete x._id;
     delete x.lastUpdated;
   });
@@ -41,7 +41,7 @@ async function getAnalytics(collName = 'analytics') {
   // undefined behavior on the front end
   // Additionally, this function computes the percentage rather than
   // unique clicks
-  result.map(x => {
+  result.map((x) => {
     x.reserveClicks =
       x.reserveClicks === undefined
         ? '0%'

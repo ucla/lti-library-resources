@@ -32,7 +32,7 @@ module.exports.getCrosslistsByShortname = async (dbCollection, shortname) => {
     return [];
   }
   const result = [];
-  course.crosslists.forEach(crosslist => {
+  course.crosslists.forEach((crosslist) => {
     result.push(crosslist.shortname);
   });
   return result;

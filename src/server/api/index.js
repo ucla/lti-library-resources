@@ -75,7 +75,7 @@ router.get('/getreserves', (req, res) => {
     if (!CheckRoleServices.isAdmin(res.locals.context.roles)) {
       return res.status(403).send(new Error('Unauthorized role'));
     }
-    LibraryServices.getReserveListings().then(reserves => {
+    LibraryServices.getReserveListings().then((reserves) => {
       const terms = new Set();
       for (let i = 0; i < reserves.length; i += 1) {
         terms.add(reserves[i].term);
@@ -91,7 +91,7 @@ router.get('/getreserves', (req, res) => {
 // Get course reserve URL route
 router.get('/getreserveurl', (req, res) => {
   try {
-    LibraryServices.getReserveUrl(req.query.shortname).then(reserve => {
+    LibraryServices.getReserveUrl(req.query.shortname).then((reserve) => {
       res.send({ reserve });
     });
   } catch (err) {
@@ -103,7 +103,7 @@ router.get('/getreserveurl', (req, res) => {
 // Crosslists route
 router.get('/crosslists', (req, res) => {
   try {
-    LibraryServices.getCrosslists(req.query.shortname).then(crosslists => {
+    LibraryServices.getCrosslists(req.query.shortname).then((crosslists) => {
       res.send({ crosslists });
     });
   } catch (err) {
@@ -118,7 +118,7 @@ router.get('/getanalytics', (req, res) => {
     if (!CheckRoleServices.isAdmin(res.locals.context.roles)) {
       return res.status(403).send(new Error('Unauthorized role'));
     }
-    Analytics.getAnalytics().then(result => {
+    Analytics.getAnalytics().then((result) => {
       res.send(result);
     });
   } catch (err) {
@@ -155,7 +155,7 @@ router.get('/analytics.xlsx', (req, res) => {
     if (!CheckRoleServices.isAdmin(res.locals.context.roles)) {
       return res.status(403).send(new Error('Unauthorized role'));
     }
-    Analytics.getAnalytics().then(result => {
+    Analytics.getAnalytics().then((result) => {
       const ws = XLSX.utils.json_to_sheet(result, {
         // Specifies the correct collumn order
         header: [

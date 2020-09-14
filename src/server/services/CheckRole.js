@@ -1,5 +1,5 @@
-module.exports.isUser = function(rawRoles) {
-  const roles = rawRoles.map(role =>
+module.exports.isUser = function (rawRoles) {
+  const roles = rawRoles.map((role) =>
     role.substr(role.lastIndexOf('#') + 1, role.length).toLowerCase()
   );
   if (
@@ -14,8 +14,8 @@ module.exports.isUser = function(rawRoles) {
   return true;
 };
 
-module.exports.isAdmin = function(rawRoles) {
-  const roles = rawRoles.map(role =>
+module.exports.isAdmin = function (rawRoles) {
+  const roles = rawRoles.map((role) =>
     role.substr(role.lastIndexOf('#') + 1, role.length).toLowerCase()
   );
   if (roles.includes('administrator') || roles.includes('admin')) {
@@ -24,8 +24,8 @@ module.exports.isAdmin = function(rawRoles) {
   return false;
 };
 
-module.exports.isStudent = function(rawRoles) {
-  const roles = rawRoles.map(role =>
+module.exports.isStudent = function (rawRoles) {
+  const roles = rawRoles.map((role) =>
     role.substr(role.lastIndexOf('#') + 1, role.length).toLowerCase()
   );
   if (roles.includes('learner')) {

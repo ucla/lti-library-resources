@@ -9,11 +9,11 @@ const checkUserRole = (context, role) => {
   }
 };
 
-export const isUserAdmin = context =>
+export const isUserAdmin = (context) =>
   checkUserRole(context, constants.ROLES.ADMIN);
 
-export const isUserTeacher = context =>
+export const isUserTeacher = (context) =>
   checkUserRole(context, constants.ROLES.TEACHER);
 
-export const isUserStudent = context =>
+export const isUserStudent = (context) =>
   checkUserRole(context, constants.ROLES.STUDENT);

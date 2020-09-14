@@ -26,11 +26,11 @@ const CourseReserves = ({ context, setError }) => {
           shortname: context.context.label,
         },
       })
-      .then(res => {
+      .then((res) => {
         setUrl(res.data.reserve);
         setError(null);
       })
-      .catch(err => {
+      .catch((err) => {
         setError({
           err,
           msg: 'Something went wrong when retrieving course reserve...',
@@ -38,6 +38,8 @@ const CourseReserves = ({ context, setError }) => {
       });
   };
 
+  // Get URL (only load once)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(getUrl, []);
 
   return (

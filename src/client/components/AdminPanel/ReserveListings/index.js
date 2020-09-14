@@ -38,14 +38,14 @@ const ReserveListings = ({ setError }) => {
     const ltik = getLtik();
     axios
       .get(`/api/getreserves?ltik=${ltik}`)
-      .then(res => {
+      .then((res) => {
         setEntries(res.data.reserves);
         setSelectedEntries(res.data.reserves);
         setTerms(res.data.terms);
         setLoading(false);
         setError(null);
       })
-      .catch(err => {
+      .catch((err) => {
         setError({
           err,
           msg: 'Something went wrong when retrieving course reserves...',
@@ -53,6 +53,8 @@ const ReserveListings = ({ setError }) => {
       });
   };
 
+  // Get reserves (only load once)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(getReserves, []);
 
   const pages = Array.from(
@@ -78,7 +80,7 @@ const ReserveListings = ({ setError }) => {
         onChange={(e, { value }) => {
           setSelectedTerm(value);
           setSelectedEntries(
-            entries.filter(entry => !value || entry.term === value)
+            entries.filter((entry) => !value || entry.term === value)
           );
         }}
       >
@@ -125,7 +127,7 @@ const ReserveListings = ({ setError }) => {
                   constants.LISTINGS_PER_PAGE * selectedPage,
                   constants.LISTINGS_PER_PAGE * (selectedPage + 1)
                 )
-                .map(entry => (
+                .map((entry) => (
                   <Table.Row key={entry.shortname}>
                     <Table.Cell>
                       <Text size="small">{entry.shortname}</Text>

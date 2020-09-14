@@ -38,12 +38,12 @@ const App = () => {
     const ltik = getLtik();
     axios
       .get(`/api/platformcontext?ltik=${ltik}`)
-      .then(res => {
+      .then((res) => {
         setPlatformContext(res.data);
         setIsCluster(res.data.context.label.search('CLUSTER') !== -1);
         setError(null);
       })
-      .catch(err => {
+      .catch((err) => {
         setError({
           err,
           msg: 'Something went wrong when retrieving course token...',

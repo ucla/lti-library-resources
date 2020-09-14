@@ -8,7 +8,7 @@ const client = require('../../models/db');
 require('dotenv').config();
 
 // Sets the class size
-beforeAll(async done => {
+beforeAll(async (done) => {
   await client.connect(mongourl);
   const dbAnalytics = client.db(dbName);
   await dbAnalytics.collection('test-analytics').updateOne(
@@ -25,14 +25,14 @@ beforeAll(async done => {
 });
 
 // User's db entry is empty
-test('User db entry empty', async done => {
+test('User db entry empty', async (done) => {
   const response = await Analytics.getAnalytics('test-analytics');
   expect(response[0].research_clicks).toEqual(undefined);
   done();
 });
 
 // Add first view
-test('Add first view', async done => {
+test('Add first view', async (done) => {
   await Analytics.addAnalytics(
     'research',
     '0000',
@@ -46,7 +46,7 @@ test('Add first view', async done => {
 });
 
 // Percentage unaffected by subsequent clicks
-test('Percentage unaffected', async done => {
+test('Percentage unaffected', async (done) => {
   await Analytics.addAnalytics(
     'research',
     '0000',
@@ -60,7 +60,7 @@ test('Percentage unaffected', async done => {
 });
 
 // Empties out the test-analytics collection
-afterAll(async done => {
+afterAll(async (done) => {
   const dbAnalytics = client.db(dbName);
   await dbAnalytics.collection('test-analytics').drop();
   await client.close();

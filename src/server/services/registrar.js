@@ -182,8 +182,8 @@ async function getShortname(offeredTermCode, classSectionID) {
 
       // Find the session that matches the class number.
       let sessionGroup = '';
-      response.classes[0].termSessionGroupCollection.forEach(groupItem => {
-        groupItem.classCollection.forEach(classItem => {
+      response.classes[0].termSessionGroupCollection.forEach((groupItem) => {
+        groupItem.classCollection.forEach((classItem) => {
           if (classItem.classNumber === secNum) {
             sessionGroup = groupItem.termsessionGroupCode;
           }
@@ -229,7 +229,7 @@ async function getCrosslists(offeredTermCode, classSectionID) {
 
   const crosslists = [];
   xml2js.parseString(crosslistXml.data, (err, result) => {
-    result.ArrayOfGetConSchedData.getConSchedData.forEach(async crosslist => {
+    result.ArrayOfGetConSchedData.getConSchedData.forEach(async (crosslist) => {
       if (!crosslist.term[0] || !crosslist.srs[0]) {
         return;
       }
