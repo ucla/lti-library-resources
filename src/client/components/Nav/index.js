@@ -65,7 +65,7 @@ const Nav = ({
         <AppNav.Item
           isSelected={currentTab === constants.TABS.LIBRARY_TOUR}
           renderLabel="Library tour"
-          href="https://spark.adobe.com/page/uJnBMHgK6VMHA/"
+          href="https://spark.adobe.com/page/PIzzAKz3jBcVY/"
           target="_blank"
           rel="noopener roreferrer"
           onClick={() => {
