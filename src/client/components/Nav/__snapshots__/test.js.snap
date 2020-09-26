@@ -19,7 +19,7 @@ exports[`Tabs render correctly for clusters 1`] = `
   />
   <Item
     cursor="pointer"
-    href="https://spark.adobe.com/page/uJnBMHgK6VMHA/"
+    href="https://spark.adobe.com/page/PIzzAKz3jBcVY/"
     isDisabled={false}
     isSelected={false}
     onClick={[Function]}
