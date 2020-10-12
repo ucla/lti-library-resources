@@ -38,7 +38,7 @@
     "@instructure/ui-link": "^7.2.0",
     "@instructure/ui-navigation": "^7.2.0",
     "@instructure/ui-number-input": "^7.2.0",
-    "@instructure/ui-pagination": "^7.2.0",
+    "@instructure/ui-pagination": "^7.2.4",
     "@instructure/ui-simple-select": "^7.2.0",
     "@instructure/ui-spinner": "^7.2.0",
     "@instructure/ui-table": "^7.2.0",
