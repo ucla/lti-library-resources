@@ -47,7 +47,7 @@
     "@instructure/ui-truncate-text": "^7.2.4",
     "@instructure/ui-view": "^7.2.4",
     "@testing-library/react": "^11.1.0",
-    "axios": "^0.20.0",
+    "axios": "^0.21.0",
     "axios-retry": "^3.1.9",
     "babel-polyfill": "^6.26.0",
     "btoa": "^1.2.1",
