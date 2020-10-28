@@ -19,11 +19,14 @@ const dbName = process.env.DB_DATABASE;
 const client = new MongoClient(mongourl, { useUnifiedTopology: true });
 
 lti.setup(
-  process.env.LTI_KEY,
+  process.env.SECRET_LTI_KEY,
   // Setting up database configurations
   {
     url: `mongodb://${process.env.DB_HOST}/${process.env.DB_DATABASE}`,
-    connection: { user: process.env.DB_USER, pass: process.env.DB_PASS },
+    connection: {
+      user: process.env.SECRET_DB_USER,
+      pass: process.env.SECRET_DB_PASS,
+    },
   },
   options
 );
@@ -74,7 +77,7 @@ async function setup() {
   await lti.registerPlatform({
     url: process.env.PLATFORM_URL,
     name: 'Platform',
-    clientId: process.env.PLATFORM_CLIENTID,
+    clientId: process.env.SECRET_PLATFORM_CLIENTID,
     authenticationEndpoint: process.env.PLATFORM_ENDPOINT,
     accesstokenEndpoint: process.env.PLATFORM_TOKEN_ENDPOINT,
     authConfig: {
@@ -86,7 +89,7 @@ async function setup() {
   // Get the public key generated for that platform.
   const plat = await lti.getPlatform(
     process.env.PLATFORM_URL,
-    process.env.PLATFORM_CLIENTID
+    process.env.SECRET_PLATFORM_CLIENTID
   );
   console.log(await plat.platformPublicKey());
 }

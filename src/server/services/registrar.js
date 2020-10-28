@@ -30,8 +30,8 @@ async function getToken() {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
     },
     auth: {
-      username: process.env.REG_WS_CLIENT_ID,
-      password: process.env.REG_WS_SECRET,
+      username: process.env.SECRET_REG_WS_CLIENT_ID,
+      password: process.env.SECRET_REG_WS_SECRET,
     },
     data,
     httpsAgent,
@@ -224,7 +224,7 @@ async function getShortname(offeredTermCode, classSectionID) {
  */
 async function getCrosslists(offeredTermCode, classSectionID) {
   const crosslistXml = await axios(
-    `https://webservices.registrar.ucla.edu/SRDB/SRDBWeb.asmx/getConSched?user=${process.env.REG_DB_USER}&pass=${process.env.REG_DB_PASS}&term=${offeredTermCode}&SRS=${classSectionID};`
+    `https://webservices.registrar.ucla.edu/SRDB/SRDBWeb.asmx/getConSched?user=${process.env.SECRET_REG_SECRET_DB_USER}&pass=${process.env.SECRET_REG_SECRET_DB_PASS}&term=${offeredTermCode}&SRS=${classSectionID};`
   );
 
   const crosslists = [];
