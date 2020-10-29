@@ -42,7 +42,7 @@ router.get('/ltilaunch', (req, res) => {
       lti_version: 'LTI-1p0',
       resource_link_id: `resource-${req.query.resourceId}-${req.query.contextId}`,
       // OAuth 1.0a Required Parameters
-      oauth_consumer_key: process.env.RG_LTI_CONSUMER_KEY,
+      oauth_consumer_key: process.env.SECRET_RG_LTI_CONSUMER_KEY,
       oauth_nonce: btoa(timestamp),
       oauth_signature_method: 'HMAC-SHA1',
       oauth_timestamp: timestamp,
@@ -55,7 +55,7 @@ router.get('/ltilaunch', (req, res) => {
       method,
       action,
       params,
-      process.env.RG_LTI_SECRET
+      process.env.SECRET_RG_LTI_SECRET
     );
     params.oauth_signature = signature;
 

@@ -3,6 +3,7 @@
 Table of Contents
 
 - [Set up VS Code](#set-up-vs-code)
+- [Set up git-secrets hooks](#set-up-git-secrets-hooks)
 - [Set up LTI tool](#set-up-lti-tool)
 - [Set up MongoDB](#set-up-mongodb)
 - [Start up the app](#start-up-the-app)
@@ -14,6 +15,23 @@ Table of Contents
 1. Download and install VS Code: https://code.visualstudio.com/
 2. Install ESlint package: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
 3. Install ESlint rules: npx install-peerdeps --global eslint-config-wesbos
+
+## Set up git-secrets hooks
+
+To prevent us from accidentally committing secrets, we will install the [git-secrets](https://github.com/awslabs/git-secrets) hooks.
+
+1. Install git-secrets locally on your machine. See instructions for your platform [here](https://github.com/awslabs/git-secrets#installing-git-secrets).
+
+2. Set up git-secrets for this repo
+
+   - `cd` into the repo
+   - Run `git secrets --install`
+
+3. Configure git-secrets by running the following commands:
+   - `git secrets --register-aws`
+   - `git secrets --add 'SECRET(\s|[a-zA-Z\_])*=\s*.+'`
+
+These rules will prevent any variables prefixed with `SECRET_` from being committed with a value filled in.
 
 ## Set up LTI tool
 
@@ -43,17 +61,17 @@ Table of Contents
 
 5. Click "Save changes"
 6. Then under "Tools" find LTI app you just created and click on the "View configurations" icon (first icon, next to gear)
-7. Copy Client ID value into PLATFORM_CLIENTID value in .env file (created below in [Start up the app](#start-up-the-app), Step 1).
+7. Copy Client ID value into SECRET_PLATFORM_CLIENTID value in .env file (created below in [Start up the app](#start-up-the-app), Step 1).
 
 ## Set up MongoDB
 
 1. Install MongoDB: https://docs.mongodb.com/manual/administration/install-community/
 2. Helpful to install MongoDB Compass to ensure your database is running correctly: https://www.mongodb.com/try/download/compass
 
-## Startup app
+## Start up the app
 
 1. Copy .env-dist to a local .env file. There are some empty secret fields in .env.dist. Ask Rex for the secrets.
-2. Set LTI_KEY to any random string, and DB_DATABASE to whatever you'd like
+2. Set SECRET_LTI_KEY to any random string
 3. (Optional) Comment out DEBUG if you do not want to see the LTI provider debugging messages
 4. Start app:
 

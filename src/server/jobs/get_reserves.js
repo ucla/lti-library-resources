@@ -15,11 +15,9 @@ const logger = winston.createLogger({
   ],
 });
 
-// Mongo values
-const mongourl = process.env.DB_URL;
-const dbName = process.env.DB_DATABASE;
-
-const client = new MongoClient(mongourl, { useUnifiedTopology: true });
+const client = new MongoClient(process.env.DB_URL, {
+  useUnifiedTopology: true,
+});
 
 // Test with 20S - URLs are empty though
 const args = process.argv.slice(2);
@@ -34,7 +32,7 @@ const term = args[0];
     // Connect to mongodb
     await client.connect();
     logger.info({ message: 'Connected correctly to mongodb server', term });
-    const db = client.db(dbName);
+    const db = client.db(process.env.DB_DATABASE);
     const srsArray = [];
 
     // Get dept IDs which have course reserves
