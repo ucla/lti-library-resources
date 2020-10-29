@@ -14,20 +14,15 @@ if (process.env.MODE === 'production') {
 }
 
 // MongoDB config
-const mongourl = process.env.DB_URL;
 const dbName = process.env.DB_DATABASE;
-const client = new MongoClient(mongourl, { useUnifiedTopology: true });
+const client = new MongoClient(process.env.DB_URL, {
+  useUnifiedTopology: true,
+});
 
 lti.setup(
   process.env.SECRET_LTI_KEY,
   // Setting up database configurations
-  {
-    url: `mongodb://${process.env.DB_HOST}/${process.env.DB_DATABASE}`,
-    connection: {
-      user: process.env.SECRET_DB_USER,
-      pass: process.env.SECRET_DB_PASS,
-    },
-  },
+  { url: process.env.DB_URL },
   options
 );
 

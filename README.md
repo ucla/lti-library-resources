@@ -68,10 +68,10 @@ These rules will prevent any variables prefixed with `SECRET_` from being commit
 1. Install MongoDB: https://docs.mongodb.com/manual/administration/install-community/
 2. Helpful to install MongoDB Compass to ensure your database is running correctly: https://www.mongodb.com/try/download/compass
 
-## Startup app
+## Start up the app
 
 1. Copy .env-dist to a local .env file. There are some empty secret fields in .env.dist. Ask Rex for the secrets.
-2. Set SECRET_LTI_KEY to any random string, and DB_DATABASE to whatever you'd like
+2. Set SECRET_LTI_KEY to any random string
 3. (Optional) Comment out DEBUG if you do not want to see the LTI provider debugging messages
 4. Start app:
 
