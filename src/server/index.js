@@ -66,7 +66,8 @@ lti.app.use('/api', apiRouter);
  */
 async function setup() {
   // Deploying provider, connecting to the database and starting express server.
-  await lti.deploy({ port: 8080 });
+  const port = process.env.PORT ? process.env.PORT : 8080;
+  await lti.deploy({ port });
 
   // Register platform, if needed.
   await lti.registerPlatform({
