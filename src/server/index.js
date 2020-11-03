@@ -35,9 +35,6 @@ lti.setup(
 
 // When receiving successful LTI launch redirects to app.
 lti.onConnect(async (token, req, res) => {
-  if (process.env.MODE === 'production') {
-    return res.sendFile(path.join(__dirname, '../../dist/index.html'));
-  }
   // On LTI launch, add the number of class members to the analytics database
   const result = await lti.NamesAndRoles.getMembers(res.locals.token);
   if (!result) {
@@ -60,6 +57,9 @@ lti.onConnect(async (token, req, res) => {
       },
       { upsert: true }
     );
+  }
+  if (process.env.MODE === 'production') {
+    return res.sendFile(path.join(__dirname, '../../dist/index.html'));
   }
 
   return lti.redirect(res, `http://localhost:${process.env.CLIENTPORT}`);
