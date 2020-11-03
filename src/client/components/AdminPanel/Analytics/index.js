@@ -16,7 +16,7 @@ const Analytics = ({ setError }) => {
   const getAnalytics = () => {
     const ltik = getLtik();
     axios
-      .get(`/api/getanalytics?ltik=${ltik}`)
+      .get(`${process.env.LTI_APPROUTE}/api/getanalytics?ltik=${ltik}`)
       .then((res) => {
         setAnalytics(res.data);
         setError(null);
@@ -33,7 +33,7 @@ const Analytics = ({ setError }) => {
   // and downloading the excel file
   const getExcelFile = () => {
     const ltik = getLtik();
-    window.open(`/api/analytics.xlsx?ltik=${ltik}`);
+    window.open(`${process.env.LTI_APPROUTE}/api/analytics.xlsx?ltik=${ltik}`);
   };
 
   // Requests analytics as soon as page loads (only load once)

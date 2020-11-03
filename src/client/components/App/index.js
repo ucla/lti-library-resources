@@ -37,7 +37,7 @@ const App = () => {
   const retrieveCourse = () => {
     const ltik = getLtik();
     axios
-      .get(`/api/platformcontext?ltik=${ltik}`)
+      .get(`${process.env.LTI_APPROUTE}/api/platformcontext?ltik=${ltik}`)
       .then((res) => {
         setPlatformContext(res.data);
         setIsCluster(res.data.context.label.search('CLUSTER') !== -1);

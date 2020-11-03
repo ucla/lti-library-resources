@@ -21,7 +21,7 @@ const CourseReserves = ({ context, setError }) => {
 
     const ltik = getLtik();
     axios
-      .get(`/api/getreserveurl?ltik=${ltik}`, {
+      .get(`${process.env.LTI_APPROUTE}/api/getreserveurl?ltik=${ltik}`, {
         params: {
           shortname: context.context.label,
         },
