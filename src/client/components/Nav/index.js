@@ -22,7 +22,7 @@ const Nav = ({
   const addAnalytics = (type = 'research') => {
     const ltik = getLtik();
     axios
-      .get(`/api/addanalytics/${type}?ltik=${ltik}`)
+      .get(`${process.env.LTI_APPROUTE}/api/addanalytics/${type}?ltik=${ltik}`)
       .then((res) => {
         setError(null);
       })

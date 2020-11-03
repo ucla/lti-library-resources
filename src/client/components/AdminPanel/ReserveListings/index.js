@@ -37,7 +37,7 @@ const ReserveListings = ({ setError }) => {
   const getReserves = () => {
     const ltik = getLtik();
     axios
-      .get(`/api/getreserves?ltik=${ltik}`)
+      .get(`${process.env.LTI_APPROUTE}/api/getreserves?ltik=${ltik}`)
       .then((res) => {
         setEntries(res.data.reserves);
         setSelectedEntries(res.data.reserves);

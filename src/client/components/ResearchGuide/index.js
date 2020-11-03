@@ -39,7 +39,7 @@ const ResearchGuide = ({
 
     const ltik = getLtik();
     axios
-      .get(`/api/ltilaunch?ltik=${ltik}`, {
+      .get(`${process.env.LTI_APPROUTE}/api/ltilaunch?ltik=${ltik}`, {
         params: {
           contextId: context.id,
           resourceId: resource.id,
@@ -83,7 +83,7 @@ const ResearchGuide = ({
 
     const ltik = getLtik();
     axios
-      .get(`/api/crosslists?ltik=${ltik}`, {
+      .get(`${process.env.LTI_APPROUTE}/api/crosslists?ltik=${ltik}`, {
         params: {
           shortname: contextLabel,
         },

@@ -19,6 +19,13 @@ const client = new MongoClient(process.env.DB_URL, {
   useUnifiedTopology: true,
 });
 
+const approute = process.env.LTI_APPROUTE ? process.env.LTI_APPROUTE : '';
+options.appRoute = approute;
+options.loginRoute = `${approute}/login`;
+options.keysetRoute = `${approute}/keys`;
+options.invalidTokenRoute = `${approute}/invalidtoken`;
+options.sessionTimeoutRoute = `${approute}/sessiontimeout`;
+
 lti.setup(
   process.env.SECRET_LTI_KEY,
   // Setting up database configurations
@@ -55,18 +62,18 @@ lti.onConnect(async (token, req, res) => {
     );
   }
 
-  return lti.redirect(res, 'http://localhost:3000');
+  return lti.redirect(res, `http://localhost:${process.env.CLIENTPORT}`);
 });
 
 // Routes
-lti.app.use('/api', apiRouter);
+lti.app.use(`${process.env.LTI_APPROUTE}/api`, apiRouter);
 
 /**
  *
  */
 async function setup() {
   // Deploying provider, connecting to the database and starting express server.
-  const port = process.env.PORT ? process.env.PORT : 8080;
+  const port = process.env.SERVERPORT ? process.env.SERVERPORT : 8080;
   await lti.deploy({ port });
 
   // Register platform, if needed.
