@@ -97,6 +97,34 @@ const term = args[0];
             deptName: deptNames[i],
             crosslists,
           });
+        } else if (srs === 'Staff') {
+          const updateStatus = await db.collection('reserves').update(
+            { courseNumber }, // Query using course number because there could be multiple Staff srses.
+            {
+              url,
+              srs,
+              courseName,
+              courseNumber,
+              term,
+              lastUpdated: Date.now(),
+              deptCode: deptCodes[i],
+              deptName: deptNames[i],
+            },
+            { upsert: true }
+          );
+          logger.info({
+            message: updateStatus.nUpserted
+              ? 'Insert DB entry'
+              : 'Update DB entry',
+            url,
+            srs,
+            courseName,
+            courseNumber,
+            term,
+            lastUpdated: Date.now(),
+            deptCode: deptCodes[i],
+            deptName: deptNames[i],
+          });
         } else {
           logger.error({ message: 'Registrar returned null', srs, term });
         }
