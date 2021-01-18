@@ -41,7 +41,7 @@
     "@instructure/ui-pagination": "^7.3.0",
     "@instructure/ui-simple-select": "^7.3.0",
     "@instructure/ui-spinner": "^7.3.0",
-    "@instructure/ui-table": "^7.3.0",
+    "@instructure/ui-table": "^7.3.4",
     "@instructure/ui-tabs": "^7.3.0",
     "@instructure/ui-text": "^7.3.0",
     "@instructure/ui-truncate-text": "^7.3.0",
