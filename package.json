@@ -44,7 +44,7 @@
     "@instructure/ui-table": "^7.3.4",
     "@instructure/ui-tabs": "^7.3.4",
     "@instructure/ui-text": "^7.3.4",
-    "@instructure/ui-truncate-text": "^7.3.4",
+    "@instructure/ui-truncate-text": "^7.4.0",
     "@instructure/ui-view": "^7.3.4",
     "@testing-library/react": "^11.2.3",
     "axios": "^0.21.1",
