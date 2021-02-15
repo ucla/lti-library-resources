@@ -3618,10 +3618,10 @@ commander@~2.17.1:
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.17.1.tgz#bd77ab7de6de94205ceacc72f1716d29f20a77bf"
   integrity sha512-wPMUt6FnH2yzG95SA6mzjQOEKUU3aLaDEmzs1ti+1E9h+CsrZghRlqEM/EJ4KscsQVG8uNN4uVreUeT8+drlgg==
 
-comment-parser@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/comment-parser/-/comment-parser-1.1.0.tgz#4f6fac17718363653e1cb6d5ded3f093ce51ae4e"
-  integrity sha512-Q4dQ9niTWOF01ufvH/z6Z3RsBkwr7G42IsaFjuNliL6CY9ZeOEU3jRwTNY2mTY1ibAsASMrXnlQtx2tOb7Q8MA==
+comment-parser@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/comment-parser/-/comment-parser-1.1.2.tgz#e5317d7a2ec22b470dcb54a29b25426c30bf39d8"
+  integrity sha512-AOdq0i8ghZudnYv8RUnHrhTgafUGs61Rdz9jemU5x2lnZwAWyOq7vySo626K59e1fVKH1xSRorJwPVRLSWOoAQ==
 
 commondir@^1.0.1:
   version "1.0.1"
@@ -4704,12 +4704,12 @@ eslint-plugin-import@^2.22.0:
     resolve "^1.17.0"
     tsconfig-paths "^3.9.0"
 
-eslint-plugin-jsdoc@^31.0.6:
-  version "31.0.6"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-31.0.6.tgz#8e6b57ea74b2ac262b9d78b18ae472866571303c"
-  integrity sha512-wGd83EcR+M0HHBgVx3f4gf78z5gMyEil6fqebpAFPeG9fgbUcP1XiWikTWSW3rJrjj7rQvCud6A/IRFMFzanLQ==
+eslint-plugin-jsdoc@^32.0.0:
+  version "32.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-32.0.0.tgz#3e7b0dd452232845e9311442607c07c8787b933a"
+  integrity sha512-AfGe3gqJlcxyRKUjhLzPTUnEMlVVlWJCAh2N0leJndpMflyh0W7zP09+b6NQHBHk7GyR/JY0bXiSswN3QX9Lhg==
   dependencies:
-    comment-parser "1.1.0"
+    comment-parser "1.1.2"
     debug "^4.3.1"
     jsdoctypeparser "^9.0.0"
     lodash "^4.17.20"
