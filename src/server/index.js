@@ -1,7 +1,6 @@
 require('dotenv').config();
 const path = require('path');
 const lti = require('ltijs').Provider;
-const { MongoClient } = require('mongodb');
 const apiRouter = require('./api');
 const mongoClient = require('./models/db');
 
