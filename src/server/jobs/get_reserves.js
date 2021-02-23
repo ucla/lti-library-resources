@@ -1,8 +1,8 @@
 const axios = require('axios');
-const { MongoClient } = require('mongodb');
 const winston = require('winston');
 const registrar = require('../services/registrar');
 require('dotenv').config();
+const mongoClient = require('../models/db');
 
 // Winston setup
 const logger = winston.createLogger({
@@ -13,10 +13,6 @@ const logger = winston.createLogger({
       filename: `logs/get_reserves-${Date.now}.log`,
     }),
   ],
-});
-
-const client = new MongoClient(process.env.DB_URL, {
-  useUnifiedTopology: true,
 });
 
 // Test with 20S - URLs are empty though
@@ -30,7 +26,7 @@ const term = args[0];
 (async () => {
   try {
     // Connect to mongodb
-    await client.connect();
+    const client = await mongoClient.connect(process.env.DB_URL);
     logger.info({ message: 'Connected correctly to mongodb server', term });
     const db = client.db(process.env.DB_DATABASE);
     const srsArray = [];

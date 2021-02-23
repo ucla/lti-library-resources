@@ -3,6 +3,7 @@ const path = require('path');
 const lti = require('ltijs').Provider;
 const { MongoClient } = require('mongodb');
 const apiRouter = require('./api');
+const mongoClient = require('./models/db');
 
 // Creating a provider instance
 let options = {};
@@ -15,9 +16,6 @@ if (process.env.MODE === 'production') {
 
 // MongoDB config
 const dbName = process.env.DB_DATABASE;
-const client = new MongoClient(process.env.DB_URL, {
-  useUnifiedTopology: true,
-});
 
 const approute = process.env.LTI_APPROUTE ? process.env.LTI_APPROUTE : '';
 options.appRoute = approute;
@@ -41,7 +39,8 @@ lti.onConnect(async (token, req, res) => {
     console.log('getMembers returned null');
   } else {
     const numMembers = result.members.length;
-    await client.connect();
+    // Connect to mongodb
+    const client = await mongoClient.connect(process.env.DB_URL);
     const dbAnalytics = client.db(dbName);
     // Additionally, add shortname and contextId to analytics database entry
     const contextId = res.locals.context.context.id;
