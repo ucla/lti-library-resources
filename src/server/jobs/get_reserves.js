@@ -26,9 +26,9 @@ const term = args[0];
 (async () => {
   try {
     // Connect to mongodb
-    const client = await mongoClient.connect(process.env.DB_URL);
+    await mongoClient.connect(process.env.DB_URL);
     logger.info({ message: 'Connected correctly to mongodb server', term });
-    const db = client.db(process.env.DB_DATABASE);
+    const db = mongoClient.db(process.env.DB_DATABASE);
     const srsArray = [];
 
     // Get dept IDs which have course reserves
@@ -107,7 +107,7 @@ const term = args[0];
       count: deleteStatus.deletedCount,
       term,
     });
-    client.close();
+    mongoClient.close();
   } catch (error) {
     logger.error({ message: error, term });
   }

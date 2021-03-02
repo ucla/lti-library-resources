@@ -39,8 +39,8 @@ lti.onConnect(async (token, req, res) => {
   } else {
     const numMembers = result.members.length;
     // Connect to mongodb
-    const client = await mongoClient.connect(process.env.DB_URL);
-    const dbAnalytics = client.db(dbName);
+    await mongoClient.connect(process.env.DB_URL);
+    const dbAnalytics = mongoClient.db(dbName);
     // Additionally, add shortname and contextId to analytics database entry
     const contextId = res.locals.context.context.id;
     const shortname = res.locals.context.context.label;
