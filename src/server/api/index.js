@@ -16,7 +16,7 @@ router.get('/idtoken', (req, res) => {
     res.send(res.locals.token);
   } catch (err) {
     console.log(err);
-    return res.status(400).send(err);
+    return res.status(400).send(new Error('Failed to send ID token'));
   }
 });
 
@@ -26,7 +26,7 @@ router.get('/platformcontext', (req, res) => {
     res.send(res.locals.context);
   } catch (err) {
     console.log(err);
-    return res.status(400).send(err);
+    return res.status(400).send(new Error('Failed to send platform context'));
   }
 });
 
@@ -65,7 +65,7 @@ router.get('/ltilaunch', (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.status(400).send(err);
+    return res.status(400).send(new Error('Failed to send LTI launch request'));
   }
 });
 
@@ -84,7 +84,7 @@ router.get('/getreserves', (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.status(400).send(err);
+    return res.status(400).send(new Error('Failed to get course reserves'));
   }
 });
 
@@ -96,7 +96,7 @@ router.get('/getreserveurl', (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.status(400).send(err);
+    return res.status(400).send(new Error('Failed to get course reserve URL'));
   }
 });
 
@@ -108,7 +108,7 @@ router.get('/crosslists', (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.status(400).send(err);
+    return res.status(400).send(new Error('Failed to get crosslists'));
   }
 });
 
@@ -123,7 +123,7 @@ router.get('/getanalytics', (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.status(400).send(err);
+    return res.status(400).send(new Error('Failed to get analytics'));
   }
 });
 
@@ -143,7 +143,7 @@ router.get('/addanalytics/:type', (req, res) => {
     res.send();
   } catch (err) {
     console.log(err);
-    return res.status(400).send(err);
+    return res.status(400).send(new Error('Failed to add view'));
   }
 });
 
