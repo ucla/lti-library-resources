@@ -70,7 +70,7 @@ These rules will prevent any variables prefixed with `SECRET_` from being commit
 
 ## Start up the app
 
-1. Copy .env-dist to a local .env file. There are some empty secret fields in .env.dist. Ask Rex for the secrets.
+1. Copy .env.dist to a local .env file. There are some empty secret fields in .env.dist. Ask Rex for the secrets.
 2. Set SECRET_LTI_KEY to any random string
 3. (Optional) Comment out DEBUG if you do not want to see the LTI provider debugging messages
 4. Start app:
