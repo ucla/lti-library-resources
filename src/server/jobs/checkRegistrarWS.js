@@ -5,7 +5,7 @@ const registrar = require('../services/registrar');
 // DEBUG='registrar:*' node src/server/jobs/checkRegistrarWS.js
 (async () => {
   const result = await registrar.call({
-    url: '/sis/infrastructure/verifyconnectivity/v1',
+    url: `/sis/infrastructure/verifyconnectivity/v1`,
     params: {
       anyText: new Date().toUTCString(),
     },
