@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { theme } from '@instructure/canvas-theme';
+import { EmotionThemeProvider } from '@instructure/emotion';
 import './index.css';
 import axiosRetry from 'axios-retry';
 import { getLtik } from '../../services/ltik';
@@ -12,8 +13,6 @@ import ResearchGuide from '../ResearchGuide';
 import AdminPanel from '../AdminPanel';
 import ErrorAlert from './ErrorAlert';
 import * as constants from '../../constants';
-
-theme.use();
 
 axiosRetry(axios);
 
@@ -54,36 +53,38 @@ const App = () => {
   useEffect(retrieveCourse, []);
 
   return (
-    <div>
-      <Nav
-        isCluster={isCluster}
-        currentTab={currentTab}
-        setCurrentTab={setCurrentTab}
-        isUserAdmin={isUserAdmin}
-        isUserTeacher={isUserTeacher}
-        platformContext={platformContext}
-        setError={setError}
-      />
-      {error && (
-        <div>
-          <ErrorAlert err={error.err} msg={error.msg} />
-        </div>
-      )}
-      {currentTab === constants.TABS.RESEARCH_GUIDE && (
-        <ResearchGuide
-          platformContext={platformContext}
+    <EmotionThemeProvider theme={theme}>
+      <div>
+        <Nav
+          isCluster={isCluster}
+          currentTab={currentTab}
+          setCurrentTab={setCurrentTab}
           isUserAdmin={isUserAdmin}
           isUserTeacher={isUserTeacher}
+          platformContext={platformContext}
           setError={setError}
         />
-      )}
-      {currentTab === constants.TABS.COURSE_RESERVES && (
-        <CourseReserves context={platformContext} setError={setError} />
-      )}
-      {currentTab === constants.TABS.ADMIN_PANEL && (
-        <AdminPanel setError={setError} />
-      )}
-    </div>
+        {error && (
+          <div>
+            <ErrorAlert err={error.err} msg={error.msg} />
+          </div>
+        )}
+        {currentTab === constants.TABS.RESEARCH_GUIDE && (
+          <ResearchGuide
+            platformContext={platformContext}
+            isUserAdmin={isUserAdmin}
+            isUserTeacher={isUserTeacher}
+            setError={setError}
+          />
+        )}
+        {currentTab === constants.TABS.COURSE_RESERVES && (
+          <CourseReserves context={platformContext} setError={setError} />
+        )}
+        {currentTab === constants.TABS.ADMIN_PANEL && (
+          <AdminPanel setError={setError} />
+        )}
+      </div>
+    </EmotionThemeProvider>
   );
 };
 
