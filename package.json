@@ -42,7 +42,7 @@
     "@instructure/ui-number-input": "^8.1.0",
     "@instructure/ui-pagination": "^8.1.0",
     "@instructure/ui-simple-select": "^8.1.0",
-    "@instructure/ui-spinner": "^8.1.0",
+    "@instructure/ui-spinner": "^8.7.0",
     "@instructure/ui-table": "^8.1.0",
     "@instructure/ui-tabs": "^8.1.0",
     "@instructure/ui-text": "^8.1.0",
