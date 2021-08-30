@@ -33,7 +33,7 @@
     "@instructure/canvas-theme": "^8.1.0",
     "@instructure/emotion": "^8.1.0",
     "@instructure/ui-alerts": "^8.1.0",
-    "@instructure/ui-billboard": "^8.1.0",
+    "@instructure/ui-billboard": "^8.8.0",
     "@instructure/ui-buttons": "^8.1.0",
     "@instructure/ui-heading": "^8.1.0",
     "@instructure/ui-icons": "^8.1.0",
