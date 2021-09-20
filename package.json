@@ -38,7 +38,7 @@
     "@instructure/ui-heading": "^8.1.0",
     "@instructure/ui-icons": "^8.1.0",
     "@instructure/ui-link": "^8.1.0",
-    "@instructure/ui-navigation": "^8.1.0",
+    "@instructure/ui-navigation": "^8.9.1",
     "@instructure/ui-number-input": "^8.1.0",
     "@instructure/ui-pagination": "^8.1.0",
     "@instructure/ui-simple-select": "^8.1.0",
