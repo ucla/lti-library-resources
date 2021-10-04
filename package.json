@@ -45,7 +45,7 @@
     "@instructure/ui-spinner": "^8.1.0",
     "@instructure/ui-table": "^8.1.0",
     "@instructure/ui-tabs": "^8.1.0",
-    "@instructure/ui-text": "^8.1.0",
+    "@instructure/ui-text": "^8.10.2",
     "@instructure/ui-truncate-text": "^8.1.0",
     "@instructure/ui-view": "^8.1.0",
     "@testing-library/react": "^11.2.6",
