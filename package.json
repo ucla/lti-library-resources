@@ -30,7 +30,7 @@
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@emotion/core": "^10.0.27",
-    "@instructure/canvas-theme": "^8.1.0",
+    "@instructure/canvas-theme": "^8.11.1",
     "@instructure/emotion": "^8.1.0",
     "@instructure/ui-alerts": "^8.1.0",
     "@instructure/ui-billboard": "^8.1.0",
