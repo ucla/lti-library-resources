@@ -32,7 +32,7 @@
     "@emotion/core": "^10.0.27",
     "@instructure/canvas-theme": "^8.1.0",
     "@instructure/emotion": "^8.1.0",
-    "@instructure/ui-alerts": "^8.1.0",
+    "@instructure/ui-alerts": "^8.12.0",
     "@instructure/ui-billboard": "^8.1.0",
     "@instructure/ui-buttons": "^8.1.0",
     "@instructure/ui-heading": "^8.1.0",
