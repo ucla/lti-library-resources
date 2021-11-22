@@ -17,6 +17,6 @@ jobs:
           source: '.env.dist'
           target: '.env'
       - name: MongoDB in GitHub Actions
-        uses: supercharge/mongodb-github-action@1.3.0
+        uses: supercharge/mongodb-github-action@1.7.0
       - name: Run tests
         run: yarn test
